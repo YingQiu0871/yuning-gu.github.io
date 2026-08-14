@@ -1,6 +1,8 @@
 import type { Locale } from '@/lib/i18n/config';
 
-export const SITE_URL = 'https://yuning-gu.github.io';
+// Site URL: change via the NEXT_PUBLIC_SITE_URL environment variable at build time,
+// or edit the fallback below. Deploy script: deploy/setup-server.sh · workflow: .github/workflows/deploy.yml
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yingqiu.me';
 
 export const profile = {
   name: 'Yuning Gu',
@@ -19,6 +21,7 @@ export const navigation = {
     { label: 'About', href: '/en/about' },
     { label: 'Research', href: '/en/research' },
     { label: 'Publications', href: '/en/publications' },
+    { label: 'Blog', href: '/en/blog' },
     { label: 'Experience', href: '/en/experience' },
     { label: 'Contact', href: '/en/contact' },
   ],
@@ -27,6 +30,7 @@ export const navigation = {
     { label: '关于', href: '/zh/about' },
     { label: '研究', href: '/zh/research' },
     { label: '论文', href: '/zh/publications' },
+    { label: '博客', href: '/zh/blog' },
     { label: '经历', href: '/zh/experience' },
     { label: '联系', href: '/zh/contact' },
   ],

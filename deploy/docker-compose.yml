@@ -1,0 +1,25 @@
+# Alternative to the rsync + system Caddy flow in DEPLOY.md:
+# builds and runs the whole site in one container.
+#
+#   docker compose -f deploy/docker-compose.yml up -d --build
+#
+# Note: replace yingqiu.me with your domain in deploy/Caddyfile first.
+
+services:
+  site:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: https://yingqiu.me
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: unless-stopped
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

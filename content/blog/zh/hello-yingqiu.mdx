@@ -1,0 +1,33 @@
+---
+title: '你好，yingqiu.me —— 本站的新家'
+description: '本站从 GitHub Pages 迁移到了自有域名和服务器。改了什么、为什么改，以及接下来会做什么。'
+date: 2026-08-14
+tags: [公告, 网站]
+---
+
+之前这个主页一直托管在 GitHub Pages 上（`yuning-gu.github.io`）。改了 GitHub 用户名之后，旧地址悄然失效——这正好是个契机，把一直想做的事情做了。
+
+## 改了什么
+
+- **自有域名。** 现在站点住在 `yingqiu.me`，由 [Caddy](https://caddyserver.com) 提供 HTTPS（证书自动签发与续期，无需手动处理）。
+- **自己的服务器。** 站点是纯静态文件——HTML、CSS、JavaScript——由 GitHub Actions 构建，再同步到一台小 VPS 上。没有数据库，也没有需要照看的 Node 进程。
+- **博客。** 就是这个页面。文章用 Markdown / MDX 撰写，每种语言一个文件，构建时编译进站点。
+
+## 为什么是静态站？
+
+> 静态站快、便宜、几乎不可能坏。每一页就是一个文件，每一次部署就是一次 `rsync`。
+
+对于一个主要职责是「在我泡实验室的时候保持在线」的网站来说，这一点很重要。构建执行 `npm run build`，产出整个站点到 `out/`，部署只有一条命令：
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://yingqiu.me npm run build
+rsync -az --delete out/ deployer@yingqiu.me:/var/www/site/
+```
+
+## 接下来
+
+1. 持续更新主页内容（论文、经历）。
+2. 在这里写东西——科研笔记、文献小结，以及药物研发路上的所学所思。
+3. 打磨细节：无埋点统计、依赖精简、中英双语贯穿始终。
+
+喜欢用订阅器的话，可以通过 [RSS](/feed.xml) 订阅。如果发现哪里坏了，[联系页](/zh/contact/)是找到我最快的方式。
