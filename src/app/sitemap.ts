@@ -1,5 +1,4 @@
 import type { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/blog';
 import { SITE_URL } from '@/lib/site-content';
 
 export const dynamic = 'force-static';
@@ -26,34 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const blogIndexEntries = (['en', 'zh'] as const).map((lang) => ({
-    url: `${SITE_URL}/${lang}/blog/`,
-    lastModified,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  const blogPosts = getAllPosts();
-  const blogEntries = blogPosts.map((post) => {
-    const counterpart = blogPosts.find((p) => p.slug === post.slug && p.lang !== post.lang);
-    return {
-      url: `${SITE_URL}/${post.lang}/blog/${post.slug}/`,
-      lastModified: post.updated ?? post.date,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-      ...(counterpart
-        ? {
-            alternates: {
-              languages: {
-                en: `${SITE_URL}/en/blog/${post.slug}/`,
-                zh: `${SITE_URL}/zh/blog/${post.slug}/`,
-              },
-            },
-          }
-        : {}),
-    };
-  });
-
   return [
     {
       url: `${SITE_URL}/`,
@@ -62,7 +33,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...localized,
-    ...blogIndexEntries,
-    ...blogEntries,
   ];
 }

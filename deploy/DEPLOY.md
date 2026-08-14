@@ -1,19 +1,18 @@
 # 部署指南：自有域名 + 境外 VPS
 
 本文档把站点从 GitHub Pages 迁移到**自有域名 + 境外服务器**的完整流程写清楚。
-整体架构：
+整体架构（**双站**：学术主页 + 独立博客，各是一个仓库、各有一套部署）：
 
 ```
-本地 / GitHub 仓库
+两个 GitHub 仓库（主页 / 博客）
       │  push 到 main
       ▼
-GitHub Actions（构建静态站点 out/ + 生成 RSS）
+GitHub Actions（各自构建静态站点）
       │  rsync over SSH
       ▼
-你的 VPS（Caddy 自动 HTTPS，静态文件托管）
-      │
-      ▼
-访客浏览器  https://yingqiu.me
+你的 VPS（Caddy 自动 HTTPS）
+   ├─ /var/www/site  →  https://yingqiu.me        （学术主页）
+   └─ /var/www/blog  →  https://blog.yingqiu.me  （博客，独立仓库独立部署）
 ```
 
 > 方案选的是**境外 VPS**，域名解析即可直接上线，**无需 ICP 备案**。
@@ -33,7 +32,9 @@ GitHub Actions（构建静态站点 out/ + 生成 RSS）
 
 - `src/lib/site-content.ts` → `SITE_URL` 的默认值（或构建时用 `NEXT_PUBLIC_SITE_URL` 环境变量覆盖）
 - `.github/workflows/deploy.yml` → `NEXT_PUBLIC_SITE_URL` 默认值（或 GitHub 仓库变量 `SITE_URL`）
-- `deploy/Caddyfile` → 两处 `yingqiu.me`
+- `deploy/Caddyfile` → `yingqiu.me` 与 `blog.yingqiu.me` 两个站点块
+
+博客仓库同理：`src/lib/metadata.ts` 的 `SITE_URL` 默认值 + 博客仓库自己的工作流。**博客和主页的 GitHub Secrets 是同一套**（`DEPLOY_HOST` / `DEPLOY_USER=deployer` / `DEPLOY_SSH_KEY`），分别加在各自仓库即可，默认部署目录不同（`/var/www/site` 与 `/var/www/blog`）。
 
 ## 1. 买服务器
 
@@ -72,6 +73,7 @@ Azure for Students 含 $100 额度 + 12 个月免费服务（[学生优惠说明
 | 类型 | 主机记录 | 值 |
 | --- | --- | --- |
 | A | @ | 服务器 IPv4 |
+| A | blog | 服务器 IPv4 |
 | AAAA | @ | 服务器 IPv6（可选） |
 | CNAME | www | yingqiu.me |
 
@@ -130,7 +132,7 @@ npm run typecheck && npm run lint && npm run build
 npm run feed
 ```
 
-写博客：在 `content/blog/en/` 与 `content/blog/zh/` 里按相同文件名写 MDX 即可（字段说明见站内《如何在本站写一篇文章》）。推送后约 1–2 分钟上线。
+写博客：在**博客仓库**的 `content/blog/en/` 与 `content/blog/zh/` 里按相同文件名写 MDX 即可（字段说明见博客站内《如何在本博客写一篇文章》）。推送后约 1–2 分钟上线。
 
 ## 6. 换域名 / 换服务器
 

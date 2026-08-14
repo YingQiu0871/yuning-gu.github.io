@@ -4,22 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/generate-feed.mjs",
     "build": "next build",
     "start": "next start",
-    "feed": "node scripts/generate-feed.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3",
     "next": "16.2.10",
-    "next-mdx-remote": "^6.0.0",
     "react": "19.2.7",
-    "react-dom": "19.2.7",
-    "rehype-highlight": "^7.0.2",
-    "rehype-slug": "^6.0.0",
-    "remark-gfm": "^4.0.1"
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@types/node": "^24",

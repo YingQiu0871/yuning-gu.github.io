@@ -21,7 +21,7 @@ export const navigation = {
     { label: 'About', href: '/en/about' },
     { label: 'Research', href: '/en/research' },
     { label: 'Publications', href: '/en/publications' },
-    { label: 'Blog', href: '/en/blog' },
+    { label: 'Blog', href: 'https://blog.yingqiu.me', external: true },
     { label: 'Experience', href: '/en/experience' },
     { label: 'Contact', href: '/en/contact' },
   ],
@@ -30,11 +30,11 @@ export const navigation = {
     { label: '关于', href: '/zh/about' },
     { label: '研究', href: '/zh/research' },
     { label: '论文', href: '/zh/publications' },
-    { label: '博客', href: '/zh/blog' },
+    { label: '博客', href: 'https://blog.yingqiu.me', external: true },
     { label: '经历', href: '/zh/experience' },
     { label: '联系', href: '/zh/contact' },
   ],
-} satisfies Record<Locale, Array<{ label: string; href: string }>>;
+} satisfies Record<Locale, Array<{ label: string; href: string; external?: boolean }>>;
 
 export const homeContent = {
   en: {

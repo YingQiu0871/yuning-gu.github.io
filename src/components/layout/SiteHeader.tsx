@@ -53,6 +53,13 @@ export default function SiteHeader({ lang }: { lang: Locale }) {
 
         <nav className="desktop-nav" aria-label={lang === 'zh' ? '主导航' : 'Primary navigation'}>
           {navigation[lang].map((item) => {
+            if (item.external) {
+              return (
+                <a key={item.href} href={item.href} target="_blank" rel="noreferrer">
+                  {item.label} ↗
+                </a>
+              );
+            }
             const active =
               pathname === item.href ||
               (item.href !== `/${lang}` && pathname.startsWith(`${item.href}/`));
@@ -106,11 +113,17 @@ export default function SiteHeader({ lang }: { lang: Locale }) {
         className={`mobile-nav ${menuOpen ? 'is-open' : ''}`}
         aria-label={lang === 'zh' ? '移动端导航' : 'Mobile navigation'}
       >
-        {navigation[lang].map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
-            {item.label}
-          </Link>
-        ))}
+        {navigation[lang].map((item) =>
+          item.external ? (
+            <a key={item.href} href={item.href} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
+              {item.label} ↗
+            </a>
+          ) : (
+            <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+              {item.label}
+            </Link>
+          ),
+        )}
       </nav>
     </header>
   );
