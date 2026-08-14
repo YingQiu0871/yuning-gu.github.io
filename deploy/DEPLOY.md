@@ -153,3 +153,19 @@ docker compose -f deploy/docker-compose.yml up -d --build
 ```
 
 镜像内完成构建 + Caddy 托管，80/443 自动映射，效果与方案一相同。
+
+## 9. 套 Cloudflare 免费 CDN（推荐）
+
+作用：隐藏源站真实 IP、免费 DDoS 防护、全球加速（含国内访问优化）。源站 Caddy 已有有效证书，可无缝开启严格 TLS。
+
+1. 注册 [Cloudflare](https://dash.cloudflare.com/sign-up) → **Add a site** → `yingqiu.me` → **Free** 计划。
+2. 它会扫描并导入现有记录；确认（没有就手动加）：
+   - `A @ 51.107.68.55`（代理状态：**橙云**）
+   - `CNAME www yingqiu.me`（**橙云**）
+3. **SSL/TLS → Overview**：加密模式选 **Full (strict)**（源站证书有效，此模式最安全）。
+4. **SSL/TLS → Edge Certificates**：打开 **Always Use HTTPS**。
+5. **Security → Settings**：Security Level 选 Medium，可开 Bot Fight Mode。
+6. Cloudflare 会提供**两个 Nameserver** 地址；去 Spaceship → 域名管理 → Nameservers → Custom，把 Cloudflare 的两个 NS 填进去（若 Spaceship 开着 DNSSEC 先关掉）。NS 切换通常几分钟到几小时生效。
+7. 生效后回 Cloudflare 验证状态为 Active。之后**源站加固（可选但推荐）**：Azure NSG 的 80/443 入站规则把来源限制为 [Cloudflare IP 段](https://www.cloudflare.com/ips/)，从此只有 Cloudflare 能直连源站，扫描器和攻击全部被挡在 CF 之外。
+
+注意：套了 CF 后，Caddy 的证书续期走 http-01 挑战、经由 Cloudflare 转发，照常自动完成，无需干预。
