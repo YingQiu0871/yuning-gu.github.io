@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Yuning Gu',
   },
   description:
-    'Academic portfolio of Yuning Gu, an M1 D2HP student working across pharmaceutical technology, drug delivery, natural products, and clinical research.',
+    'Academic portfolio of Yuning Gu, an M2 D2HP student working across pharmaceutical technology, drug delivery, natural products, and clinical research.',
   alternates: {
     canonical: `${SITE_URL}/`,
     languages: {

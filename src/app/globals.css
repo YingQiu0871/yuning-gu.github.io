@@ -1654,3 +1654,114 @@ main {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ---- Typography refinements (EN / ZH) ---- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    Inter, 'Segoe UI Variable Text', 'Segoe UI', Aptos, 'Helvetica Neue', 'PingFang SC',
+    'Hiragino Sans GB', 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei UI',
+    'Microsoft YaHei', system-ui, sans-serif;
+  font-feature-settings: 'kern', 'liga', 'calt';
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* English: slightly tighter display type, comfortable measure */
+html:lang(en) h1,
+html:lang(en) h2 {
+  line-height: 1.12;
+}
+
+html:lang(en) p {
+  hanging-punctuation: first last;
+}
+
+/* Chinese: no negative tracking, taller leading, CJK-aware line breaking */
+html:lang(zh) body {
+  font-family:
+    'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Source Han Sans SC',
+    'Microsoft YaHei UI', 'Microsoft YaHei', Inter, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.015em;
+  line-break: strict;
+  word-break: normal;
+}
+
+html:lang(zh) h1,
+html:lang(zh) h2,
+html:lang(zh) h3,
+html:lang(zh) .hero h1,
+html:lang(zh) .not-found-copy h1 span,
+html:lang(zh) .not-found-code {
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  font-weight: 650;
+}
+
+html:lang(zh) .hero h1 {
+  line-height: 1.22;
+  letter-spacing: 0;
+}
+
+html:lang(zh) p,
+html:lang(zh) li {
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+/* Uppercase tracking is a Latin idiom; soften it for Chinese labels */
+html:lang(zh) .eyebrow,
+html:lang(zh) .publication-meta,
+html:lang(zh) [class*='eyebrow'],
+html:lang(zh) [class*='label'] {
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+/* Readable line length for long-form copy */
+.hero-intro,
+.section-heading > p,
+.content-card p,
+.about-chapter p {
+  max-width: 68ch;
+}
+
+html:lang(zh) .hero-intro,
+html:lang(zh) .section-heading > p,
+html:lang(zh) .content-card p,
+html:lang(zh) .about-chapter p {
+  max-width: 36em;
+}
+
+@media (max-width: 720px) {
+  body {
+    line-height: 1.7;
+  }
+
+  html:lang(zh) body {
+    line-height: 1.8;
+  }
+}

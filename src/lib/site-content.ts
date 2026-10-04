@@ -41,11 +41,11 @@ export const homeContent = {
     eyebrow: 'Pharmaceutical Sciences · 2025–2026',
     title: 'From pharmaceutics to translational health research.',
     intro:
-      'I am an M1 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My work connects pharmaceutical technology, drug delivery, natural products, and data-informed clinical research.',
+      'I am an M2 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My work connects pharmaceutical technology, drug delivery, natural products, and data-informed clinical research.',
     primaryCta: 'Explore my research',
     secondaryCta: 'View publications',
     statusLabel: 'Current academic focus',
-    statusTitle: 'M1 Development of Drugs and Health Products (D2HP)',
+    statusTitle: 'M2 Development of Drugs and Health Products (D2HP)',
     statusBody: 'Faculty of Pharmacy, Université Paris-Saclay',
     location: 'Paris-Saclay, France',
     stats: [
@@ -87,11 +87,11 @@ export const homeContent = {
     eyebrow: '药物科学 · 2025–2026',
     title: '从药剂学出发，探索可转化的健康研究。',
     intro:
-      '我现就读于巴黎萨克雷大学药学院 M1 Development of Drugs and Health Products（D2HP）项目。我的研究兴趣涵盖药物制剂技术、药物递送、天然产物及数据驱动的临床研究。',
+      '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目。我的研究兴趣涵盖药物制剂技术、药物递送、天然产物及数据驱动的临床研究。',
     primaryCta: '查看研究方向',
     secondaryCta: '查看论文',
     statusLabel: '当前学术方向',
-    statusTitle: 'M1 Development of Drugs and Health Products（D2HP）',
+    statusTitle: 'M2 Development of Drugs and Health Products（D2HP）',
     statusBody: '巴黎萨克雷大学药学院',
     location: '法国 · 巴黎萨克雷',
     stats: [
@@ -144,6 +144,11 @@ export const highlights = {
       text: 'A cross-sectional NHANES study evaluating UHR as a predictor of cardiovascular disease in cancer patients.',
     },
     {
+      date: '2026–2027',
+      title: 'M2 D2HP at Université Paris-Saclay',
+      text: 'International training across drug development, pharmaceutical sciences, and health products.',
+    },
+    {
       date: '2025–2026',
       title: 'M1 D2HP at Université Paris-Saclay',
       text: 'International training across drug development, pharmaceutical sciences, and health products.',
@@ -161,6 +166,11 @@ export const highlights = {
       text: '基于 NHANES 数据，研究 UHR 对癌症患者心血管疾病的预测表现。',
     },
     {
+      date: '2026–2027',
+      title: '巴黎萨克雷大学 M2 D2HP',
+      text: '围绕药物研发、药物科学与健康产品开展全英文国际化学习。',
+    },
+    {
       date: '2025–2026',
       title: '巴黎萨克雷大学 M1 D2HP',
       text: '围绕药物研发、药物科学与健康产品开展全英文国际化学习。',
@@ -170,6 +180,13 @@ export const highlights = {
 
 export const education = {
   en: [
+    {
+      degree: 'M2 Development of Drugs and Health Products (D2HP)',
+      school: 'Faculty of Pharmacy, Université Paris-Saclay',
+      period: '2026–2027',
+      description:
+        'International pharmaceutical sciences programme covering drug development, major pathologies, pharmacy and biotechnology, and transversal pharmaceutical disciplines.',
+    },
     {
       degree: 'M1 Development of Drugs and Health Products (D2HP)',
       school: 'Faculty of Pharmacy, Université Paris-Saclay',
@@ -192,6 +209,13 @@ export const education = {
     },
   ],
   zh: [
+    {
+      degree: '药物与健康产品开发 M2（D2HP）',
+      school: '巴黎萨克雷大学药学院',
+      period: '2026–2027',
+      description:
+        '全英文国际药物科学项目，课程涵盖药物研发、重大疾病、药学与生物技术以及跨学科药物科学。',
+    },
     {
       degree: '药物与健康产品开发 M1（D2HP）',
       school: '巴黎萨克雷大学药学院',

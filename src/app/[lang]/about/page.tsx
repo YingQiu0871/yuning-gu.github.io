@@ -22,7 +22,7 @@ const copy = {
   en: {
     title: 'About me',
     intro:
-      'I am an M1 student in Development of Drugs and Health Products (D2HP) at the Faculty of Pharmacy, Université Paris-Saclay.',
+      'I am an M2 student in Development of Drugs and Health Products (D2HP) at the Faculty of Pharmacy, Université Paris-Saclay.',
     storyEyebrow: 'Academic profile',
     paragraphs: [
       'My undergraduate training in Pharmaceutic Preparations at Heilongjiang University of Chinese Medicine gave me a foundation in formulation science, modern drug-delivery systems, pharmaceutical analysis, and experimental pharmacology. Together, these subjects taught me to see drug development across design, manufacture, quality evaluation, and biological effect.',
@@ -41,6 +41,11 @@ const copy = {
     chapterEyebrow: 'Current chapter',
     chapterTitle: 'Building a bridge from evidence to formulation technology.',
     chapterItems: [
+      {
+        period: '2026–2027',
+        title: 'D2HP · M2',
+        detail: 'Faculty of Pharmacy, Université Paris-Saclay',
+      },
       {
         period: '2025–2026',
         title: 'D2HP · M1',
@@ -87,7 +92,7 @@ const copy = {
   zh: {
     title: '关于我',
     intro:
-      '我现就读于巴黎萨克雷大学药学院 M1 Development of Drugs and Health Products（D2HP）项目。',
+      '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目。',
     storyEyebrow: '学术简介',
     paragraphs: [
       '本科阶段，我在黑龙江中医药大学主修药物制剂，系统学习制剂科学、现代药物递送、药物分析与实验药理。这些课程使我从药物的设计、制备、质量评价和生物效应等环节理解药物研发，并奠定了实验与分析基础。',
@@ -100,6 +105,11 @@ const copy = {
     chapterEyebrow: '当前阶段',
     chapterTitle: '从研究证据走向药物制剂技术。',
     chapterItems: [
+      {
+        period: '2026–2027',
+        title: 'D2HP · M2',
+        detail: '巴黎萨克雷大学药学院',
+      },
       {
         period: '2025–2026',
         title: 'D2HP · M1',
