@@ -47,7 +47,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
           </div>
           <div className="contact-detail">
             <span>{label.programme}</span>
-            <strong>M1 Development of Drugs and Health Products (D2HP)</strong>
+            <strong>M2 Development of Drugs and Health Products (D2HP)</strong>
           </div>
         </section>
 
