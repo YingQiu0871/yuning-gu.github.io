@@ -11,7 +11,7 @@ set -euo pipefail
 
 DOMAIN="${1:?usage: setup-server.sh <domain> [deployer-public-key]}"
 DEPLOYER_KEY="${2:-}"
-SITE_DIR="/var/www/site"
+SITE_DIRS=(/var/www/site /var/www/blog /var/www/evolune)
 
 echo "==> Installing Caddy (official apt repo)"
 if ! command -v caddy >/dev/null 2>&1; then
@@ -27,8 +27,8 @@ else
   echo "    caddy already installed, skipping"
 fi
 
-echo "==> Preparing site directory"
-install -d -m 755 "$SITE_DIR"
+echo "==> Preparing site directories"
+install -d -m 755 "${SITE_DIRS[@]}"
 
 if [[ -n "$DEPLOYER_KEY" ]]; then
   echo "==> Creating deployer user with SSH key"
@@ -39,8 +39,8 @@ if [[ -n "$DEPLOYER_KEY" ]]; then
   echo "$DEPLOYER_KEY" > /home/deployer/.ssh/authorized_keys
   chown deployer:deployer /home/deployer/.ssh/authorized_keys
   chmod 600 /home/deployer/.ssh/authorized_keys
-  # Give deployer ownership of the site dir so rsync can write to it
-  chown -R deployer:deployer "$SITE_DIR"
+  # Give deployer ownership of the site dirs so rsync can write to it
+  chown -R deployer:deployer "${SITE_DIRS[@]}"
 fi
 
 echo "==> Writing Caddyfile for $DOMAIN"
