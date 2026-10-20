@@ -72,6 +72,12 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             </a>
           </div>
           <div className="contact-detail">
+            <span>GitHub</span>
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              YingQiu0871 ↗
+            </a>
+          </div>
+          <div className="contact-detail">
             <span>ResearchGate</span>
             <a href={profile.researchGate} target="_blank" rel="noreferrer">
               Yuning Gu ↗
