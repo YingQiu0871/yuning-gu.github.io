@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import '../globals.css';
 import SiteFrame from '@/components/layout/SiteFrame';
+import PersonStructuredData from '@/components/seo/PersonStructuredData';
 import ThemeScript from '@/components/layout/ThemeScript';
 import { SITE_URL } from '@/lib/site-content';
 
@@ -59,6 +60,7 @@ export default function DefaultRootLayout({ children }: { children: React.ReactN
     <html lang="en" suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <PersonStructuredData />
       </head>
       <body>
         <a className="skip-link" href="#main-content">

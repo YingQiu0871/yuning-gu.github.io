@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import '../globals.css';
 import SiteFrame from '@/components/layout/SiteFrame';
+import PersonStructuredData from '@/components/seo/PersonStructuredData';
 import ThemeScript from '@/components/layout/ThemeScript';
 import { isValidLocale, locales } from '@/lib/i18n/config';
 import { SITE_URL } from '@/lib/site-content';
@@ -91,6 +92,7 @@ export default async function LangRootLayout({
     <html lang={lang} suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <PersonStructuredData />
       </head>
       <body>
         <a className="skip-link" href="#main-content">

@@ -12,6 +12,7 @@ export const profile = {
   orcid: 'https://orcid.org/0009-0003-2561-8122',
   googleScholar: 'https://scholar.google.com/citations?user=QUiuMUMAAAAJ&hl=zh-CN',
   linkedin: 'https://www.linkedin.com/in/yuninggu2002',
+  github: 'https://github.com/YingQiu0871',
   researchGate: 'https://www.researchgate.net/profile/Yuning-Gu',
 };
 
