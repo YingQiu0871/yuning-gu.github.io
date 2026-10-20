@@ -24,13 +24,16 @@ export default function SiteFrame({
         </div>
         <nav
           className="footer-profiles"
-          aria-label={lang === 'zh' ? '学术主页' : 'Academic profiles'}
+          aria-label={lang === 'zh' ? '学术与开发主页' : 'Academic and development profiles'}
         >
           <a href={profile.googleScholar} target="_blank" rel="noreferrer">
             Google Scholar ↗
           </a>
           <a href={profile.orcid} target="_blank" rel="noreferrer">
             ORCID ↗
+          </a>
+          <a href={profile.github} target="_blank" rel="noreferrer">
+            GitHub ↗
           </a>
         </nav>
         <div className="footer-meta">
