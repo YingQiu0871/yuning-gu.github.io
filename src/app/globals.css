@@ -1,41 +1,44 @@
 :root {
   color-scheme: light;
-  --page: #f4f7fc;
-  --page-deep: #e7edf8;
-  --surface: rgba(255, 255, 255, 0.88);
+  --page: #f7f5f0;
+  --page-deep: #f0ede5;
+  --surface: #fffdf9;
   --surface-solid: #ffffff;
-  --surface-soft: #edf2fa;
-  --ink: #10233f;
-  --ink-soft: #405674;
-  --ink-faint: #536985;
-  --line: rgba(31, 72, 130, 0.16);
-  --accent: #2f6fca;
-  --accent-strong: #174986;
-  --accent-soft: #dce8f9;
-  --blue: #2e72ad;
-  --shadow: 0 24px 70px rgba(23, 64, 122, 0.12);
-  --header-height: 76px;
-  --radius-lg: 28px;
-  --radius-md: 18px;
-  --content: 1180px;
+  --surface-soft: #efece4;
+  --ink: #1d1c1a;
+  --ink-soft: #4a4741;
+  --ink-faint: #6b675f;
+  --line: rgba(29, 28, 26, 0.13);
+  --line-strong: rgba(29, 28, 26, 0.34);
+  --accent: #0b6b63;
+  --accent-strong: #08524c;
+  --accent-soft: #e0ede8;
+  --blue: #2f6f86;
+  --shadow: 0 1px 2px rgba(29, 28, 26, 0.04), 0 18px 40px -22px rgba(29, 28, 26, 0.22);
+  --header-height: 72px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --content: 1120px;
+  --serif: var(--font-serif), 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --page: #071426;
-  --page-deep: #0a1b35;
-  --surface: rgba(12, 30, 55, 0.88);
-  --surface-solid: #0e213d;
-  --surface-soft: #142b4c;
-  --ink: #edf4ff;
-  --ink-soft: #bdcae0;
-  --ink-faint: #93a7c5;
-  --line: rgba(151, 182, 227, 0.18);
-  --accent: #70a8ff;
-  --accent-strong: #a9caff;
-  --accent-soft: #16335e;
-  --blue: #82bde5;
-  --shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+  --page: #121413;
+  --page-deep: #0f1110;
+  --surface: #181b1a;
+  --surface-solid: #1d211f;
+  --surface-soft: #222725;
+  --ink: #ece9e2;
+  --ink-soft: #bdb9af;
+  --ink-faint: #98948a;
+  --line: rgba(236, 233, 226, 0.13);
+  --line-strong: rgba(236, 233, 226, 0.34);
+  --accent: #5cc2b2;
+  --accent-strong: #8fdacd;
+  --accent-soft: #163029;
+  --blue: #7fb7cc;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 18px 40px -22px rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -52,10 +55,7 @@ body {
   min-height: 100vh;
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 8% 4%, rgba(62, 112, 196, 0.16), transparent 31rem),
-    radial-gradient(circle at 88% 12%, rgba(88, 136, 214, 0.13), transparent 30rem),
-    linear-gradient(180deg, var(--page), var(--page-deep));
+  background: var(--page);
   font-family:
     Inter, Aptos, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
   font-size: 16px;
@@ -64,20 +64,6 @@ body {
   transition:
     color 180ms ease,
     background-color 180ms ease;
-}
-
-body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  content: '';
-  opacity: 0.32;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(68, 108, 172, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(68, 108, 172, 0.09) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, black, transparent 70%);
 }
 
 a {
@@ -113,12 +99,13 @@ h1,
 h2,
 h3 {
   line-height: 1.15;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
 }
 
 :focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 72%, white);
-  outline-offset: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .skip-link {
@@ -146,8 +133,8 @@ h3 {
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--page) 82%, transparent);
-  backdrop-filter: blur(18px);
+  background: color-mix(in srgb, var(--page) 88%, transparent);
+  backdrop-filter: blur(14px);
 }
 
 .header-inner {
@@ -171,13 +158,12 @@ h3 {
   height: 38px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  color: #f6f9ff;
-  background: linear-gradient(145deg, var(--accent), var(--blue));
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  box-shadow: 0 8px 24px rgba(37, 91, 170, 0.24);
+  border-radius: 50%;
+  color: var(--page);
+  background: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .brand-copy {
@@ -206,11 +192,11 @@ h3 {
 .desktop-nav a,
 .language-link,
 .cv-link {
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 8px 12px;
   color: var(--ink-soft);
-  font-size: 0.83rem;
-  font-weight: 650;
+  font-size: 0.84rem;
+  font-weight: 600;
   transition:
     color 160ms ease,
     background 160ms ease;
@@ -222,6 +208,22 @@ h3 {
 .cv-link:hover {
   color: var(--accent-strong);
   background: var(--accent-soft);
+}
+
+.desktop-nav a {
+  border-radius: 0;
+  padding: 8px 10px;
+  background: none !important;
+  box-shadow: inset 0 -2px 0 transparent;
+}
+
+.desktop-nav a:hover {
+  box-shadow: inset 0 -2px 0 var(--line-strong);
+}
+
+.desktop-nav a[aria-current='page'] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 .header-actions {
@@ -287,26 +289,36 @@ main {
   grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
   gap: clamp(34px, 6vw, 84px);
   align-items: center;
-  padding-block: clamp(64px, 9vw, 126px) 48px;
+  padding-block: clamp(56px, 8vw, 112px) clamp(40px, 6vw, 72px);
 }
 
 .eyebrow,
 .card-label,
 .publication-meta {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   color: var(--accent-strong);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 24px;
+  height: 1px;
+  display: inline-block;
+  margin-right: 12px;
+  vertical-align: middle;
+  content: '';
+  background: currentColor;
 }
 
 .hero h1 {
   max-width: 820px;
   margin-bottom: 24px;
-  font-size: clamp(2.65rem, 7vw, 5.55rem);
-  font-weight: 680;
-  letter-spacing: -0.065em;
+  font-size: clamp(2.6rem, 6.4vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
 .hero-intro {
@@ -328,11 +340,11 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 18px;
+  padding: 11px 22px;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 8px;
   font-size: 0.9rem;
-  font-weight: 750;
+  font-weight: 650;
   transition:
     transform 160ms ease,
     background 160ms ease,
@@ -340,27 +352,35 @@ main {
 }
 
 .button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .button-primary {
-  color: #f6f9ff;
+  color: #fffdf9;
   background: var(--accent-strong);
-  box-shadow: 0 12px 30px rgba(37, 91, 170, 0.24);
 }
 
-:root[data-theme='dark'] .button-primary {
-  color: #061429;
+.button-primary:hover {
   background: var(--accent);
 }
 
+:root[data-theme='dark'] .button-primary {
+  color: #0b1a17;
+  background: var(--accent);
+}
+
+:root[data-theme='dark'] .button-primary:hover {
+  background: var(--accent-strong);
+}
+
 .button-secondary {
-  border-color: var(--line);
-  background: var(--surface);
+  border-color: var(--line-strong);
+  background: transparent;
 }
 
 .button-secondary:hover {
-  border-color: var(--accent);
+  border-color: var(--ink);
+  background: var(--surface);
 }
 
 .text-link {
@@ -370,7 +390,7 @@ main {
   padding: 6px 3px;
   color: var(--accent-strong);
   font-size: 0.88rem;
-  font-weight: 750;
+  font-weight: 650;
 }
 
 .text-link:hover {
@@ -397,7 +417,7 @@ main {
   position: absolute;
   inset: 0;
   content: '';
-  background: linear-gradient(to top, rgba(4, 21, 51, 0.24), transparent 45%);
+  background: linear-gradient(to top, rgba(18, 20, 19, 0.16), transparent 40%);
   pointer-events: none;
 }
 
@@ -414,7 +434,8 @@ main {
 
 .profile-card-copy h2 {
   margin-bottom: 10px;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  line-height: 1.25;
 }
 
 .profile-card-copy p:not(.card-label) {
@@ -431,7 +452,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 22px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line);
 }
 
@@ -449,7 +470,7 @@ main {
 }
 
 .stats-strip strong {
-  font-size: 1.5rem;
+  font-size: 2.1rem;
   line-height: 1;
 }
 
@@ -480,7 +501,7 @@ main {
 .contact-band h2,
 .page-heading h1 {
   margin-bottom: 0;
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(2rem, 3.8vw, 3rem);
 }
 
 .section-heading > p {
@@ -492,37 +513,31 @@ main {
 .focus-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: clamp(24px, 4vw, 48px);
 }
 
 .focus-card {
-  min-height: 280px;
-  padding: 28px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease;
+  min-height: 260px;
+  padding: 22px 0 0;
+  border-top: 2px solid var(--ink);
+  transition: border-color 180ms ease;
 }
 
 .focus-card:hover {
-  transform: translateY(-5px);
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  border-color: var(--accent);
 }
 
 .focus-card > span {
   display: block;
-  margin-bottom: 52px;
+  margin-bottom: 40px;
   color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: 2.4rem;
+  line-height: 1;
 }
 
 .focus-card h3 {
   margin-bottom: 14px;
-  font-size: 1.28rem;
+  font-size: 1.35rem;
 }
 
 .focus-card p {
@@ -565,8 +580,8 @@ main {
 .timeline time,
 .education-panel time {
   color: var(--accent-strong);
-  font-size: 0.77rem;
-  font-weight: 800;
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .timeline h3,
@@ -586,12 +601,12 @@ main {
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(160deg, var(--surface), var(--surface-soft));
+  background: var(--surface);
 }
 
 .education-panel > h2 {
   margin-bottom: 28px;
-  font-size: 1.55rem;
+  font-size: 1.7rem;
 }
 
 .education-panel article {
@@ -606,7 +621,7 @@ main {
 }
 
 .publication-list {
-  border-top: 1px solid var(--line);
+  border-top: 2px solid var(--ink);
 }
 
 .publication-row {
@@ -619,15 +634,15 @@ main {
 }
 
 .publication-index {
-  color: var(--ink-faint);
-  font-size: 0.78rem;
-  font-weight: 800;
+  color: var(--accent);
+  font-size: 1.5rem;
+  line-height: 1.1;
 }
 
 .publication-row h3 {
   max-width: 880px;
   margin-bottom: 10px;
-  font-size: 1.08rem;
+  font-size: 1.2rem;
   line-height: 1.35;
 }
 
@@ -643,10 +658,21 @@ main {
 }
 
 .publication-row > a {
+  padding: 5px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
   color: var(--accent-strong);
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.76rem;
+  font-weight: 700;
   white-space: nowrap;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.publication-row > a:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .contact-band {
@@ -656,12 +682,9 @@ main {
   gap: 30px;
   margin-block: 32px 90px;
   padding: clamp(28px, 6vw, 58px);
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
   border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 90% 20%, rgba(69, 125, 214, 0.2), transparent 20rem),
-    var(--surface);
-  box-shadow: var(--shadow);
+  background: var(--accent-soft);
 }
 
 .contact-band h2 {
@@ -715,7 +738,7 @@ main {
   margin-bottom: 12px;
   color: var(--accent-strong);
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .content-card h2,
@@ -744,12 +767,13 @@ main {
 }
 
 .tag {
-  padding: 6px 10px;
-  border-radius: 999px;
+  padding: 4px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: 6px;
   color: var(--accent-strong);
-  background: var(--accent-soft);
-  font-size: 0.72rem;
-  font-weight: 750;
+  background: transparent;
+  font-size: 0.74rem;
+  font-weight: 600;
 }
 
 .stack-list {
@@ -848,11 +872,9 @@ main {
 .about-chapter {
   grid-area: chapter;
   padding: 27px 29px;
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
   border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 92% 8%, rgba(71, 126, 211, 0.19), transparent 13rem),
-    linear-gradient(145deg, var(--surface), var(--surface-soft));
+  background: var(--accent-soft);
 }
 
 .about-chapter h2 {
@@ -870,8 +892,8 @@ main {
 .about-chapter-item {
   padding: 15px 16px;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--surface-solid) 64%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface-solid) 70%, transparent);
 }
 
 .about-chapter-item span,
@@ -950,14 +972,12 @@ main {
 
 .interest-card:hover {
   border-color: color-mix(in srgb, var(--accent) 48%, var(--line));
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .interest-card-featured {
   grid-column: span 2;
-  background:
-    radial-gradient(circle at 85% 15%, rgba(72, 127, 211, 0.18), transparent 16rem),
-    linear-gradient(145deg, var(--surface), var(--surface-soft));
+  background: var(--accent-soft);
 }
 
 .interest-meta {
@@ -1139,10 +1159,7 @@ main {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 35% 35%, rgba(74, 132, 221, 0.22), transparent 15rem),
-    linear-gradient(145deg, var(--surface), var(--surface-soft));
-  box-shadow: var(--shadow);
+  background: var(--accent-soft);
 }
 
 .not-found-visual::before,
@@ -1181,7 +1198,6 @@ main {
   height: 19px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 8px 20px rgba(25, 78, 151, 0.26);
 }
 
 .orbit-one {
@@ -1214,12 +1230,9 @@ main {
 
 .not-found-tablet {
   position: absolute;
-  border: 1px solid rgba(77, 123, 191, 0.22);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: 50%;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.66), transparent),
-    var(--accent-soft);
-  box-shadow: 0 20px 45px rgba(18, 53, 105, 0.18);
+  background: var(--surface);
 }
 
 .not-found-tablet::after {
@@ -1251,7 +1264,6 @@ main {
   position: absolute;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 10px 24px rgba(27, 74, 145, 0.2);
 }
 
 .particle-one {
@@ -1662,7 +1674,7 @@ html {
 
 body {
   font-family:
-    Inter, 'Segoe UI Variable Text', 'Segoe UI', Aptos, 'Helvetica Neue', 'PingFang SC',
+    var(--font-sans), Inter, 'Segoe UI Variable Text', 'Segoe UI', Aptos, 'Helvetica Neue', 'PingFang SC',
     'Hiragino Sans GB', 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei UI',
     'Microsoft YaHei', system-ui, sans-serif;
   font-feature-settings: 'kern', 'liga', 'calt';
@@ -1688,10 +1700,25 @@ p {
   line-height: 1.7;
 }
 
-/* English: slightly tighter display type, comfortable measure */
+/* English: serif display type, comfortable measure */
 html:lang(en) h1,
 html:lang(en) h2 {
   line-height: 1.12;
+}
+
+html:lang(en)
+  :is(
+    h1,
+    h2,
+    h3,
+    .stats-strip strong,
+    .focus-card > span,
+    .publication-index,
+    .brand-mark,
+    .not-found-code
+  ) {
+  font-family: var(--serif);
+  font-weight: 500;
 }
 
 html:lang(en) p {

@@ -5,6 +5,7 @@ import PersonStructuredData from '@/components/seo/PersonStructuredData';
 import ThemeScript from '@/components/layout/ThemeScript';
 import { isValidLocale, locales } from '@/lib/i18n/config';
 import { SITE_URL } from '@/lib/site-content';
+import { fontVariables } from '@/lib/fonts';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-static';
@@ -72,8 +73,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f4f7fc' },
-    { media: '(prefers-color-scheme: dark)', color: '#071426' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f5f0' },
+    { media: '(prefers-color-scheme: dark)', color: '#121413' },
   ],
 };
 
@@ -89,7 +90,7 @@ export default async function LangRootLayout({
   const skipLabel = lang === 'zh' ? '跳转到主要内容' : 'Skip to content';
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang} className={fontVariables} suppressHydrationWarning>
       <head>
         <ThemeScript />
         <PersonStructuredData />
