@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
 import ThemeScript from '@/components/layout/ThemeScript';
+import { fontVariables } from '@/lib/fonts';
 
 export const metadata: Metadata = {
   title: 'Page not found | Yuning Gu',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>

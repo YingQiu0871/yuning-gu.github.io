@@ -4,6 +4,7 @@ import SiteFrame from '@/components/layout/SiteFrame';
 import PersonStructuredData from '@/components/seo/PersonStructuredData';
 import ThemeScript from '@/components/layout/ThemeScript';
 import { SITE_URL } from '@/lib/site-content';
+import { fontVariables } from '@/lib/fonts';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -50,14 +51,14 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f4f7fc' },
-    { media: '(prefers-color-scheme: dark)', color: '#071426' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f5f0' },
+    { media: '(prefers-color-scheme: dark)', color: '#121413' },
   ],
 };
 
 export default function DefaultRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
         <ThemeScript />
         <PersonStructuredData />

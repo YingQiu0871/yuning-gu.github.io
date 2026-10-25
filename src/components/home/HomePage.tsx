@@ -61,7 +61,6 @@ export default function HomePage({ lang }: { lang: Locale }) {
       <section className="content-section section-shell">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">{content.focusHeading}</p>
             <h2>{content.focusHeading}</h2>
           </div>
           <p>{content.focusIntro}</p>
@@ -147,7 +146,6 @@ export default function HomePage({ lang }: { lang: Locale }) {
 
       <section className="contact-band section-shell">
         <div>
-          <p className="eyebrow">{content.contactHeading}</p>
           <h2>{content.contactHeading}</h2>
           <p>{content.contactBody}</p>
         </div>
