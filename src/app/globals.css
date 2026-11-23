@@ -2827,6 +2827,7 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
 /* ---- The diagonal: one rising line carried through the whole page ---- */
 :root {
+  --color-shade: oklch(80% 0.085 78);
   --slant: 14px;
   --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }
@@ -2850,6 +2851,10 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
   stroke-width: 14;
   stroke-linejoin: miter;
   paint-order: stroke;
+}
+
+.fig-shade {
+  fill: var(--color-shade);
 }
 
 .fig-mid {
@@ -2994,5 +2999,14 @@ html:is(:lang(en), :lang(zh)) .poster-hero h1 {
 @media (max-width: 760px) {
   .index-row {
     --slant: 12px;
+  }
+}
+
+/* On narrow screens the tilted head pivots from its top-left corner, so no line leaves the gutter */
+@media (max-width: 1000px) {
+  html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+    margin-top: var(--space-xl);
+    transform: rotate(-4deg);
+    transform-origin: left top;
   }
 }

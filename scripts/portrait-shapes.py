@@ -32,12 +32,35 @@ red = cv2.bitwise_and(red, fg); red = cv2.morphologyEx(red, cv2.MORPH_OPEN, np.o
 dark = cv2.bitwise_and(dark, fg)
 mid = cv2.bitwise_and(cv2.bitwise_and(mid, fg), cv2.bitwise_not(red))
 dark = cv2.medianBlur(dark, 5); mid = cv2.medianBlur(mid, 9); red = cv2.medianBlur(red, 9)
-# the face keeps its fine marks (spectacle frames, brows, mouth) from a lightly smoothed copy
-fine = cv2.cvtColor(cv2.GaussianBlur(img, (3, 3), 0), cv2.COLOR_BGR2GRAY)
-roi = np.zeros((H, W), np.uint8); roi[345:500, 462:622] = 255
-detail = cv2.bitwise_and(cv2.bitwise_and((fine < 92).astype(np.uint8) * 255, roi), fg)
-detail = cv2.morphologyEx(detail, cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
+# the face is drawn again at four times the size, so its features survive:
+# line marks (eyes, brows, nostrils, mouth, spectacle frames) and a soft shade tone
+FX0, FY0, FX1, FY1, K = 450, 330, 640, 520, 4
+fgray = cv2.cvtColor(img[FY0:FY1, FX0:FX1], cv2.COLOR_BGR2GRAY)
+up = cv2.resize(fgray, None, fx=K, fy=K, interpolation=cv2.INTER_CUBIC)
+upb = cv2.GaussianBlur(up, (7, 7), 0)
+oval = np.zeros_like(up); cv2.ellipse(oval, ((543 - FX0) * K, (420 - FY0) * K), (80 * K, 98 * K), 0, 0, 360, 255, -1)
+fgup = cv2.resize(fg[FY0:FY1, FX0:FX1], None, fx=K, fy=K, interpolation=cv2.INTER_NEAREST)
+oval = cv2.bitwise_and(oval, fgup)
+lines = cv2.adaptiveThreshold(upb, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 45, 11)
+lines = cv2.bitwise_or(lines, (upb < 62).astype(np.uint8) * 255)
+lines = cv2.bitwise_and(lines, oval)
+lines = cv2.morphologyEx(lines, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+lines = cv2.medianBlur(lines, 7)
+wide = cv2.GaussianBlur(up, (31, 31), 0)
+local = cv2.blur(wide, (301, 301))
+shade = ((wide.astype(np.int16) < local.astype(np.int16) - 3) & (wide > 95)).astype(np.uint8) * 255
+shade = cv2.bitwise_and(shade, oval)
+shade = cv2.medianBlur(shade, 21)
+roi = np.zeros((H, W), np.uint8); cv2.ellipse(roi, (543, 420), (80, 98), 0, 0, 360, 255, -1)
 mid = cv2.bitwise_and(mid, cv2.bitwise_not(roi))
+def face_polys(m, e, min_area):
+    cs, _ = cv2.findContours(m, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    out = []
+    for c in cs:
+        if cv2.contourArea(c) < min_area: continue
+        a2 = cv2.approxPolyDP(c, e, True)
+        if len(a2) >= 3: out.append(a2.reshape(-1, 2).astype(np.float32) / K + np.array([FX0, FY0], np.float32))
+    return out
 
 # 3. hard-edged polygons
 def polys(m, e, min_area):
@@ -48,18 +71,21 @@ def polys(m, e, min_area):
         a = cv2.approxPolyDP(c, e, True)
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
-layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60) + polys(detail, 1.1, 14))]
+layers = [('light', polys(fg, eps * 1.4, 2000)), ('shade', face_polys(shade, 5.0, 900)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)), ('lines', face_polys(lines, 1.8, 70))]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
 def d(ps):
-    return ' '.join('M' + ' L'.join(f'{int(x - x0)} {int(y - y0)}' for x, y in p) + ' Z' for p in ps)
+    return ' '.join('M' + ' L'.join(f'{round(float(x - x0), 1):g} {round(float(y - y0), 1):g}' for x, y in p) + ' Z' for p in ps)
 shapes = {name: d(ps) for name, ps in layers}
 json.dump({'width': int(wbox), 'height': int(hbox), 'shapes': shapes}, open(outdir + '/portrait.json', 'w'))
 
 # preview
-cols = {'light': (168, 231, 246), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11)}
-prev = np.full((H, W, 3), (60, 40, 20), np.uint8)
+cols = {'light': (168, 231, 246), 'shade': (120, 180, 222), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
+prev = np.full((H * 3, W * 3, 3), (60, 40, 20), np.uint8)
 for name, ps in layers:
-    for p in ps: cv2.fillPoly(prev, [p.astype(np.int32)], cols[name])
-cv2.imwrite(outdir + '/portrait-preview.png', prev[y0:y0 + hbox, x0:x0 + wbox])
+    layer = np.zeros((H * 3, W * 3), np.uint8)
+    cv2.fillPoly(layer, [np.round(p * 3).astype(np.int32) for p in ps], 255)
+    prev[layer > 0] = cols[name]
+cv2.imwrite(outdir + '/portrait-preview.png', prev[y0 * 3:(y0 + hbox) * 3, x0 * 3:(x0 + wbox) * 3])
+cv2.imwrite(outdir + '/portrait-face.png', prev[FY0 * 3:FY1 * 3, FX0 * 3:FX1 * 3])
 print(wbox, hbox, {k: (len(ps), sum(len(p) for p in ps)) for k, ps in layers}, sum(len(v) for v in shapes.values()))

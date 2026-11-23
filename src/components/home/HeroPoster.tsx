@@ -2,7 +2,7 @@ import { portraitShapes } from '@/components/home/portraitShapes';
 
 // The home hero's picture: one flat poster scene behind the headline, built on a
 // single rising diagonal. A red disc stands behind a cut-out portrait (the photo
-// flattened to four tones and hard edges), three bars cross on the diagonal, and a
+// flattened to flat tones and hard edges), three bars cross on the diagonal, and a
 // rocket made of plain shapes rides the widest bar.
 // Original drawing; every colour comes from the stylesheet's tokens.
 
@@ -76,9 +76,11 @@ export default function HeroPoster({ label }: { label: string }) {
       {/* the portrait as a cut-out: silhouette with a dark keyline, then the tones */}
       <g className="art-figure" transform="translate(940 196) scale(0.78)">
         <path className="fig-light" d={portraitShapes.light} />
-        <path className="fig-mid" d={portraitShapes.mid} />
-        <path className="fig-red" d={portraitShapes.red} />
-        <path className="fig-dark" d={portraitShapes.dark} />
+        <path className="fig-shade" fillRule="evenodd" d={portraitShapes.shade} />
+        <path className="fig-mid" fillRule="evenodd" d={portraitShapes.mid} />
+        <path className="fig-red" fillRule="evenodd" d={portraitShapes.red} />
+        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.dark} />
+        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.lines} />
       </g>
     </svg>
   );
