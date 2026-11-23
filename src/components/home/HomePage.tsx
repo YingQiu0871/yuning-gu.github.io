@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import Authors from '@/components/Authors';
+import PosterPortrait from '@/components/home/PosterPortrait';
 import type { Locale } from '@/lib/i18n/config';
 import {
   education,
@@ -46,24 +46,13 @@ export default function HomePage({ lang }: { lang: Locale }) {
           </p>
         </div>
 
-        <aside className="profile-card" aria-label={content.statusLabel}>
-          <div className="portrait-wrap">
-            <Image
-              src="/images/avatar.webp"
-              alt={`${profile.name} portrait`}
-              width="416"
-              height="416"
-              priority
-              sizes="(max-width: 720px) 72vw, 416px"
-            />
-          </div>
-          <div className="profile-card-copy">
-            <p className="card-label">{content.statusLabel}</p>
-            <h2>{content.statusTitle}</h2>
-            <p>{content.statusBody}</p>
-            <span>{content.location}</span>
-          </div>
-        </aside>
+        <PosterPortrait
+          name={profile.name}
+          label={content.statusLabel}
+          title={content.statusTitle}
+          body={content.statusBody}
+          location={content.location}
+        />
       </section>
 
       <section className="stats-strip section-shell" aria-label="Profile at a glance">
