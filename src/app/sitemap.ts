@@ -3,10 +3,10 @@ import { SITE_URL } from '@/lib/site-content';
 
 export const dynamic = 'force-static';
 
-const routes = ['', 'about', 'education', 'experience', 'projects', 'publications', 'research', 'skills', 'contact'];
+const routes = ['', 'about', 'education', 'experience', 'publications', 'research', 'contact'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date('2026-08-14');
+  const lastModified = new Date('2026-11-23');
   const localized = routes.flatMap((route) =>
     (['en', 'zh'] as const).map((lang) => {
       const suffix = route ? `/${route}` : '';

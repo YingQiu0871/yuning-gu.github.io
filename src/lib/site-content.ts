@@ -39,39 +39,46 @@ export const navigation = {
 
 export const homeContent = {
   en: {
-    eyebrow: 'Pharmaceutical Sciences · 2025–2026',
-    title: 'From pharmaceutics to translational health research.',
+    eyebrow: 'Pharmaceutical Sciences · Université Paris-Saclay',
+    title: 'Pharmaceutical technology, from hot-melt extrusion to printed tablets.',
     intro:
-      'I am an M2 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My work connects pharmaceutical technology, drug delivery, natural products, and data-informed clinical research.',
+      'I am an M2 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My main interest is pharmaceutical technology: hot-melt extrusion and 3D printing of oral dosage forms. Earlier work in natural-product pharmacology and clinical epidemiology gave me the analytical and data skills I bring to it.',
+    seekingLabel: 'Open to opportunities',
+    seekingText:
+      'I am looking for an M2 research internship for spring 2027 and a PhD position starting in autumn 2027, both in pharmaceutical technology.',
+    seekingCta: 'Get in touch',
     primaryCta: 'Explore my research',
     secondaryCta: 'View publications',
     statusLabel: 'Current academic focus',
     statusTitle: 'M2 Development of Drugs and Health Products (D2HP)',
     statusBody: 'Faculty of Pharmacy, Université Paris-Saclay',
     location: 'Paris-Saclay, France',
-    stats: [
-      { value: '4', label: 'Publications' },
-      { value: '3', label: 'Research themes' },
-      { value: '4', label: 'Institutions' },
-    ],
+    statLabels: {
+      publications: 'Peer-reviewed publications',
+      firstAuthor: 'As first or co-first author',
+      corresponding: 'As corresponding author',
+    },
     focusHeading: 'Research focus',
     focusIntro:
-      'I am interested in how formulation science, experimental pharmacology, and population data can work together to improve medicines and health outcomes.',
+      'My current work is in pharmaceutical technology. Two earlier lines of research, in metabolic health data and in natural products, shaped how I design experiments and read evidence.',
     focusAreas: [
       {
         number: '01',
+        tag: 'Current focus',
         title: 'Pharmaceutical technology',
-        text: 'Hot-melt extrusion, polymer-based filaments, and the potential of fused deposition modeling for tablet manufacturing.',
+        text: 'Hot-melt extrusion of polymer-based filaments and their suitability for fused deposition modeling (FDM) of tablets, studied during my research internship at the University of Szeged.',
       },
       {
         number: '02',
+        tag: 'Earlier work',
         title: 'Metabolic and cardiovascular health',
-        text: 'Biomarkers, clinical epidemiology, and experimental approaches to diabetes and cardiovascular risk.',
+        text: 'Cross-sectional analysis of NHANES data on biomarkers and cardiovascular risk. It taught me to work with population data and clinical statistics.',
       },
       {
         number: '03',
+        tag: 'Earlier work',
         title: 'Natural products and drug delivery',
-        text: 'Analytical chemistry, network pharmacology, molecular docking, and modern delivery strategies for bioactive compounds.',
+        text: 'GC–MS, enzyme-inhibition assays, network pharmacology, molecular docking, and in vivo validation of bioactive compounds for diabetes. It gave me my grounding in analytical and experimental methods.',
       },
     ],
     latestHeading: 'Latest highlights',
@@ -81,43 +88,49 @@ export const homeContent = {
     educationHeading: 'Education',
     contactHeading: 'Let’s connect',
     contactBody:
-      'I welcome conversations about pharmaceutical technology, drug development, clinical research, and international research opportunities.',
+      'If you supervise internships or PhD projects in pharmaceutical technology, or want to talk about hot-melt extrusion and printed dosage forms, I would be glad to hear from you.',
     emailCta: 'Email me',
   },
   zh: {
-    eyebrow: '药物科学 · 2025–2026',
-    title: '从药剂学出发，探索可转化的健康研究。',
+    eyebrow: '药物科学 · 巴黎萨克雷大学',
+    title: '药物制剂技术：从热熔挤出到 3D 打印片剂。',
     intro:
-      '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目。我的研究兴趣涵盖药物制剂技术、药物递送、天然产物及数据驱动的临床研究。',
+      '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目，主要方向是药物制剂技术，包括热熔挤出和口服固体制剂的 3D 打印。此前在天然产物药理和临床流行病学方面的研究，为我打下了分析与数据方面的基础。',
+    seekingLabel: '正在寻找机会',
+    seekingText: '我在找 2027 年春季的 M2 科研实习，以及 2027 年秋季入学的博士职位，方向都是药物制剂技术。',
+    seekingCta: '联系我',
     primaryCta: '查看研究方向',
     secondaryCta: '查看论文',
     statusLabel: '当前学术方向',
     statusTitle: 'M2 Development of Drugs and Health Products（D2HP）',
     statusBody: '巴黎萨克雷大学药学院',
     location: '法国 · 巴黎萨克雷',
-    stats: [
-      { value: '4', label: '发表论文' },
-      { value: '3', label: '研究方向' },
-      { value: '4', label: '学习与研究机构' },
-    ],
+    statLabels: {
+      publications: '同行评议论文',
+      firstAuthor: '第一或共同第一作者',
+      corresponding: '通讯作者',
+    },
     focusHeading: '研究方向',
     focusIntro:
-      '我关注药物制剂、实验药理和人群数据如何相互连接，从不同层面推动药物研发与健康结局改善。',
+      '我目前的研究集中在药物制剂技术。此前在代谢健康数据和天然产物两个方向上的工作，影响了我设计实验和解读证据的方式。',
     focusAreas: [
       {
         number: '01',
+        tag: '当前方向',
         title: '药物制剂技术',
-        text: '研究热熔挤出、高分子丝材及熔融沉积成型技术在片剂打印与制造中的潜在应用。',
+        text: '研究高分子丝材的热熔挤出，以及丝材用于熔融沉积成型（FDM）片剂打印的适用性。这是我在塞格德大学科研实习期间的课题。',
       },
       {
         number: '02',
+        tag: '此前的研究',
         title: '代谢与心血管健康',
-        text: '结合生物标志物、临床流行病学和实验方法，研究糖尿病与心血管疾病风险。',
+        text: '基于 NHANES 数据，对生物标志物与心血管疾病风险做横断面分析。这段经历让我学会了处理人群数据和临床统计。',
       },
       {
         number: '03',
+        tag: '此前的研究',
         title: '天然产物与药物递送',
-        text: '运用分析化学、网络药理、分子对接及现代递送策略研究天然活性成分。',
+        text: '运用 GC–MS、酶抑制实验、网络药理、分子对接和体内验证，研究天然活性成分对糖尿病的作用。这段经历打下了我的分析与实验方法基础。',
       },
     ],
     latestHeading: '近期动态',
@@ -126,8 +139,7 @@ export const homeContent = {
     publicationLink: '查看全部论文',
     educationHeading: '教育背景',
     contactHeading: '保持联系',
-    contactBody:
-      '欢迎就药物制剂技术、药物研发、临床研究及国际科研机会与我交流。',
+    contactBody: '如果你在招药物制剂技术方向的实习生或博士生，或者想聊聊热熔挤出和 3D 打印制剂，欢迎给我写信。',
     emailCta: '发送邮件',
   },
 } satisfies Record<Locale, Record<string, unknown>>;
@@ -135,8 +147,13 @@ export const homeContent = {
 export const highlights = {
   en: [
     {
+      date: 'Sep 2026',
+      title: 'Started M2 D2HP at Université Paris-Saclay',
+      text: 'Second year of the international master’s programme in drug development and health products.',
+    },
+    {
       date: 'Apr–Jul 2026',
-      title: 'Research internship at the University of Szeged',
+      title: 'Completed a research internship at the University of Szeged',
       text: 'Hot-melt extrusion of HPMC-based filaments for potential FDM tablet printing, supervised by Dr. habil. Tamás Sovány.',
     },
     {
@@ -144,37 +161,22 @@ export const highlights = {
       title: 'New article published in Medicine',
       text: 'A cross-sectional NHANES study evaluating UHR as a predictor of cardiovascular disease in cancer patients.',
     },
-    {
-      date: '2026–2027',
-      title: 'M2 D2HP at Université Paris-Saclay',
-      text: 'International training across drug development, pharmaceutical sciences, and health products.',
-    },
-    {
-      date: '2025–2026',
-      title: 'M1 D2HP at Université Paris-Saclay',
-      text: 'International training across drug development, pharmaceutical sciences, and health products.',
-    },
   ],
   zh: [
     {
+      date: '2026.09',
+      title: '进入巴黎萨克雷大学 M2 D2HP',
+      text: '药物研发与健康产品方向国际硕士项目的第二年。',
+    },
+    {
       date: '2026.04–07',
-      title: '塞格德大学科研实习',
+      title: '完成塞格德大学科研实习',
       text: '在 Dr. habil. Tamás Sovány 指导下，开展 HPMC 基丝材热熔挤出及其用于 FDM 片剂打印的潜力研究。',
     },
     {
       date: '2026.01',
       title: '新论文发表于 Medicine',
       text: '基于 NHANES 数据，研究 UHR 对癌症患者心血管疾病的预测表现。',
-    },
-    {
-      date: '2026–2027',
-      title: '巴黎萨克雷大学 M2 D2HP',
-      text: '围绕药物研发、药物科学与健康产品开展全英文国际化学习。',
-    },
-    {
-      date: '2025–2026',
-      title: '巴黎萨克雷大学 M1 D2HP',
-      text: '围绕药物研发、药物科学与健康产品开展全英文国际化学习。',
     },
   ],
 } satisfies Record<Locale, Array<{ date: string; title: string; text: string }>>;
@@ -193,7 +195,7 @@ export const education = {
       school: 'Faculty of Pharmacy, Université Paris-Saclay',
       period: '2025–2026',
       description:
-        'International pharmaceutical sciences programme covering drug development, major pathologies, pharmacy and biotechnology, and transversal pharmaceutical disciplines.',
+        'First year of the programme, followed by a research internship in pharmaceutical technology at the University of Szeged (Apr–Jul 2026).',
     },
     {
       degree: 'B.S. in Pharmaceutic Preparations',
@@ -221,8 +223,7 @@ export const education = {
       degree: '药物与健康产品开发 M1（D2HP）',
       school: '巴黎萨克雷大学药学院',
       period: '2025–2026',
-      description:
-        '全英文国际药物科学项目，课程涵盖药物研发、重大疾病、药学与生物技术以及跨学科药物科学。',
+      description: '项目第一年，课程结束后在塞格德大学完成药物制剂技术方向的科研实习（2026.04–07）。',
     },
     {
       degree: '药物制剂学学士',
@@ -322,6 +323,8 @@ export type Publication = {
   doi: string;
   type: 'Journal article' | 'Conference paper';
   note?: string;
+  firstAuthor?: boolean;
+  corresponding?: boolean;
 };
 
 export const publications: Publication[] = [
@@ -333,6 +336,8 @@ export const publications: Publication[] = [
     date: '2026-01-02',
     doi: '10.1097/MD.0000000000046732',
     type: 'Journal article',
+    note: 'First author',
+    firstAuthor: true,
   },
   {
     title:
@@ -343,6 +348,8 @@ export const publications: Publication[] = [
     doi: '10.1016/j.jff.2024.106652',
     type: 'Journal article',
     note: 'First and corresponding author',
+    firstAuthor: true,
+    corresponding: true,
   },
   {
     title:
@@ -353,6 +360,7 @@ export const publications: Publication[] = [
     doi: '10.32629/jcmr.v5i2.2288',
     type: 'Journal article',
     note: 'Corresponding author',
+    corresponding: true,
   },
   {
     title: 'Retrosynthetic design of Wulfenioidins L with potential anti-Zika virus activity',
@@ -362,8 +370,110 @@ export const publications: Publication[] = [
     doi: '10.1051/bioconf/202411102004',
     type: 'Conference paper',
     note: 'Co-first author',
+    firstAuthor: true,
   },
 ];
+
+export const publicationNotes: Record<string, string> = {
+  'First author': '第一作者',
+  'First and corresponding author': '第一作者兼通讯作者',
+  'Corresponding author': '通讯作者',
+  'Co-first author': '共同第一作者',
+};
+
+export const projects = {
+  en: [
+    {
+      period: '2026',
+      title: 'HPMC-Based Filaments for Potential FDM Tablet Printing',
+      role: 'Research Intern · University of Szeged · Supervisor: Dr. habil. Tamás Sovány',
+      description:
+        'Research on the hot-melt extrusion of HPMC-based filaments and their potential suitability for fused deposition modeling of tablets.',
+      tags: ['Hot-melt extrusion', 'HPMC', 'FDM'],
+    },
+    {
+      period: '2023–2024',
+      title: 'Peony Bark–Dang Gui Formula Microparticles',
+      role: 'Research team member',
+      description:
+        'Development of sustained-release microparticles combining peony bark extract and a traditional formula, supported by HPLC and GC–MS analysis.',
+      tags: ['Drug delivery', 'HPLC', 'Natural products'],
+    },
+    {
+      period: '2022–2023',
+      title: 'Herbal Health Beverage Innovation',
+      role: 'Project lead',
+      description:
+        'Product and brand development for food-grade herbal beverages combining traditional ingredients with contemporary health communication.',
+      tags: ['Product design', 'TCM', 'Entrepreneurship'],
+    },
+  ],
+  zh: [
+    {
+      period: '2026',
+      title: '用于潜在 FDM 片剂打印的 HPMC 基丝材',
+      role: '科研实习生 · 塞格德大学 · 导师：Dr. habil. Tamás Sovány',
+      description: '研究 HPMC 基丝材的热熔挤出工艺及其用于熔融沉积成型片剂打印的潜力。',
+      tags: ['热熔挤出', 'HPMC', 'FDM'],
+    },
+    {
+      period: '2023–2024',
+      title: '复方丹皮当归缓释微粒',
+      role: '研究团队成员',
+      description: '结合牡丹皮提取物与传统方剂开发缓释微粒，并运用 HPLC 与 GC–MS 开展分析。',
+      tags: ['药物递送', 'HPLC', '天然产物'],
+    },
+    {
+      period: '2022–2023',
+      title: '中药健康饮品创新',
+      role: '项目负责人',
+      description: '围绕药食同源原料开展产品与品牌设计，将传统成分与现代健康传播相结合。',
+      tags: ['产品设计', '中医药', '创新创业'],
+    },
+  ],
+} satisfies Record<
+  Locale,
+  Array<{ period: string; title: string; role: string; description: string; tags: string[] }>
+>;
+
+export const skills = {
+  en: [
+    {
+      title: 'Pharmaceutical technology',
+      items: ['Hot-melt extrusion', 'HPMC filament preparation', 'FDM tablet-printing research', 'Drug formulation'],
+    },
+    {
+      title: 'Laboratory and analysis',
+      items: ['HPLC', 'GC–MS', 'Spectrophotometry', 'Enzyme-inhibition assays', 'Cell culture', 'Western blot'],
+    },
+    {
+      title: 'Research methods',
+      items: ['Experimental design', 'Clinical data analysis', 'Network pharmacology', 'Molecular docking', 'Scientific writing'],
+    },
+    {
+      title: 'Data and software',
+      items: ['GraphPad Prism', 'SPSS', 'R', 'Excel', 'ChemDraw', 'Python'],
+    },
+  ],
+  zh: [
+    {
+      title: '药物制剂技术',
+      items: ['热熔挤出', 'HPMC 丝材制备', 'FDM 片剂打印研究', '药物制剂设计'],
+    },
+    {
+      title: '实验与分析',
+      items: ['HPLC', 'GC–MS', '分光光度法', '酶抑制实验', '细胞培养', 'Western blot'],
+    },
+    {
+      title: '科研方法',
+      items: ['实验设计', '临床数据分析', '网络药理', '分子对接', '科研写作'],
+    },
+    {
+      title: '数据与软件',
+      items: ['GraphPad Prism', 'SPSS', 'R', 'Excel', 'ChemDraw', 'Python'],
+    },
+  ],
+} satisfies Record<Locale, Array<{ title: string; items: string[] }>>;
 
 export const pageLabels = {
   en: {
@@ -377,11 +487,12 @@ export const pageLabels = {
     doi: 'Open DOI',
     supervisor: 'Supervisor',
     email: 'Academic email',
+    personalEmail: 'Long-term email',
     affiliation: 'Affiliation',
     programme: 'Programme',
     profiles: 'Academic profiles',
     contactIntro:
-      'I welcome academic conversations and potential collaborations in pharmaceutical technology, drug development, natural products, and clinical research.',
+      'I am looking for an M2 research internship for spring 2027 and a PhD position starting in autumn 2027, both in pharmaceutical technology. I am also happy to talk about my earlier work on natural products and clinical data.',
   },
   zh: {
     education: '教育背景',
@@ -394,10 +505,11 @@ export const pageLabels = {
     doi: '打开 DOI',
     supervisor: '导师',
     email: '机构邮箱',
+    personalEmail: '长期邮箱',
     affiliation: '所在机构',
     programme: '项目',
     profiles: '学术主页',
     contactIntro:
-      '欢迎就药物制剂技术、药物研发、天然产物与临床研究进行学术交流或探讨合作机会。',
+      '我在找 2027 年春季的 M2 科研实习和 2027 年秋季入学的博士职位，方向都是药物制剂技术。也欢迎聊我之前在天然产物和临床数据方面的工作。',
   },
 } satisfies Record<Locale, Record<string, string>>;

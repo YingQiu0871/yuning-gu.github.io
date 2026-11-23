@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
-import { profile } from '@/lib/site-content';
+import { profile, skills } from '@/lib/site-content';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -233,6 +233,24 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           </div>
         </aside>
       </div>
+
+      <section className="page-section" aria-labelledby="skills-title">
+        <h2 id="skills-title">{lang === 'zh' ? '方法与工具' : 'Methods and tools'}</h2>
+        <div className="content-grid">
+          {skills[lang].map((category) => (
+            <article className="content-card" key={category.title}>
+              <h3>{category.title}</h3>
+              <div className="tag-list">
+                {category.items.map((item) => (
+                  <span className="tag" key={item}>
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="interests-section" aria-labelledby="interests-title">
         <div className="section-heading interests-heading">

@@ -1,16 +1,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Authors from '@/components/Authors';
 import type { Locale } from '@/lib/i18n/config';
 import {
   education,
   highlights,
   homeContent,
   profile,
+  publicationNotes,
   publications,
 } from '@/lib/site-content';
 
 export default function HomePage({ lang }: { lang: Locale }) {
   const content = homeContent[lang];
+  const stats = [
+    { value: publications.length, label: content.statLabels.publications },
+    { value: publications.filter((p) => p.firstAuthor).length, label: content.statLabels.firstAuthor },
+    { value: publications.filter((p) => p.corresponding).length, label: content.statLabels.corresponding },
+  ];
 
   return (
     <>
@@ -19,6 +26,13 @@ export default function HomePage({ lang }: { lang: Locale }) {
           <p className="eyebrow">{content.eyebrow}</p>
           <h1 id="hero-title">{content.title}</h1>
           <p className="hero-intro">{content.intro}</p>
+          <p className="seeking-note">
+            <strong>{content.seekingLabel}</strong>
+            <span>{content.seekingText}</span>
+            <Link className="text-link" href={`/${lang}/contact`}>
+              {content.seekingCta} <span aria-hidden="true">→</span>
+            </Link>
+          </p>
           <div className="hero-actions">
             <Link className="button button-primary" href={`/${lang}/research`}>
               {content.primaryCta}
@@ -50,7 +64,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
       </section>
 
       <section className="stats-strip section-shell" aria-label="Profile at a glance">
-        {content.stats.map((stat) => (
+        {stats.map((stat) => (
           <div key={stat.label}>
             <strong>{stat.value}</strong>
             <span>{stat.label}</span>
@@ -69,6 +83,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
           {content.focusAreas.map((area) => (
             <article className="focus-card" key={area.number}>
               <span>{area.number}</span>
+              <p className="focus-tag">{area.tag}</p>
               <h3>{area.title}</h3>
               <p>{area.text}</p>
             </article>
@@ -127,9 +142,14 @@ export default function HomePage({ lang }: { lang: Locale }) {
               <div>
                 <p className="publication-meta">
                   {publication.venue} · {publication.date}
+                  {publication.note
+                    ? ` · ${lang === 'zh' ? publicationNotes[publication.note] : publication.note}`
+                    : ''}
                 </p>
                 <h3>{publication.title}</h3>
-                <p>{publication.authors}</p>
+                <p>
+                  <Authors list={publication.authors} />
+                </p>
               </div>
               <a
                 href={`https://doi.org/${publication.doi}`}
