@@ -1,116 +1,131 @@
+"""Turn a plain-background portrait into a flat, hard-edged poster cut-out.
+
+Usage: python scripts/portrait-shapes.py <portrait image> <out dir>
+Writes portrait.json (SVG path data per tone layer) and preview PNGs.
+The source photo is not committed; only the generated shapes are.
+"""
 import sys, json
 import numpy as np, cv2
 from PIL import Image
+
 src, outdir = sys.argv[1], sys.argv[2]
-eps = float(sys.argv[3]) if len(sys.argv) > 3 else 3.5
-img = cv2.cvtColor(np.array(Image.open(src).convert('RGB')), cv2.COLOR_RGB2BGR)
+K = 3                                   # trace at three times the size
+raw = cv2.cvtColor(np.array(Image.open(src).convert('RGB')), cv2.COLOR_RGB2BGR)
+img = cv2.resize(raw, None, fx=K, fy=K, interpolation=cv2.INTER_CUBIC)
 H, W = img.shape[:2]
+gray0 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-# 1. cut the figure out of the sea
-mask = np.full((H, W), cv2.GC_PR_BGD, np.uint8)
-mask[:250, :] = cv2.GC_BGD; mask[:, :190] = cv2.GC_BGD; mask[:, 800:] = cv2.GC_BGD
-prob = np.array([[470,280],[620,285],[650,420],[670,470],[760,640],[785,820],[720,1069],[310,1069],[215,780],[250,640],[330,540],[415,470],[450,330]], np.int32)
-cv2.fillPoly(mask, [prob], cv2.GC_PR_FGD)
-sure = np.array([[490,320],[600,320],[620,440],[600,520],[680,640],[700,860],[640,1060],[380,1060],[290,800],[320,640],[420,540],[470,440]], np.int32)
-cv2.fillPoly(mask, [sure], cv2.GC_FGD)
-bgd = np.zeros((1, 65), np.float64); fgd = np.zeros((1, 65), np.float64)
-cv2.grabCut(img, mask, None, bgd, fgd, 6, cv2.GC_INIT_WITH_MASK)
-fg = np.where((mask == cv2.GC_FGD) | (mask == cv2.GC_PR_FGD), 255, 0).astype(np.uint8)
-fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
-fg = cv2.morphologyEx(fg, cv2.MORPH_CLOSE, np.ones((15, 15), np.uint8))
+# 1. silhouette: everything the white backdrop does not reach from the border
+near_white = (cv2.GaussianBlur(gray0, (9, 9), 0) > 236).astype(np.uint8)
+ff = near_white.copy(); m = np.zeros((H + 2, W + 2), np.uint8)
+for x in range(0, W, 8):
+    for y in (0, H - 1):
+        if ff[y, x] == 1: cv2.floodFill(ff, m, (x, y), 2)
+for y in range(0, H, 8):
+    for x in (0, W - 1):
+        if ff[y, x] == 1: cv2.floodFill(ff, m, (x, y), 2)
+fg = (ff != 2).astype(np.uint8) * 255
+fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))
 n, lab, stats, _ = cv2.connectedComponentsWithStats(fg)
-big = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA]); fg = np.where(lab == big, 255, 0).astype(np.uint8)
+fg = np.where(lab == 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA]), 255, 0).astype(np.uint8)
+x0, y0, wbox, hbox = cv2.boundingRect(fg)
 
-# 2. flatten to four tones
-smooth = cv2.bilateralFilter(img, 13, 60, 60); smooth = cv2.medianBlur(smooth, 11)
-hsv = cv2.cvtColor(smooth, cv2.COLOR_BGR2HSV); gray = cv2.cvtColor(smooth, cv2.COLOR_BGR2GRAY)
-h, s, v = cv2.split(hsv)
-red = ((h >= 6) & (h <= 28) & (s > 105) & (v > 70)).astype(np.uint8) * 255
-dark = (gray < 78).astype(np.uint8) * 255
-mid = ((gray >= 78) & (gray < 150)).astype(np.uint8) * 255
-red = cv2.bitwise_and(red, fg); red = cv2.morphologyEx(red, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
-dark = cv2.bitwise_and(dark, fg)
-mid = cv2.bitwise_and(cv2.bitwise_and(mid, fg), cv2.bitwise_not(red))
-dark = cv2.medianBlur(dark, 5); mid = cv2.medianBlur(mid, 9); red = cv2.medianBlur(red, 9)
-# the face is drawn again at four times the size, so its features survive:
-# line marks (eyes, brows, nostrils, mouth, spectacle frames) and a soft shade tone
-FX0, FY0, FX1, FY1, K = 450, 330, 640, 520, 4
-fgray = cv2.cvtColor(img[FY0:FY1, FX0:FX1], cv2.COLOR_BGR2GRAY)
-up = cv2.resize(fgray, None, fx=K, fy=K, interpolation=cv2.INTER_CUBIC)
-upb = cv2.GaussianBlur(up, (7, 7), 0)
-oval = np.zeros_like(up); cv2.ellipse(oval, ((543 - FX0) * K, (420 - FY0) * K), (80 * K, 98 * K), 0, 0, 360, 255, -1)
-fgup = cv2.resize(fg[FY0:FY1, FX0:FX1], None, fx=K, fy=K, interpolation=cv2.INTER_NEAREST)
-oval = cv2.bitwise_and(oval, fgup)
-lines = cv2.adaptiveThreshold(upb, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 45, 11)
-lines = cv2.bitwise_or(lines, (upb < 62).astype(np.uint8) * 255)
-lines = cv2.bitwise_and(lines, oval)
-lines = cv2.morphologyEx(lines, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
-lines = cv2.medianBlur(lines, 7)
-# tidy the lower face: the ears and the chin carry no marks, and the mouth is one clean lip line
-def box(x0b, y0b, x1b, y1b):
-    return (slice((y0b - FY0) * K, (y1b - FY0) * K), slice((x0b - FX0) * K, (x1b - FX0) * K))
-inner = np.zeros_like(up); cv2.ellipse(inner, ((541 - FX0) * K, (418 - FY0) * K), (70 * K, 96 * K), 0, 0, 360, 255, -1)
-band = np.zeros_like(up); band[box(FX0, 372, FX1, 412)] = 255          # the spectacle band keeps its full width
-lines = cv2.bitwise_and(lines, cv2.bitwise_or(inner, band))
-mouth = box(506, 440, 590, 470)
-lip = cv2.adaptiveThreshold(cv2.GaussianBlur(up, (13, 13), 0), 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 61, 9)[mouth]
-lip = cv2.morphologyEx(lip, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
-nl, ll, sl, _ = cv2.connectedComponentsWithStats(lip)
-keep = np.zeros_like(lip)
+# 2. tones
+smooth = cv2.bilateralFilter(img, 15, 50, 50)
+gray = cv2.cvtColor(smooth, cv2.COLOR_BGR2GRAY)
+lab_img = cv2.cvtColor(smooth, cv2.COLOR_BGR2LAB)
+dark = cv2.bitwise_and((cv2.medianBlur(gray, 9) < 78).astype(np.uint8) * 255, fg)     # hair and shirt
+dark = cv2.morphologyEx(dark, cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8))
+skin = cv2.bitwise_and(fg, cv2.bitwise_not(cv2.dilate(dark, np.ones((5, 5), np.uint8))))
+skin_vals = gray[skin > 0]
+M = float(np.median(skin_vals))
+soft = cv2.GaussianBlur(gray, (0, 0), 5)
+shade = cv2.bitwise_and(((soft < M - 13)).astype(np.uint8) * 255, skin)               # the modelling of the face
+shade = cv2.medianBlur(shade, 15)
+deep = cv2.bitwise_and(((soft < M - 42)).astype(np.uint8) * 255, skin)                # under the chin, by the hair
+deep = cv2.medianBlur(deep, 11)
+# lips by colour: redder than the skin around them
+a = lab_img[:, :, 1].astype(np.int16)
+a_med = float(np.median(a[skin > 0]))
+lips = cv2.bitwise_and(((cv2.GaussianBlur(a.astype(np.float32), (0, 0), 3) > a_med + 7)).astype(np.uint8) * 255, skin)
+lips = cv2.morphologyEx(lips, cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
+nl, ll, sl, cl = cv2.connectedComponentsWithStats(lips)
+lips = np.zeros_like(lips)
 if nl > 1:
-    # the lip line is the widest mark in the box
-    widest = 1 + int(np.argmax(sl[1:, cv2.CC_STAT_WIDTH]))
-    keep[ll == widest] = 255
-    keep = cv2.morphologyEx(keep, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
-    # keep only the lip line itself: in each column, the first run of the mark, at most 22px deep
-    for cx in range(keep.shape[1]):
-        col = np.flatnonzero(keep[:, cx])
-        if col.size: keep[col[0] + 22:, cx] = 0
-    keep = cv2.medianBlur(keep, 7)
-lines[box(FX0, 438, FX1, FY1)] = 0
-lines[mouth] = keep
-wide = cv2.GaussianBlur(up, (31, 31), 0)
-local = cv2.blur(wide, (301, 301))
-shade = ((wide.astype(np.int16) < local.astype(np.int16) - 3) & (wide > 95)).astype(np.uint8) * 255
-shade = cv2.bitwise_and(shade, oval)
-shade = cv2.medianBlur(shade, 21)
-shade[box(FX0, 436, FX1, FY1)] = 0   # no shade below the nose: it read as stubble
-shade = cv2.bitwise_and(shade, inner)
-roi = np.zeros((H, W), np.uint8); cv2.ellipse(roi, (543, 420), (80, 98), 0, 0, 360, 255, -1)
-mid = cv2.bitwise_and(mid, cv2.bitwise_not(roi))
-def face_polys(m, e, min_area):
-    cs, _ = cv2.findContours(m, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
-    out = []
-    for c in cs:
-        if cv2.contourArea(c) < min_area: continue
-        a2 = cv2.approxPolyDP(c, e, True)
-        if len(a2) >= 3: out.append(a2.reshape(-1, 2).astype(np.float32) / K + np.array([FX0, FY0], np.float32))
-    return out
+    # the mouth is the largest red patch in the lower half of the skin
+    ys = np.flatnonzero(skin.any(axis=1)); mid_y = (ys[0] + ys[-1]) / 2
+    cand = [i for i in range(1, nl) if cl[i][1] > mid_y - 40 * K and sl[i, cv2.CC_STAT_AREA] > 200]
+    if cand:
+        best = max(cand, key=lambda i: sl[i, cv2.CC_STAT_AREA]); lips[ll == best] = 255
+lips = cv2.medianBlur(lips, 9)
+# fine marks: eyes, brows, nostrils, the lip line, spectacle frames
+fine = cv2.GaussianBlur(gray0, (5, 5), 0)
+lines = cv2.adaptiveThreshold(fine, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 41, 12)
+lines = cv2.bitwise_and(lines, cv2.erode(skin, np.ones((7, 7), np.uint8)))
+lines = cv2.morphologyEx(lines, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+lines = cv2.medianBlur(lines, 5)
+# The spectacles are thin metal and the eyes are small: traced, both break into crumbs.
+# They are drawn instead as plain geometry at their measured places (source-pixel coordinates),
+# which is also how a poster artist would set them.
+def P(x, y): return (int(round(x * K)), int(round(y * K)))
+def superellipse(cx, cy, ax, by, n=3.2, steps=40):
+    t = np.linspace(0, 2 * np.pi, steps, endpoint=False)
+    xs_ = cx + ax * np.sign(np.cos(t)) * np.abs(np.cos(t)) ** (2 / n)
+    ys_ = cy + by * np.sign(np.sin(t)) * np.abs(np.sin(t)) ** (2 / n)
+    return np.array([P(x, y) for x, y in zip(xs_, ys_)], np.int32)
+band = (slice(int(184 * K), int(237 * K)), slice(int(186 * K), int(342 * K)))
+lines[band] = 0; deep[band] = 0; shade[band] = 0
+FRAME = max(int(round(2.3 * K)), 3)
+for cx in (223.5, 303.0):
+    cv2.polylines(lines, [superellipse(cx, 211, 25.5, 20)], True, 255, FRAME, cv2.LINE_AA)
+cv2.polylines(lines, [np.array([P(248, 200), P(255, 195.5), P(271, 195.5), P(278, 200)], np.int32)], False, 255, FRAME, cv2.LINE_AA)
+cv2.line(lines, P(198, 200), P(188, 198), 255, FRAME, cv2.LINE_AA)
+cv2.line(lines, P(329, 200), P(339, 198), 255, FRAME, cv2.LINE_AA)
+eyes = np.zeros_like(lines)
+for ex, flip in ((227.0, 1), (300.0, -1)):
+    eye = [(-12.5, 1.0), (-7, -3.6), (2, -4.6), (9, -2.6), (12.5, 0.6), (7, 3.4), (-4, 3.6)]
+    cv2.fillPoly(eyes, [np.array([P(ex + flip * dx, 201.5 + dy) for dx, dy in eye], np.int32)], 255)
+lines = (lines > 127).astype(np.uint8) * 255
+
+# what shows on the dark shirt: the zip and the collar edges
+body_top = int(y0 + hbox * 0.52)
+trim = cv2.adaptiveThreshold(cv2.GaussianBlur(gray0, (7, 7), 0), 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 61, -9)
+trim = cv2.bitwise_and(trim, cv2.erode(dark, np.ones((9, 9), np.uint8)))
+trim[:body_top, :] = 0
+trim = cv2.medianBlur(trim, 5)
 
 # 3. hard-edged polygons
-def polys(m, e, min_area):
-    cs, hier = cv2.findContours(m, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+def polys(mask, eps, min_area):
+    cs, _ = cv2.findContours(mask, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
     out = []
     for c in cs:
         if cv2.contourArea(c) < min_area: continue
-        a = cv2.approxPolyDP(c, e, True)
-        if len(a) >= 3: out.append(a.reshape(-1, 2))
+        p = cv2.approxPolyDP(c, eps, True)
+        if len(p) >= 3: out.append(p.reshape(-1, 2))
     return out
-layers = [('light', polys(fg, eps * 1.4, 2000)), ('shade', face_polys(shade, 5.0, 900)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)), ('lines', face_polys(lines, 1.6, 150))]
-
-x0, y0, wbox, hbox = cv2.boundingRect(fg)
+layers = [
+    ('light', polys(fg, 9.0, 4000)),
+    ('shade', polys(shade, 5.0, 900)),
+    ('lips', polys(lips, 3.0, 200)),
+    ('mid', polys(deep, 5.0, 500)),
+    ('dark', polys(dark, 6.0, 500)),
+    ('lines', polys(lines, 1.6, 90)),
+    ('eyes', polys(eyes, 1.0, 50)),
+    ('trim', polys(trim, 3.0, 260)),
+]
 def d(ps):
-    return ' '.join('M' + ' L'.join(f'{round(float(x - x0), 1):g} {round(float(y - y0), 1):g}' for x, y in p) + ' Z' for p in ps)
-shapes = {name: d(ps) for name, ps in layers}
-json.dump({'width': int(wbox), 'height': int(hbox), 'shapes': shapes}, open(outdir + '/portrait.json', 'w'))
+    return ' '.join('M' + ' L'.join(f'{round((x - x0) / K, 1):g} {round((y - y0) / K, 1):g}' for x, y in p) + ' Z' for p in ps)
+json.dump({'width': round(wbox / K), 'height': round(hbox / K), 'shapes': {k: d(v) for k, v in layers}}, open(outdir + '/portrait.json', 'w'))
 
-# preview
-cols = {'light': (168, 231, 246), 'shade': (120, 180, 222), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
-prev = np.full((H * 3, W * 3, 3), (60, 40, 20), np.uint8)
+cols = {'light': (168, 231, 246), 'shade': (128, 186, 226), 'lips': (64, 96, 214), 'mid': (150, 120, 70), 'dark': (34, 26, 11), 'lines': (34, 26, 11), 'eyes': (34, 26, 11), 'trim': (150, 120, 70)}
+prev = np.full((H, W, 3), (30, 50, 214), np.uint8)
+cv2.polylines(prev, [p.astype(np.int32) for p in layers[0][1]], True, (168, 231, 246), 14)
 for name, ps in layers:
-    layer = np.zeros((H * 3, W * 3), np.uint8)
-    cv2.fillPoly(layer, [np.round(p * 3).astype(np.int32) for p in ps], 255)
+    layer = np.zeros((H, W), np.uint8)
+    cv2.fillPoly(layer, [p.astype(np.int32) for p in ps], 255)
     prev[layer > 0] = cols[name]
-cv2.imwrite(outdir + '/portrait-preview.png', prev[y0 * 3:(y0 + hbox) * 3, x0 * 3:(x0 + wbox) * 3])
-cv2.imwrite(outdir + '/portrait-face.png', prev[FY0 * 3:FY1 * 3, FX0 * 3:FX1 * 3])
-print(wbox, hbox, {k: (len(ps), sum(len(p) for p in ps)) for k, ps in layers}, sum(len(v) for v in shapes.values()))
+crop = prev[y0:y0 + hbox, x0:x0 + wbox]
+cv2.imwrite(outdir + '/portrait-preview.png', cv2.resize(crop, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA))
+ys = np.flatnonzero(skin.any(axis=1)); xs = np.flatnonzero(skin[ys[0]:ys[0] + int((ys[-1] - ys[0]) * 0.75)].any(axis=0))
+cv2.imwrite(outdir + '/portrait-face.png', prev[max(ys[0] - 120, 0):ys[0] + int((ys[-1] - ys[0]) * 0.8), max(xs[0] - 60, 0):xs[-1] + 60])
+print(round(wbox / K), round(hbox / K), 'skin median', M, {k: (len(v), sum(len(p) for p in v)) for k, v in layers})

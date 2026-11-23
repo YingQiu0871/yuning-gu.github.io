@@ -2828,6 +2828,7 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 /* ---- The diagonal: one rising line carried through the whole page ---- */
 :root {
   --color-shade: oklch(80% 0.085 78);
+  --color-lip: oklch(62% 0.16 34);
   --slant: 14px;
   --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }
@@ -2847,8 +2848,8 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
 .fig-light {
   fill: var(--color-ink);
-  stroke: var(--color-sky);
-  stroke-width: 16;
+  stroke: var(--color-ink);
+  stroke-width: 9;
   stroke-linejoin: miter;
   paint-order: stroke;
 }
@@ -2861,8 +2862,8 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
   fill: var(--color-slate);
 }
 
-.fig-red {
-  fill: var(--color-accent);
+.fig-lips {
+  fill: var(--color-lip);
 }
 
 .fig-dark {
@@ -3008,5 +3009,16 @@ html:is(:lang(en), :lang(zh)) .poster-hero h1 {
     margin-top: var(--space-xl);
     transform: rotate(-4deg);
     transform-origin: left top;
+  }
+}
+
+/* The head sits in the middle of the space left of the figure, and tilts about its own centre */
+@media (min-width: 1001px) {
+  .poster-hero-copy {
+    padding-left: clamp(0px, 5vw, 88px);
+  }
+
+  html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+    transform-origin: center;
   }
 }
