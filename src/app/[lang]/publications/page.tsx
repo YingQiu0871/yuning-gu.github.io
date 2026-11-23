@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
-import { pageLabels, publications } from '@/lib/site-content';
+import Authors from '@/components/Authors';
+import { pageLabels, publicationNotes, publications } from '@/lib/site-content';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -43,10 +44,14 @@ export default async function PublicationsPage({ params }: { params: Promise<{ l
                 {publication.type} · {publication.date}
               </span>
               <h2>{publication.title}</h2>
-              <p className="authors">{publication.authors}</p>
+              <p className="authors">
+                <Authors list={publication.authors} />
+              </p>
               <p className="venue">
                 {publication.venue}
-                {publication.note ? ` · ${publication.note}` : ''}
+                {publication.note
+                  ? ` · ${lang === 'zh' ? publicationNotes[publication.note] : publication.note}`
+                  : ''}
               </p>
             </div>
             <a

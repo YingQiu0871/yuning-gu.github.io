@@ -38,6 +38,10 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </div>
           <div className="contact-detail">
+            <span>{label.personalEmail}</span>
+            <a href={`mailto:${profile.personalEmail}`}>{profile.personalEmail}</a>
+          </div>
+          <div className="contact-detail">
             <span>{label.affiliation}</span>
             <strong>
               {lang === 'zh'

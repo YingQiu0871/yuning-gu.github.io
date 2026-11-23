@@ -14,6 +14,12 @@ yingqiu.me {
 	}
 	redir @no-trailing-slash {http.request.uri.path}/ permanent
 
+	# Projects merged into Research, Skills into About (Nov 2026)
+	@old-projects path_regexp oldp ^/(en|zh)/projects/?$
+	redir @old-projects /{re.oldp.1}/research/ permanent
+	@old-skills path_regexp olds ^/(en|zh)/skills/?$
+	redir @old-skills /{re.olds.1}/about/ permanent
+
 	# Friendly 404 — Next.js exports 404.html for the custom not-found page
 	handle_errors {
 		@404 expression `{http.error.status_code} == 404`

@@ -459,10 +459,13 @@ main {
 .stats-strip div {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: 11px;
-  padding: 5px 16px;
+  gap: 14px;
+  padding: 5px 24px;
   border-right: 1px solid var(--line);
+}
+
+.stats-strip div:first-child {
+  padding-left: 0;
 }
 
 .stats-strip div:last-child {
@@ -475,8 +478,8 @@ main {
 }
 
 .stats-strip span {
-  color: var(--ink-faint);
-  font-size: 0.82rem;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
 }
 
 .content-section {
@@ -529,7 +532,7 @@ main {
 
 .focus-card > span {
   display: block;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   color: var(--accent);
   font-size: 2.4rem;
   line-height: 1;
@@ -1442,7 +1445,7 @@ main {
   }
 
   .stats-strip div {
-    justify-content: space-between;
+    padding-inline: 0;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
@@ -1752,6 +1755,30 @@ html:lang(zh) .hero h1 {
   letter-spacing: 0;
 }
 
+/* Chinese display type: Newsreader has no CJK glyphs, so pair it with a Songti-style serif */
+html:lang(zh)
+  :is(
+    h1,
+    h2,
+    h3,
+    .stats-strip strong,
+    .focus-card > span,
+    .publication-index,
+    .brand-mark,
+    .not-found-code
+  ) {
+  font-family:
+    var(--font-serif), var(--font-serif-sc), 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', serif;
+  font-weight: 600;
+}
+
+/* Publication titles stay in English on the Chinese pages */
+html:lang(zh) .publication-row h3,
+html:lang(zh) .publication-card h2 {
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
 html:lang(zh) p,
 html:lang(zh) li {
   line-height: 1.85;
@@ -1791,4 +1818,63 @@ html:lang(zh) .about-chapter p {
   html:lang(zh) body {
     line-height: 1.8;
   }
+}
+
+/* ---- Seeking note, focus tags, merged sections ---- */
+.seeking-note {
+  max-width: 720px;
+  display: grid;
+  gap: 6px;
+  margin-bottom: 30px;
+  padding: 2px 0 2px 18px;
+  border-left: 2px solid var(--accent);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.seeking-note strong {
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html:lang(zh) .seeking-note strong {
+  letter-spacing: 0.06em;
+}
+
+.seeking-note .text-link {
+  justify-self: start;
+}
+
+.focus-tag {
+  margin-bottom: 10px;
+  color: var(--ink-faint);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.focus-card:first-child .focus-tag {
+  color: var(--accent-strong);
+}
+
+.focus-card p.focus-tag {
+  font-size: 0.76rem;
+}
+
+.author-self {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.page-section {
+  margin-top: clamp(48px, 7vw, 80px);
+}
+
+.page-section > h2 {
+  margin-bottom: 24px;
+  font-size: clamp(1.6rem, 2.8vw, 2.1rem);
 }
