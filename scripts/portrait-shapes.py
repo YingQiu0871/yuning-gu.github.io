@@ -10,6 +10,7 @@ import numpy as np, cv2
 from PIL import Image
 src, outdir = sys.argv[1], sys.argv[2]
 eps = float(sys.argv[3]) if len(sys.argv) > 3 else 3.5
+FOLD_DEPTH = 9
 img = cv2.cvtColor(np.array(Image.open(src).convert('RGB')), cv2.COLOR_RGB2BGR)
 H, W = img.shape[:2]
 
@@ -129,6 +130,19 @@ neck = [np.array([(498, 478)] + jaw[2:9] + [(590, 480), (584, 512), (566, 524), 
 # the left ear shows as a narrow strip between the hair and the hood; the dark tone swallowed it
 ear = [np.array([(462, 390), (468, 388), (471.5, 400), (473.5, 412), (479, 421), (483.5, 432), (480.5, 436.5), (474, 430), (468, 420), (464, 406)], np.float64)]
 
+# 2c. The jacket's right half is evenly lit, so the plain tone threshold finds nothing there and
+# it reads as one blank field. Its folds are taken by local contrast instead: wherever the cloth
+# is a little darker than the cloth around it (the placket, the pocket flap, the sleeve).
+cloth = cv2.bitwise_and(fg, ((s < 70) & (v > 110)).astype(np.uint8) * 255)
+cloth = cv2.erode(cloth, np.ones((13, 13), np.uint8))
+g1 = cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (0, 0), 3).astype(np.int16)
+g2 = cv2.blur(cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (0, 0), 3), (141, 141)).astype(np.int16)
+folds = ((g1 < g2 - FOLD_DEPTH).astype(np.uint8) * 255)
+folds = cv2.bitwise_and(folds, cloth)
+folds[:, :598] = 0                     # the left half already has its folds
+folds[:520, :] = 0                     # nothing above the shoulders
+folds = cv2.medianBlur(cv2.morphologyEx(folds, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)), 9)
+
 # 3. hard-edged polygons
 def polys(m, e, min_area):
     cs, hier = cv2.findContours(m, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
@@ -138,10 +152,11 @@ def polys(m, e, min_area):
         a = cv2.approxPolyDP(c, e, True)
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
-layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('neck', neck), ('chin', chin), ('dark', polys(dark, eps * 0.7, 60)),
+layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220) + polys(folds, eps, 420)), ('red', polys(red, eps, 260)), ('neck', neck), ('chin', chin), ('dark', polys(dark, eps * 0.7, 60)),
           ('ear', ear), ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline'] + ear_fold), ('eyewhite', face['eyewhite']), ('iris', face['iris']), ('lid', face['lid']), ('glasses', glasses)]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
+cv2.imwrite(outdir + '/folds.png', folds)
 def d(ps):
     return ' '.join('M' + ' L'.join(f'{round(float(x - x0), 1):g} {round(float(y - y0), 1):g}' for x, y in p) + ' Z' for p in ps)
 shapes = {name: d(ps) for name, ps in layers}
