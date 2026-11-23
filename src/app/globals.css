@@ -2848,8 +2848,8 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
 .fig-light {
   fill: var(--color-ink);
-  stroke: var(--color-ink);
-  stroke-width: 9;
+  stroke: var(--color-sky);
+  stroke-width: 16;
   stroke-linejoin: miter;
   paint-order: stroke;
 }
@@ -2860,6 +2860,10 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
 .fig-mid {
   fill: var(--color-slate);
+}
+
+.fig-red {
+  fill: var(--color-accent);
 }
 
 .fig-lips {

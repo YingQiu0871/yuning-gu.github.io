@@ -48,9 +48,9 @@ export default function HeroPoster({ label }: { label: string }) {
 
       {/* the disc behind the figure */}
       <g className="art-planet">
-        <circle className="art-dash" cx="1196" cy="420" r="276" />
-        <circle className="art-rim" cx="1196" cy="420" r="232" />
-        <circle className="art-body" cx="1196" cy="420" r="222" />
+        <circle className="art-dash" cx="1196" cy="392" r="262" />
+        <circle className="art-rim" cx="1196" cy="392" r="216" />
+        <circle className="art-body" cx="1196" cy="392" r="206" />
       </g>
 
       {/* three bars on one rising diagonal */}
@@ -73,16 +73,16 @@ export default function HeroPoster({ label }: { label: string }) {
         </g>
       </g>
 
-      {/* the portrait as a cut-out bust: silhouette with a cream keyline, then the tones */}
-      <g className="art-figure" transform="translate(1004 362) scale(0.82)">
+      {/* the portrait as a cut-out: silhouette with a dark keyline, the tones, then the face */}
+      <g className="art-figure" transform="translate(1016 318) scale(0.62)">
         <path className="fig-light" d={portraitShapes.light} />
-        <path className="fig-shade" fillRule="evenodd" d={portraitShapes.shade} />
-        <path className="fig-lips" fillRule="evenodd" d={portraitShapes.lips} />
         <path className="fig-mid" fillRule="evenodd" d={portraitShapes.mid} />
+        <path className="fig-red" fillRule="evenodd" d={portraitShapes.red} />
         <path className="fig-dark" fillRule="evenodd" d={portraitShapes.dark} />
-        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.lines} />
+        <path className="fig-lips" d={portraitShapes.lips} />
+        <path className="fig-dark" d={portraitShapes.lines} />
         <path className="fig-dark" d={portraitShapes.eyes} />
-        <path className="fig-mid" fillRule="evenodd" d={portraitShapes.trim} />
+        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.glasses} />
       </g>
     </svg>
   );
