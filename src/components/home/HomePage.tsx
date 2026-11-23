@@ -23,16 +23,8 @@ export default function HomePage({ lang }: { lang: Locale }) {
     <>
       <section className="hero section-shell" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow">{content.eyebrow}</p>
           <h1 id="hero-title">{content.title}</h1>
           <p className="hero-intro">{content.intro}</p>
-          <p className="seeking-note">
-            <strong>{content.seekingLabel}</strong>
-            <span>{content.seekingText}</span>
-            <Link className="text-link" href={`/${lang}/contact`}>
-              {content.seekingCta} <span aria-hidden="true">→</span>
-            </Link>
-          </p>
           <div className="hero-actions">
             <Link className="button button-primary" href={`/${lang}/research`}>
               {content.primaryCta}
@@ -41,6 +33,13 @@ export default function HomePage({ lang }: { lang: Locale }) {
               {content.secondaryCta}
             </Link>
           </div>
+          <p className="seeking-note">
+            <strong>{content.seekingLabel}</strong>
+            <span>{content.seekingText}</span>
+            <Link className="text-link" href={`/${lang}/contact`}>
+              {content.seekingCta}
+            </Link>
+          </p>
         </div>
 
         <aside className="profile-card" aria-label={content.statusLabel}>
@@ -96,7 +95,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
           <div className="section-title-row">
             <h2>{content.latestHeading}</h2>
             <Link className="text-link" href={`/${lang}/experience`}>
-              {content.latestLink} <span aria-hidden="true">→</span>
+              {content.latestLink}
             </Link>
           </div>
           <div className="timeline">
@@ -123,7 +122,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
           ))}
           <Link className="text-link" href={`/${lang}/education`}>
             {lang === 'zh' ? '完整教育经历' : 'Full education history'}{' '}
-            <span aria-hidden="true">→</span>
+           
           </Link>
         </div>
       </section>
@@ -132,7 +131,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
         <div className="section-title-row">
           <h2>{content.publicationHeading}</h2>
           <Link className="text-link" href={`/${lang}/publications`}>
-            {content.publicationLink} <span aria-hidden="true">→</span>
+            {content.publicationLink}
           </Link>
         </div>
         <div className="publication-list">
@@ -140,15 +139,16 @@ export default function HomePage({ lang }: { lang: Locale }) {
             <article className="publication-row" key={publication.doi}>
               <span className="publication-index">{String(index + 1).padStart(2, '0')}</span>
               <div>
-                <p className="publication-meta">
-                  {publication.venue} · {publication.date}
-                  {publication.note
-                    ? ` · ${lang === 'zh' ? publicationNotes[publication.note] : publication.note}`
-                    : ''}
-                </p>
                 <h3>{publication.title}</h3>
                 <p>
                   <Authors list={publication.authors} />
+                </p>
+                <p className="publication-meta">
+                  <span>{publication.venue}</span>
+                  <span>{publication.date.slice(0, 4)}</span>
+                  {publication.note ? (
+                    <span>{lang === 'zh' ? publicationNotes[publication.note] : publication.note}</span>
+                  ) : null}
                 </p>
               </div>
               <a
@@ -157,7 +157,7 @@ export default function HomePage({ lang }: { lang: Locale }) {
                 rel="noreferrer"
                 aria-label={`Open DOI for ${publication.title}`}
               >
-                DOI ↗
+                DOI
               </a>
             </article>
           ))}

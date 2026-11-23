@@ -36,7 +36,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ lang:
         {content.focusAreas.map((area) => (
           <article className="content-card" key={area.number}>
             <span className="meta">
-              {area.number} · {area.tag}
+              {area.number} {area.tag}
             </span>
             <h2>{area.title}</h2>
             <p>{area.text}</p>

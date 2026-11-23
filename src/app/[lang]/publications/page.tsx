@@ -41,7 +41,7 @@ export default async function PublicationsPage({ params }: { params: Promise<{ l
           <article className="content-card publication-card" key={publication.doi}>
             <div>
               <span className="meta">
-                {publication.type} · {publication.date}
+                {publication.type}, {publication.date.slice(0, 4)}
               </span>
               <h2>{publication.title}</h2>
               <p className="authors">
@@ -50,7 +50,7 @@ export default async function PublicationsPage({ params }: { params: Promise<{ l
               <p className="venue">
                 {publication.venue}
                 {publication.note
-                  ? ` · ${lang === 'zh' ? publicationNotes[publication.note] : publication.note}`
+                  ? `, ${lang === 'zh' ? publicationNotes[publication.note] : publication.note}`
                   : ''}
               </p>
             </div>
@@ -60,7 +60,7 @@ export default async function PublicationsPage({ params }: { params: Promise<{ l
               target="_blank"
               rel="noreferrer"
             >
-              {label.doi} ↗
+              {label.doi}
             </a>
           </article>
         ))}

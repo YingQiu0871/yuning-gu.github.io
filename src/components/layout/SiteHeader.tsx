@@ -56,7 +56,7 @@ export default function SiteHeader({ lang }: { lang: Locale }) {
             if (item.external) {
               return (
                 <a key={item.href} href={item.href} target="_blank" rel="noreferrer">
-                  {item.label} ↗
+                  {item.label}
                 </a>
               );
             }
@@ -116,7 +116,7 @@ export default function SiteHeader({ lang }: { lang: Locale }) {
         {navigation[lang].map((item) =>
           item.external ? (
             <a key={item.href} href={item.href} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
-              {item.label} ↗
+              {item.label}
             </a>
           ) : (
             <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
