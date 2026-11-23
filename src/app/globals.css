@@ -2866,6 +2866,10 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
   fill: var(--color-accent);
 }
 
+.fig-ear {
+  fill: var(--color-ink);
+}
+
 .fig-lips {
   fill: var(--color-lip);
 }

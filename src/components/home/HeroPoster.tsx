@@ -79,6 +79,7 @@ export default function HeroPoster({ label }: { label: string }) {
         <path className="fig-mid" fillRule="evenodd" d={portraitShapes.mid} />
         <path className="fig-red" fillRule="evenodd" d={portraitShapes.red} />
         <path className="fig-dark" fillRule="evenodd" d={portraitShapes.dark} />
+        <path className="fig-ear" d={portraitShapes.ear} />
         <path className="fig-lips" d={portraitShapes.lips} />
         <path className="fig-dark" d={portraitShapes.lines} />
         <path className="fig-dark" d={portraitShapes.eyes} />

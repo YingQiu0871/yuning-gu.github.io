@@ -80,14 +80,13 @@ if len(sys.argv) > 4:
     brow = cv2.morphologyEx(window(marks, 200, 164, 330, 183), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (31, 7)))
     face['brows'] = contours(brow, 1.6, 200, KI)
     face['nose'] = contours(window(marks, 240, 236, 290, 258), 1.6, 60, KI)
-    face['lipline'] = contours(window(marks, 232, 274, 296, 292), 1.6, 80, KI)
-    la = cv2.cvtColor(cv2.bilateralFilter(idi, 15, 50, 50), cv2.COLOR_BGR2LAB)[:, :, 1].astype(np.float32)
-    skin_a = float(np.median(la[int(230 * KI):int(262 * KI), int(210 * KI):int(320 * KI)]))
-    lipm = (cv2.GaussianBlur(la, (0, 0), 3) > skin_a + 7).astype(np.uint8) * 255
-    lipm = cv2.medianBlur(cv2.morphologyEx(window(lipm, 232, 268, 296, 300), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)), 9)
-    lp = contours(lipm, 2.4, 200, KI)
-    face['lips'] = [max(lp, key=lambda p: cv2.contourArea(p.astype(np.float32)))] if lp else []
-    almond = [(-15, 1.2), (-8.5, -4.6), (2.5, -5.8), (11, -3.2), (15, 0.8), (8.5, 4.2), (-5, 4.4)]
+    # the mouth is set as plain shapes at its measured place: two lips and the line between them
+    upper = [(236, 279.5), (247, 274.6), (258, 271.2), (265, 272.8), (272, 271.2), (283, 274.6), (294, 281), (280, 280.6), (265, 280.4), (250, 280)]
+    lower = [(241, 281.2), (250, 280.8), (265, 281.2), (280, 281.4), (289, 282.2), (282, 286.6), (272, 289.4), (258, 289.4), (248, 286.6)]
+    seam = [(235, 278.8), (250, 279.4), (265, 279.8), (280, 280), (295, 280.4), (295, 282.2), (280, 281.9), (265, 281.7), (250, 281.3), (235, 280.7)]
+    face['lips'] = [np.array(upper, np.float64), np.array(lower, np.float64)]
+    face['lipline'] = [np.array(seam, np.float64)]
+    almond = [(-18.5, 1.4), (-10.5, -5.6), (3, -7), (13.5, -4), (18.5, 1), (10.5, 5.2), (-6, 5.4)]
     face['eyes'] = [np.array([(ex + f * dx, ey + dy) for dx, dy in almond]) for (ex, ey), f in zip(ID_EYES, (1, -1))]
     face = {k: [to_sea(p) for p in v] for k, v in face.items()}
 
@@ -107,6 +106,10 @@ cv2.line(gl, G(540, 401.5), G(559, 403.5), 255, FR, cv2.LINE_AA)
 cv2.line(gl, G(488, 397), G(470, 394), 255, FR, cv2.LINE_AA)
 cv2.line(gl, G(610.5, 407), G(624, 408), 255, FR, cv2.LINE_AA)
 glasses = contours((gl > 127).astype(np.uint8) * 255, 2.2, 200, KG)
+ear_fold = [np.array([(466, 394), (468.4, 393.4), (471, 404), (473, 413), (477.5, 421.5), (481, 428), (479.4, 429.6), (475, 423.5), (471, 414.5), (468.6, 405)], np.float64),
+            np.array([(482.5, 392), (485, 392), (486, 410), (488.5, 426), (486.5, 427), (484, 411)], np.float64)]
+# the left ear shows as a narrow strip between the hair and the hood; the dark tone swallowed it
+ear = [np.array([(462, 390), (468, 388), (471.5, 400), (473.5, 412), (479, 421), (483.5, 432), (480.5, 436.5), (474, 430), (468, 420), (464, 406)], np.float64)]
 
 # 3. hard-edged polygons
 def polys(m, e, min_area):
@@ -118,7 +121,7 @@ def polys(m, e, min_area):
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
 layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)),
-          ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline']), ('eyes', face['eyes']), ('glasses', glasses)]
+          ('ear', ear), ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline'] + ear_fold), ('eyes', face['eyes']), ('glasses', glasses)]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
 def d(ps):
@@ -127,7 +130,7 @@ shapes = {name: d(ps) for name, ps in layers}
 json.dump({'width': int(wbox), 'height': int(hbox), 'shapes': shapes}, open(outdir + '/portrait.json', 'w'))
 
 # preview
-cols = {'light': (168, 231, 246), 'lips': (70, 100, 214), 'eyes': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
+cols = {'light': (168, 231, 246), 'ear': (168, 231, 246), 'lips': (70, 100, 214), 'eyes': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
 prev = np.full((H * 3, W * 3, 3), (60, 40, 20), np.uint8)
 for name, ps in layers:
     layer = np.zeros((H * 3, W * 3), np.uint8)
