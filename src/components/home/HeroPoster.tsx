@@ -3,7 +3,7 @@ import { portraitShapes } from '@/components/home/portraitShapes';
 // The home hero's picture: one flat poster scene behind the headline, built on a
 // single rising diagonal. A red disc stands behind a cut-out portrait (the photo
 // flattened to flat tones and hard edges), three bars cross on the diagonal, and a
-// rocket made of plain shapes rides the widest bar.
+// rocket made of plain shapes climbs a parabola across them.
 // Original drawing; every colour comes from the stylesheet's tokens.
 
 // Deterministic star field (same output on every build).
@@ -48,7 +48,6 @@ export default function HeroPoster({ label }: { label: string }) {
 
       {/* the disc behind the figure */}
       <g className="art-planet">
-        <circle className="art-dash" cx="1196" cy="392" r="262" />
         <circle className="art-rim" cx="1196" cy="392" r="216" />
         <circle className="art-body" cx="1196" cy="392" r="206" />
       </g>
@@ -58,10 +57,15 @@ export default function HeroPoster({ label }: { label: string }) {
       <path className="art-bar-light" d="M330 800 L1440 283 L1440 297 L360 800 Z" />
       <path className="art-bar-red" d="M700 800 L1440 455 L1440 480 L753 800 Z" />
 
-      {/* the rocket rides the wide bar; this group carries the launch animation */}
-      <g className="art-flight">
-        <path className="art-trail" d="M748 690 L752 706 L590 800 L470 800 Z" />
-        <g transform="translate(800 672) rotate(-25) scale(1.8)">
+      {/* The rocket climbs a parabola: M700 800 Q740 430 980 236. The exhaust is a ribbon that
+          narrows along the same curve, and a dashed line carries the curve on past the rocket. */}
+      <path className="art-course" d="M980 236 Q1172 81 1492 39" />
+      <path className="art-trail" d="M660 800 Q716 440 927 268 L938 281 Q768 452 752 800 Z" />
+      <path className="art-trail art-trail-thin" d="M610 800 Q690 470 912 262 L916 266 Q706 478 636 800 Z" />
+      <path className="art-trail art-trail-thin" d="M790 800 Q796 500 944 290 L949 293 Q820 500 816 800 Z" />
+      {/* static placement here; where offset-path is supported the stylesheet flies it along the curve */}
+      <g className="art-rocket" transform="translate(980 236) rotate(-39)">
+        <g transform="scale(1.8)">
           <path className="art-fin" d="M-26 -11 L-46 -28 L-10 -11 Z" />
           <path className="art-fin" d="M-26 11 L-46 28 L-10 11 Z" />
           <path className="art-nozzle" d="M-26 -8 L-34 -11 L-34 11 L-26 8 Z" />

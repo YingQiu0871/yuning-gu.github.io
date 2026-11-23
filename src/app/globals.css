@@ -3034,3 +3034,57 @@ html:is(:lang(en), :lang(zh)) .poster-hero h1 {
     transform-origin: center;
   }
 }
+
+/* ---- The rocket's parabola ---- */
+.art-course {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2.5;
+  stroke-dasharray: 3 15;
+  stroke-linecap: round;
+}
+
+.art-trail {
+  animation: exhaust 1700ms var(--ease-out) 150ms both;
+}
+
+.art-trail-thin {
+  animation-delay: 350ms;
+}
+
+@keyframes exhaust {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (offset-path: path('M0 0 L1 1')) {
+  .art-rocket {
+    transform: none;
+    offset-path: path('M700 800 Q740 430 980 236');
+    offset-rotate: auto;
+    offset-distance: 100%;
+    animation: climb 1700ms var(--ease-out) 150ms both;
+  }
+}
+
+@keyframes climb {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-rocket,
+  .art-trail {
+    animation: none;
+  }
+}
