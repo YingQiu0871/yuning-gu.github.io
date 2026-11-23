@@ -2828,7 +2828,7 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 /* ---- The diagonal: one rising line carried through the whole page ---- */
 :root {
   --color-shade: oklch(80% 0.085 78);
-  --color-lip: oklch(62% 0.16 34);
+  --color-lip: oklch(74% 0.085 52);
   --slant: 14px;
   --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }

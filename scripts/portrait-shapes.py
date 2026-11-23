@@ -84,7 +84,9 @@ if len(sys.argv) > 4:
     upper = [(236, 279.5), (247, 274.6), (258, 271.2), (265, 272.8), (272, 271.2), (283, 274.6), (294, 281), (280, 280.6), (265, 280.4), (250, 280)]
     lower = [(241, 281.2), (250, 280.8), (265, 281.2), (280, 281.4), (289, 282.2), (282, 286.6), (272, 289.4), (258, 289.4), (248, 286.6)]
     seam = [(235, 278.8), (250, 279.4), (265, 279.8), (280, 280), (295, 280.4), (295, 282.2), (280, 281.9), (265, 281.7), (250, 281.3), (235, 280.7)]
-    face['lips'] = [np.array(upper, np.float64), np.array(lower, np.float64)]
+    # kept thin: the lips are flattened towards the line between them
+    thin = lambda pts: [(x, 280.5 + (y - 280.5) * 0.5) for x, y in pts]
+    face['lips'] = [np.array(thin(upper), np.float64), np.array(thin(lower), np.float64)]
     face['lipline'] = [np.array(seam, np.float64)]
     almond = [(-18.5, 1.4), (-10.5, -5.6), (3, -7), (13.5, -4), (18.5, 1), (10.5, 5.2), (-6, 5.4)]
     face['eyes'] = [np.array([(ex + f * dx, ey + dy) for dx, dy in almond]) for (ex, ey), f in zip(ID_EYES, (1, -1))]
