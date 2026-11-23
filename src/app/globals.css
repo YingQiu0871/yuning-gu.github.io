@@ -1,5 +1,5 @@
 /* Hallmark · shape: kept · genre: editorial · theme: custom, a constructivist space-poster direction on the Manifesto scale · redesign: restyle
- * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: the portrait as a flat poster, a capsule rocket in orbit round it
+ * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: the hero is one poster scene, a capsule rocket climbing to a red planet
  * axes: dark/display-condensed/chromatic-red · posture: red and gold · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, a personal academic page under a campaign theme; the red is spent on the one word that names the work and on the closing band */
 /* Hallmark · waive 38iii · one word on a red plate, once, in the hero head · it is the direction's signature */
@@ -2532,5 +2532,217 @@ html:is(:lang(en), :lang(zh)) .poster-band h2 {
   .hero > .poster {
     grid-column: auto;
     grid-row: auto;
+  }
+}
+
+/* ---- The hero is one poster: a full-bleed scene with the head set on it ---- */
+.poster-hero {
+  position: relative;
+  min-height: clamp(560px, calc(100svh - var(--header-height)), 820px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 10px solid var(--color-ink);
+}
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.poster-hero-copy {
+  position: relative;
+  padding-block: var(--space-2xl);
+}
+
+html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+  max-width: 8.2em;
+  margin: 0 0 var(--space-xl);
+  font-size: clamp(3rem, 5.6vw, 5rem);
+  transform: rotate(-3.5deg);
+  transform-origin: left bottom;
+  animation: wipe var(--dur-long) var(--ease-out) both;
+}
+
+html:lang(zh) .poster-hero h1:lang(zh) {
+  max-width: 7em;
+  font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+  line-height: 1.12;
+}
+
+.hot {
+  display: inline-block;
+  padding: 0 0.14em;
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+
+.art-stars,
+.art-sparkle,
+.art-rim,
+.art-trail,
+.art-capsule-tail {
+  fill: var(--color-ink);
+}
+
+.art-body,
+.art-fin,
+.art-capsule-nose {
+  fill: var(--color-accent);
+}
+
+.art-band {
+  fill: var(--color-accent-deep);
+}
+
+.art-dash {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2;
+  stroke-dasharray: 3 16;
+  stroke-linecap: round;
+}
+
+.art-ring {
+  fill: none;
+  stroke: var(--color-slate);
+  stroke-width: 14;
+}
+
+.art-portrait {
+  filter: grayscale(1) contrast(1.1);
+}
+
+/* Motion: the rocket flies in once, the stars breathe, the planet drifts on scroll */
+.art-flight {
+  animation: launch 1600ms var(--ease-out) 150ms both;
+}
+
+.art-stars-1 {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+.art-stars-2 {
+  animation: twinkle 7s ease-in-out -2s infinite;
+}
+
+.art-stars-3 {
+  animation: twinkle 9s ease-in-out -5s infinite;
+}
+
+@keyframes launch {
+  from {
+    opacity: 0;
+    transform: translate(-340px, 420px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes drift-far {
+  to {
+    transform: translateY(70px);
+  }
+}
+
+@keyframes drift-near {
+  to {
+    transform: translateY(170px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .art-sky {
+      animation: drift-far linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 900px;
+    }
+
+    .art-planet {
+      animation: drift-near linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 900px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-hero h1,
+  .art-flight,
+  .art-stars-1,
+  .art-stars-2,
+  .art-stars-3 {
+    animation: none;
+  }
+}
+
+/* ---- Below the poster: the introduction, the programme slip, the notice ---- */
+.intro-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-xl) var(--gap-columns);
+  align-items: start;
+  padding-block: var(--space-3xl) var(--space-xl);
+}
+
+.intro-strip .hero-intro {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-xl);
+  line-height: 1.5;
+}
+
+.intro-side {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.intro-side .seeking-note {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .intro-strip {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: var(--space-2xl);
+  }
+
+  .intro-side .poster {
+    width: 100%;
+  }
+}
+
+/* On narrow screens the scene sits above the head instead of behind it */
+@media (max-width: 1000px) {
+  .poster-hero {
+    min-height: 0;
+    display: block;
+  }
+
+  .hero-art {
+    position: static;
+    height: clamp(340px, 52vw, 480px);
+    display: block;
+  }
+
+  .poster-hero-copy {
+    padding-block: var(--space-lg) var(--space-xl);
   }
 }

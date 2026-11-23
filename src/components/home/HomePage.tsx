@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Authors from '@/components/Authors';
-import PosterPortrait from '@/components/home/PosterPortrait';
+import HeroPoster from '@/components/home/HeroPoster';
 import type { Locale } from '@/lib/i18n/config';
 import {
   education,
@@ -21,14 +21,14 @@ export default function HomePage({ lang }: { lang: Locale }) {
 
   return (
     <>
-      <section className="hero section-shell" aria-labelledby="hero-title">
-        <h1 id="hero-title">
-          {content.title}
-          <span className="hot">{content.titleAccent}</span>
-          {content.titleEnd}
-        </h1>
-        <div className="hero-copy">
-          <p className="hero-intro">{content.intro}</p>
+      <section className="poster-hero" aria-labelledby="hero-title">
+        <HeroPoster label={`${profile.name} portrait`} />
+        <div className="poster-hero-copy section-shell">
+          <h1 id="hero-title">
+            {content.title}
+            <span className="hot">{content.titleAccent}</span>
+            {content.titleEnd}
+          </h1>
           <div className="hero-actions">
             <Link className="button button-primary" href={`/${lang}/research`}>
               {content.primaryCta}
@@ -37,6 +37,20 @@ export default function HomePage({ lang }: { lang: Locale }) {
               {content.secondaryCta}
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="intro-strip section-shell">
+        <p className="hero-intro">{content.intro}</p>
+        <div className="intro-side">
+          <aside className="poster" aria-label={content.statusLabel}>
+            <div className="poster-band">
+              <p className="card-label">{content.statusLabel}</p>
+              <h2>{content.statusTitle}</h2>
+              <p>{content.statusBody}</p>
+              <span>{content.location}</span>
+            </div>
+          </aside>
           <p className="seeking-note">
             <strong>{content.seekingLabel}</strong>
             <span>{content.seekingText}</span>
@@ -45,14 +59,6 @@ export default function HomePage({ lang }: { lang: Locale }) {
             </Link>
           </p>
         </div>
-
-        <PosterPortrait
-          name={profile.name}
-          label={content.statusLabel}
-          title={content.statusTitle}
-          body={content.statusBody}
-          location={content.location}
-        />
       </section>
 
       <section className="stats-strip section-shell" aria-label="Profile at a glance">
