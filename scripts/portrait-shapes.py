@@ -88,9 +88,11 @@ if len(sys.argv) > 4:
     thin = lambda pts: [(x, 280.5 + (y - 280.5) * 0.5) for x, y in pts]
     face['lips'] = [np.array(thin(upper), np.float64), np.array(thin(lower), np.float64)]
     face['lipline'] = [np.array(seam, np.float64)]
-    almond = [(-18.5, 1.4), (-10.5, -5.6), (3, -7), (13.5, -4), (18.5, 1), (10.5, 5.2), (-6, 5.4)]
+    almond = [(-22, 1.7), (-12.5, -6.7), (3.6, -8.4), (16, -4.8), (22, 1.2), (12.5, 6.2), (-7, 6.5)]
     face['eyes'] = [np.array([(ex + f * dx, ey + dy) for dx, dy in almond]) for (ex, ey), f in zip(ID_EYES, (1, -1))]
     face = {k: [to_sea(p) for p in v] for k, v in face.items()}
+    # the eyes sit a little lower, nearer the middle of each lens
+    face['eyes'] = [p + np.array([0.0, 4.5]) for p in face['eyes']]
 
 # the spectacles: thick dark frames, measured on the figure photo
 KG = 4
