@@ -1,0 +1,76 @@
+import PortraitFigure from '@/components/poster/PortraitFigure';
+import Rocket from '@/components/poster/Rocket';
+
+// The home hero's picture: one flat poster scene behind the headline, built on a
+// single rising diagonal. A red disc stands behind a cut-out portrait (the photo
+// flattened to flat tones and hard edges), three bars cross on the diagonal, and a
+// rocket made of plain shapes climbs a parabola across them.
+// Original drawing; every colour comes from the stylesheet's tokens.
+
+// Deterministic star field (same output on every build).
+function starField(count: number, seed: number): Array<[number, number, number]> {
+  let s = seed;
+  const next = () => {
+    s = (s * 1664525 + 1013904223) % 4294967296;
+    return s / 4294967296;
+  };
+  return Array.from({ length: count }, () => [
+    Math.round(next() * 1440),
+    Math.round(next() * 800),
+    Math.round((0.7 + next() * 1.5) * 10) / 10,
+  ]);
+}
+
+const STAR_GROUPS = [starField(46, 7), starField(40, 19), starField(34, 43)];
+const SPARKLE = 'M0 -18 L3 -3 L18 0 L3 3 L0 18 L-3 3 L-18 0 L-3 -3 Z';
+
+export default function HeroPoster({ label }: { label: string }) {
+  return (
+    <svg
+      className="hero-art"
+      viewBox="0 0 1440 800"
+      preserveAspectRatio="xMaxYMid slice"
+      role="img"
+      aria-label={label}
+      focusable="false"
+    >
+      <g className="art-sky">
+        {STAR_GROUPS.map((group, index) => (
+          <g className={`art-stars art-stars-${index + 1}`} key={index}>
+            {group.map(([x, y, r]) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
+            ))}
+          </g>
+        ))}
+        <path className="art-sparkle" d={SPARKLE} transform="translate(820 150)" />
+        <path className="art-sparkle" d={SPARKLE} transform="translate(1010 84) scale(0.6)" />
+        <path className="art-sparkle" d={SPARKLE} transform="translate(1368 160) scale(0.7)" />
+      </g>
+
+      {/* the disc behind the figure */}
+      <g className="art-planet">
+        <circle className="art-rim" cx="1196" cy="392" r="216" />
+        <circle className="art-body" cx="1196" cy="392" r="206" />
+      </g>
+
+      {/* three bars on one rising diagonal */}
+      <path className="art-bar-wide" d="M420 800 L1440 325 L1440 418 L620 800 Z" />
+      <path className="art-bar-light" d="M330 800 L1440 283 L1440 297 L360 800 Z" />
+      <path className="art-bar-red" d="M700 800 L1440 455 L1440 480 L753 800 Z" />
+
+      {/* The rocket climbs a parabola: M700 800 Q740 430 980 236. The exhaust is a ribbon that
+          narrows along the same curve, and a dashed line carries the curve on past the rocket. */}
+      <path className="art-course" d="M980 236 Q1172 81 1492 39" />
+      <path className="art-trail" d="M660 800 Q716 440 927 268 L938 281 Q768 452 752 800 Z" />
+      <path className="art-trail art-trail-thin" d="M610 800 Q690 470 912 262 L916 266 Q706 478 636 800 Z" />
+      <path className="art-trail art-trail-thin" d="M790 800 Q796 500 944 290 L949 293 Q820 500 816 800 Z" />
+      {/* static placement here; where offset-path is supported the stylesheet flies it along the curve */}
+      <g className="art-rocket" transform="translate(980 236) rotate(-39)">
+        <Rocket transform="scale(1.8)" />
+      </g>
+
+      {/* the portrait as a cut-out: silhouette with a dark keyline, the tones, then the face */}
+      <PortraitFigure transform="translate(1016 318) scale(0.62)" />
+    </svg>
+  );
+}

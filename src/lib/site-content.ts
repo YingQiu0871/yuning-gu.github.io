@@ -39,7 +39,9 @@ export const navigation = {
 
 export const homeContent = {
   en: {
-    title: 'Pharmaceutical technology, from hot-melt extrusion to printed tablets.',
+    title: 'Pharmaceutical technology, from hot-melt extrusion to printed ',
+    titleAccent: 'tablets',
+    titleEnd: '.',
     intro:
       'I am an M2 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My main interest is pharmaceutical technology: hot-melt extrusion and 3D printing of oral dosage forms. Earlier work in natural-product pharmacology and clinical epidemiology gave me the analytical and data skills I bring to it.',
     seekingLabel: 'Open to opportunities',
@@ -91,7 +93,9 @@ export const homeContent = {
     emailCta: 'Email me',
   },
   zh: {
-    title: '药物制剂技术：从热熔挤出到 3D 打印片剂。',
+    title: '药物制剂技术：从热熔挤出到 3D 打印',
+    titleAccent: '片剂',
+    titleEnd: '。',
     intro:
       '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目，主要方向是药物制剂技术，包括热熔挤出和口服固体制剂的 3D 打印。此前在天然产物药理和临床流行病学方面的研究，为我打下了分析与数据方面的基础。',
     seekingLabel: '正在寻找机会',

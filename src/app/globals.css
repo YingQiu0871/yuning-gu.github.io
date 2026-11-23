@@ -1,37 +1,29 @@
-/* Hallmark · shape: kept · genre: playful · theme: Werkstatt (by request) · redesign: restyle
- * hero: kept · nav: kept · footer: kept · imagery: photographs · signature: the three research lines coded blue, red and yellow · werkstatt: putty, blackboard in dark mode
- * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P4 H3 E4 S4 R4 V4 · weakest: H, the kept hero carries a long intro and a notice above its actions; the notice moved below the actions so the first screen ends on them */
+/* Hallmark · shape: kept · genre: editorial · theme: custom, a constructivist space-poster direction on the Manifesto scale · redesign: restyle
+ * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: one rising diagonal through the page, and the portrait as a hard-edged cut-out on a red disc
+ * axes: dark/display-condensed/chromatic-red · posture: red and gold · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, a personal academic page under a campaign theme; the red is spent on the one word that names the work and on the closing band */
+/* Hallmark · waive 38iii · one word on a red plate, once, in the hero head · it is the direction's signature */
 @import url('./tokens.css');
 @import url('./base.css');
 
 :root {
-  --font-display: var(--font-jost), 'Jost', 'Futura', sans-serif;
-  --font-body: var(--font-karla), 'Karla', ui-sans-serif, system-ui, sans-serif;
-  --font-display-zh: var(--font-jost), var(--font-hei-sc), 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: var(--font-anton), 'Anton', 'Impact', sans-serif;
+  --font-body: var(--font-public-sans), 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display-zh: var(--font-anton), var(--font-hei-sc), 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-body-zh:
-    var(--font-karla), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
-    system-ui, sans-serif;
-  --color-accent-3-ink: oklch(18% 0.008 60);
+    var(--font-public-sans), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui,
+    sans-serif;
+  --color-gold: oklch(82% 0.15 88);
+  --color-slate: oklch(56% 0.07 228);
+  --color-slate-deep: oklch(44% 0.065 230);
+  --color-sky: oklch(14% 0.028 236);
+  --color-star: oklch(93% 0.075 96 / 0.55);
+  --shape-star: polygon(50% 0%, 59% 41%, 100% 50%, 59% 59%, 50% 100%, 41% 59%, 0% 50%, 41% 41%);
+  --text-hero: clamp(3rem, 7vw, 6rem);
+  --text-hero-zh: clamp(2.75rem, 7vw, 6rem);
+  --text-head: clamp(2.5rem, 5vw, 4.5rem);
   --header-height: 72px;
   --content: 1120px;
-}
-
-/* Werkstatt's blackboard colourway carries the site's dark mode */
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --color-paper: oklch(17% 0.005 60);
-  --color-paper-2: oklch(21% 0.006 60);
-  --color-paper-3: oklch(24% 0.007 60);
-  --color-ink: oklch(90% 0.015 80);
-  --color-ink-2: oklch(82% 0.015 80);
-  --color-muted: oklch(72% 0.015 78);
-  --color-rule: oklch(38% 0.01 60);
-  --color-accent: oklch(54% 0.2 264);
-  --color-accent-2: oklch(62% 0.205 33);
-  --color-accent-2-deep: oklch(55% 0.19 31);
-  --color-accent-3: oklch(88% 0.165 92);
-  --color-focus: oklch(72% 0.14 264);
 }
 
 * {
@@ -1789,35 +1781,100 @@ html:lang(zh) .about-chapter p {
   font-size: clamp(1.6rem, 2.8vw, 2.1rem);
 }
 
-/* ---- Werkstatt: type ---- */
+/* ---- Manifesto: type ---- */
+body {
+  color: var(--color-ink-2);
+}
+
 h1,
 h2,
 h3,
 html:lang(en) :is(h1, h2, h3),
 html:lang(zh) :is(h1, h2, h3) {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-display);
   max-width: none;
+  color: var(--color-ink);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
 }
 
-html:lang(en) :is(h1, h2) {
-  line-height: 1.02;
+html:lang(en) :is(.stats-strip strong, .focus-card > span, .publication-index, .brand-mark, .not-found-code) {
+  font-weight: 400;
 }
 
 html:lang(zh) :is(h1, h2, h3, .stats-strip strong, .focus-card > span, .publication-index, .brand-mark, .not-found-code) {
   font-family: var(--font-display-zh);
   font-weight: 900;
+  line-height: 1.12;
   letter-spacing: 0;
 }
 
-.hero h1 {
-  font-size: clamp(2.25rem, 4.4vw, 3.5rem);
-  font-weight: 700;
+/* The hero head is the poster: full width, above the copy, one word in red */
+.hero {
+  row-gap: var(--space-xl);
+  align-items: start;
 }
 
-html:lang(zh) .hero h1 {
-  font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+.hero > h1 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--text-hero);
+  animation: wipe var(--dur-long) var(--ease-out) both;
+}
+
+html:lang(zh) .hero > h1 {
+  font-size: var(--text-hero-zh);
+  line-height: 1.1;
+}
+
+.hero .hot {
+  color: var(--color-accent-text);
+}
+
+@keyframes wipe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero > h1 {
+    animation: none;
+  }
+}
+
+.hero-intro {
+  color: var(--color-ink-2);
+  font-size: var(--text-lead);
+}
+
+.section-heading h2,
+.section-title-row h2,
+.education-panel > h2,
+.contact-band h2,
+.page-heading h1 {
+  font-size: var(--text-head);
+}
+
+html:lang(zh) :is(.section-heading h2, .section-title-row h2, .education-panel > h2, .contact-band h2, .page-heading h1) {
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+}
+
+.timeline h3,
+.education-panel h3,
+.focus-card h3,
+.content-card h2,
+.content-card h3,
+.contact-card h2,
+.profile-card-copy h2,
+.interest-card h3 {
+  font-size: var(--text-xl);
+  line-height: 1.1;
 }
 
 /* Paper titles are citations, not display heads: body face, as published */
@@ -1827,8 +1884,8 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
   font-size: var(--text-lg);
   font-weight: 600;
   line-height: 1.3;
-  text-transform: none;
   letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Labels: the body face, a step smaller, sentence case */
@@ -1845,11 +1902,12 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 .contact-detail span,
 .interest-meta,
 .about-focus > span,
-.about-chapter-item span {
+.about-chapter-item span,
+.stats-strip span {
   color: var(--color-muted);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .eyebrow::before {
@@ -1864,34 +1922,35 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 .author-self {
-  font-weight: 700;
+  color: var(--color-ink);
+  font-weight: 600;
 }
 
-/* ---- Werkstatt: controls ---- */
+/* ---- Manifesto: controls ---- */
 .button {
   min-height: 48px;
-  padding: var(--space-md) var(--space-lg);
-  border: var(--rule-bar) solid var(--color-ink);
+  padding: var(--space-sm) var(--space-lg);
+  border: var(--rule-hair) solid var(--color-ink-2);
   color: var(--color-ink);
-  background: transparent;
-  font: 600 var(--text-sm) / 1 var(--font-body);
-  text-transform: uppercase;
+  background: none;
+  font: 600 var(--text-md) / 1 var(--font-body);
 }
 
-.button-primary,
-:root[data-theme='dark'] .button-primary {
-  color: var(--color-paper);
-  background: var(--color-ink);
+.button-primary {
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
-.button-primary:hover,
-:root[data-theme='dark'] .button-primary:hover {
-  border-color: var(--color-ink-2);
-  background: var(--color-ink-2);
+.button-primary:hover {
+  border-color: var(--color-accent-deep);
+  background: var(--color-accent-deep);
 }
 
 .button-secondary:hover {
-  background: var(--color-paper-3);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .button:active {
@@ -1904,15 +1963,16 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
   color: var(--color-ink);
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
 .text-link:hover,
 .contact-detail a:hover,
-.footer-profiles a:hover {
-  text-decoration-thickness: 3px;
-  text-underline-offset: 0.2em;
+.footer-profiles a:hover,
+.desktop-nav a:hover,
+.mobile-nav a:hover {
+  color: var(--color-accent-text);
 }
 
 .text-link:active,
@@ -1928,133 +1988,144 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 ::selection {
-  color: var(--color-accent-3-ink);
-  background: var(--color-accent-3);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .publication-row > a {
-  border: var(--rule-bar) solid var(--color-ink);
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--rule-hair) solid var(--color-ink-2);
   color: var(--color-ink);
   font: 600 var(--text-xs) / 1 var(--font-body);
-  padding: var(--space-xs) var(--space-sm);
 }
 
 .publication-row > a:hover {
-  background: var(--color-paper-3);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .tag {
-  border: var(--rule-hair) solid var(--color-ink);
-  color: var(--color-ink);
+  border: var(--rule-hair) solid var(--color-rule);
+  color: var(--color-ink-2);
 }
 
-/* ---- Werkstatt: rules and cells ---- */
+/* The sheet stays dark: Manifesto has no light ground, so the switch is retired */
+.theme-toggle {
+  display: none;
+}
+
+/* ---- Manifesto: rules and fields ---- */
 .site-header {
   border-bottom: var(--rule-bar) solid var(--color-ink);
 }
 
+.brand-mark {
+  color: var(--color-paper);
+  background: var(--color-ink);
+}
+
+/* No boxed cards: a well is a darker field under a hairline */
 .profile-card,
 .content-card,
 .contact-card,
 .education-panel,
 .interest-card,
-.about-chapter {
-  border: var(--rule-bar) solid var(--color-ink);
-  background: transparent;
-}
-
-.portrait-wrap {
-  border-bottom: var(--rule-bar) solid var(--color-ink);
-}
-
-/* Photographs print black and white so the primaries stay the only colour */
-.portrait-wrap img {
-  filter: grayscale(1) contrast(1.05);
+.about-chapter,
+.seeking-note {
+  border: 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
 }
 
 .seeking-note {
   margin: var(--space-lg) 0 0;
   padding: var(--space-md);
-  border: var(--rule-bar) solid var(--color-ink);
-  border-left-width: var(--rule-bar);
-  color: var(--color-ink);
+  color: var(--color-ink-2);
+}
+
+/* Photographs print in the ink, inside a hairline ring */
+.portrait-wrap {
+  border: var(--rule-hair) solid var(--color-rule);
+}
+
+.portrait-wrap img {
+  filter: grayscale(1) contrast(1.1) brightness(0.95);
 }
 
 .stats-strip {
   padding: 0;
-  border: var(--rule-box) solid var(--color-ink);
+  border-top: var(--rule-hair) solid var(--color-rule);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
 }
 
 .stats-strip div,
 .stats-strip div:first-child {
   flex-direction: column;
   gap: var(--space-2xs);
-  padding: var(--space-lg);
-  border-right: var(--rule-box) solid var(--color-ink);
-}
-
-.stats-strip div:last-child {
+  padding: var(--space-lg) var(--space-lg) var(--space-lg) 0;
   border-right: 0;
 }
 
 .stats-strip strong {
+  color: var(--color-ink);
   font-family: var(--font-display);
-  font-size: var(--text-display-s);
-  font-weight: 700;
+  font-size: var(--text-head);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.stats-strip span {
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  font-weight: 600;
+/* The record: research lines as full-width rows under hairlines */
+.focus-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
 }
 
-/* The three research lines, one primary each, wherever they appear */
-.focus-card {
+.focus-card,
+.focus-card:last-child {
   min-height: 0;
-  padding: 0;
-  border: var(--rule-bar) solid var(--color-ink);
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1.3fr);
+  column-gap: var(--gap-columns);
+  align-items: start;
+  padding: var(--space-lg) 0;
+  border: 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
 }
 
-.focus-card:hover {
-  border-color: var(--color-ink);
-}
-
-.focus-card > span {
-  margin: 0 0 var(--space-lg);
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: var(--rule-bar) solid var(--color-ink);
-  color: var(--color-accent-ink);
-  background: var(--color-accent);
+.focus-card > span,
+.focus-card:last-child > span {
+  grid-row: 1 / span 2;
+  margin: 0;
+  color: var(--color-muted);
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 700;
+  font-size: var(--text-head);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.focus-card:nth-child(2) > span {
-  color: var(--color-accent-ink);
-  background: var(--color-accent-2-deep);
+.focus-card > .focus-tag {
+  grid-column: 2;
+  margin: 0 0 var(--space-xs);
 }
 
-.focus-card:nth-child(3) > span {
-  color: var(--color-accent-3-ink);
-  background: var(--color-accent-3);
-}
-
-.focus-card > :not(span) {
-  margin-inline: var(--space-lg);
+.focus-card > h3 {
+  grid-column: 2;
+  margin: 0;
+  font-size: var(--text-2xl);
 }
 
 .focus-card > p:last-child {
-  margin-bottom: var(--space-lg);
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  margin: 0;
+  font-size: var(--text-md);
 }
 
 .section-title-row,
 .section-heading {
-  padding-top: var(--space-lg);
-  border-top: var(--rule-box) solid var(--color-ink);
+  padding-top: 0;
+  border-top: 0;
 }
 
 .timeline article,
@@ -2063,33 +2134,30 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 .publication-index {
-  color: var(--color-ink);
+  color: var(--color-muted);
   font-family: var(--font-display);
-  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-/* The closing band is an ink band; its button inverts to paper */
+/* The page's one red field; on it the action turns to the ground */
 .contact-band {
   border: 0;
-  color: var(--color-paper);
-  background: var(--color-ink);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .contact-band h2,
 .contact-band p {
-  color: var(--color-paper);
+  color: var(--color-accent-ink);
 }
 
-.contact-band .button-primary,
-:root[data-theme='dark'] .contact-band .button-primary {
+.contact-band .button-primary {
   border-color: var(--color-paper);
   color: var(--color-ink);
   background: var(--color-paper);
 }
 
-.contact-band .button-primary:hover,
-:root[data-theme='dark'] .contact-band .button-primary:hover {
+.contact-band .button-primary:hover {
   border-color: var(--color-paper-3);
   background: var(--color-paper-3);
 }
@@ -2097,7 +2165,6 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 /* One column gap for every multi-column section */
 .hero,
 .section-heading,
-.focus-grid,
 .split-section,
 .content-grid,
 .contact-grid,
@@ -2106,14 +2173,1068 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 @media (max-width: 720px) {
+  .focus-card,
+  .focus-card:last-child {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+
+  .focus-card > p:last-child {
+    grid-column: 2;
+    grid-row: auto;
+    margin-top: var(--space-sm);
+  }
+
   .stats-strip div,
   .stats-strip div:first-child {
-    padding: var(--space-md);
-    border-right: 0;
-    border-bottom: var(--rule-box) solid var(--color-ink);
+    padding: var(--space-md) 0;
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
 
   .stats-strip div:last-child {
     border-bottom: 0;
+  }
+}
+
+/* ---- Space poster: sunburst, tilt, orbit, stars ---- */
+
+/* A sparse star field on the sheet */
+body {
+  background-image:
+    radial-gradient(circle at 12% 18%, var(--color-star) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 9%, var(--color-star) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 62%, var(--color-star) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 91% 71%, var(--color-star) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 27% 88%, var(--color-star) 0 1px, transparent 1.5px);
+  background-size: 620px 540px;
+}
+
+.hero {
+  padding-top: clamp(var(--space-2xl), 9vw, 120px);
+}
+
+/* The head climbs left to right */
+.hero > h1 {
+  transform: rotate(-3.5deg);
+  transform-origin: left bottom;
+}
+
+.hero .hot {
+  display: inline-block;
+  padding: 0 0.14em;
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+
+/* The portrait is a body in orbit */
+.hero .profile-card,
+.about-grid .profile-card {
+  border: 0;
+  background: none;
+}
+
+.portrait-wrap {
+  aspect-ratio: 1;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+.portrait-wrap::after {
+  display: none;
+}
+
+.portrait-wrap img {
+  border: 4px solid var(--color-ink);
+  border-radius: 50%;
+}
+
+.portrait-wrap::before {
+  position: absolute;
+  inset: 31% -14%;
+  z-index: 1;
+  content: '';
+  border: 3px solid var(--color-gold);
+  border-radius: 50%;
+  transform: rotate(-22deg);
+  pointer-events: none;
+}
+
+.profile-card {
+  position: relative;
+}
+
+.profile-card::after {
+  position: absolute;
+  top: var(--space-xs);
+  right: 0;
+  width: 44px;
+  height: 44px;
+  content: '';
+  background: var(--color-accent);
+  clip-path: var(--shape-star);
+}
+
+.profile-card-copy {
+  border-top: var(--rule-bar) solid var(--color-accent);
+  margin-top: var(--space-lg);
+}
+
+/* The figures ride a red slab cut on the diagonal */
+.stats-strip {
+  margin-block: var(--space-xl);
+  padding: var(--space-3xl) var(--space-xl);
+  border: 0;
+  background: var(--color-accent);
+  clip-path: polygon(0 22%, 100% 0, 100% 78%, 0 100%);
+}
+
+.stats-strip div,
+.stats-strip div:first-child {
+  padding: 0 var(--space-md);
+}
+
+.stats-strip strong,
+.stats-strip span {
+  color: var(--color-accent-ink);
+}
+
+/* Section heads are led by a star */
+.section-heading h2::before,
+.section-title-row h2::before,
+.education-panel > h2::before,
+.page-heading h1::before {
+  width: 0.5em;
+  height: 0.5em;
+  display: inline-block;
+  margin-right: 0.28em;
+  vertical-align: 0.12em;
+  content: '';
+  background: var(--color-gold);
+  clip-path: var(--shape-star);
+}
+
+.focus-card > span,
+.focus-card:last-child > span,
+.publication-index {
+  color: var(--color-gold);
+}
+
+.focus-card,
+.focus-card:last-child {
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.site-header {
+  border-bottom-color: var(--color-accent);
+}
+
+@media (max-width: 900px) {
+  .profile-card {
+    display: block;
+  }
+
+  .portrait-wrap {
+    width: min(100%, 300px);
+    margin-inline: auto;
+  }
+
+  .hero > h1 {
+    transform: rotate(-2.5deg);
+  }
+
+  .stats-strip {
+    padding: var(--space-2xl) var(--space-lg);
+    clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+  }
+
+  .stats-strip div,
+  .stats-strip div:first-child,
+  .stats-strip div:last-child {
+    padding: var(--space-sm) 0;
+    border-bottom: 0;
+  }
+}
+
+/* ---- The poster: flat shapes, a cream frame, a red title band ---- */
+.poster {
+  align-self: start;
+  border: 10px solid var(--color-ink);
+  background: var(--color-sky);
+}
+
+.poster-scene {
+  position: relative;
+  aspect-ratio: 400 / 560;
+  overflow: hidden;
+}
+
+.poster-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.poster-sky {
+  fill: var(--color-sky);
+}
+
+.poster-star,
+.poster-cloud,
+.poster-capsule-tail {
+  fill: var(--color-ink);
+}
+
+.poster-sun {
+  fill: var(--color-gold);
+}
+
+.poster-orbit {
+  fill: none;
+  stroke: var(--color-slate);
+  stroke-width: 18;
+}
+
+.poster-world {
+  fill: var(--color-slate-deep);
+}
+
+.poster-land {
+  fill: var(--color-slate);
+}
+
+.poster-fin,
+.poster-capsule-nose {
+  fill: var(--color-accent);
+}
+
+.poster-portrait {
+  position: absolute;
+  top: 23.2%;
+  left: 20%;
+  width: 60%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 4px solid var(--color-ink);
+  border-radius: 50%;
+}
+
+.poster-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: grayscale(1) contrast(1.1);
+}
+
+.poster-band {
+  padding: var(--space-lg);
+  border-top: 10px solid var(--color-ink);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  text-align: center;
+}
+
+.poster-band .card-label,
+.poster-band p,
+.poster-band span {
+  color: var(--color-accent-ink);
+}
+
+.poster-band h2,
+html:is(:lang(en), :lang(zh)) .poster-band h2 {
+  margin: var(--space-xs) 0 var(--space-sm);
+  color: var(--color-accent-ink);
+  font-size: var(--text-2xl);
+  line-height: 1.05;
+}
+
+.poster-band p {
+  margin: 0;
+}
+
+html:lang(zh) .poster-band :is(p, h2, span) {
+  text-align: center;
+}
+
+.poster-band span {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--text-sm);
+}
+
+/* The closing field is a poster title band: red, inside a cream frame */
+.contact-band {
+  border: 10px solid var(--color-ink);
+}
+
+@media (max-width: 900px) {
+  .poster {
+    width: min(100%, 360px);
+    margin-inline: auto;
+  }
+}
+
+/* ---- Hero: two aligned columns, the copy on the left, the poster on the right ---- */
+:root {
+  --text-hero: clamp(2.75rem, 5.4vw, 4.75rem);
+  --text-hero-zh: clamp(2.5rem, 5vw, 4.25rem);
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.72fr);
+  row-gap: var(--space-lg);
+  padding-top: clamp(var(--space-xl), 6vw, 80px);
+}
+
+.hero > h1 {
+  grid-column: 1;
+  align-self: end;
+}
+
+.hero > .hero-copy {
+  grid-column: 1;
+}
+
+.hero > .poster {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.hero-intro {
+  margin-bottom: var(--space-lg);
+  font-size: var(--text-lg);
+}
+
+/* The notice closes the left column as a ruled slip, level with the poster's foot */
+.seeking-note {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border-top: var(--rule-bar) solid var(--color-accent);
+}
+
+.poster-band {
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.poster-band h2,
+html:is(:lang(en), :lang(zh)) .poster-band h2 {
+  font-size: var(--text-xl);
+}
+
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero > h1,
+  .hero > .hero-copy,
+  .hero > .poster {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* ---- The hero is one poster: a full-bleed scene with the head set on it ---- */
+.poster-hero {
+  position: relative;
+  min-height: clamp(560px, calc(100svh - var(--header-height)), 820px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 10px solid var(--color-ink);
+}
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.poster-hero-copy {
+  position: relative;
+  padding-block: var(--space-2xl);
+}
+
+html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+  max-width: 8.2em;
+  margin: 0 0 var(--space-xl);
+  font-size: clamp(3rem, 5.6vw, 5rem);
+  transform: rotate(-3.5deg);
+  transform-origin: left bottom;
+  animation: wipe var(--dur-long) var(--ease-out) both;
+}
+
+html:lang(zh) .poster-hero h1:lang(zh) {
+  max-width: 7em;
+  font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+  line-height: 1.12;
+}
+
+.hot {
+  display: inline-block;
+  padding: 0 0.14em;
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+
+.art-stars,
+.art-sparkle,
+.art-rim,
+.art-trail,
+.art-hull {
+  fill: var(--color-ink);
+}
+
+.art-body,
+.art-fin,
+.art-wedge {
+  fill: var(--color-accent);
+}
+
+.art-band {
+  fill: var(--color-accent-deep);
+}
+
+.art-stripe {
+  fill: var(--color-sky);
+}
+
+.art-nozzle {
+  fill: var(--color-slate);
+}
+
+.art-dash {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2;
+  stroke-dasharray: 3 16;
+  stroke-linecap: round;
+}
+
+.art-ring {
+  fill: none;
+  stroke: var(--color-slate);
+  stroke-width: 14;
+}
+
+.art-portrait {
+  filter: grayscale(1) contrast(1.1);
+}
+
+/* Motion: the rocket flies in once, the stars breathe, the planet drifts on scroll */
+.art-flight {
+  animation: launch 1600ms var(--ease-out) 150ms both;
+}
+
+.art-stars-1 {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+.art-stars-2 {
+  animation: twinkle 7s ease-in-out -2s infinite;
+}
+
+.art-stars-3 {
+  animation: twinkle 9s ease-in-out -5s infinite;
+}
+
+@keyframes launch {
+  from {
+    opacity: 0;
+    transform: translate(-300px, 140px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes drift-far {
+  to {
+    transform: translateY(70px);
+  }
+}
+
+@keyframes drift-near {
+  to {
+    transform: translateY(170px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .art-sky {
+      animation: drift-far linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 900px;
+    }
+
+    .art-planet {
+      animation: drift-near linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 900px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-hero h1,
+  .art-flight,
+  .art-stars-1,
+  .art-stars-2,
+  .art-stars-3 {
+    animation: none;
+  }
+}
+
+/* ---- Below the poster: the introduction, the programme slip, the notice ---- */
+.intro-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-xl) var(--gap-columns);
+  align-items: start;
+  padding-block: var(--space-3xl) var(--space-xl);
+}
+
+.intro-strip .hero-intro {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-xl);
+  line-height: 1.5;
+}
+
+.intro-side {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.intro-side .seeking-note {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .intro-strip {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: var(--space-2xl);
+  }
+
+  .intro-side .poster {
+    width: 100%;
+  }
+}
+
+/* On narrow screens the scene sits above the head instead of behind it */
+@media (max-width: 1000px) {
+  .poster-hero {
+    min-height: 0;
+    display: block;
+  }
+
+  .hero-art {
+    position: static;
+    height: clamp(340px, 52vw, 480px);
+    display: block;
+  }
+
+  .poster-hero-copy {
+    padding-block: var(--space-lg) var(--space-xl);
+  }
+}
+
+/* ---- Home contents list: five rows, each a way in ---- */
+.home-index {
+  margin-block: var(--space-xl) var(--space-3xl);
+  border-bottom: var(--rule-bar) solid var(--color-ink);
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: var(--gap-columns);
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  border-top: var(--rule-bar) solid var(--color-ink);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.index-number {
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+html:lang(zh) .index-number {
+  font-family: var(--font-display-zh);
+}
+
+.index-row h2,
+html:is(:lang(en), :lang(zh)) .index-row h2 {
+  margin: 0;
+  font-size: var(--text-head);
+  line-height: 1;
+}
+
+.index-row p {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: var(--text-md);
+}
+
+.index-row:hover,
+.index-row:focus-visible {
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+
+.index-row:hover :is(h2, p, .index-number),
+.index-row:focus-visible :is(h2, p, .index-number) {
+  color: var(--color-accent-ink);
+}
+
+.index-row:active {
+  background: var(--color-accent-deep);
+}
+
+@media (max-width: 760px) {
+  .index-row {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    row-gap: var(--space-xs);
+    padding-inline: 0;
+  }
+
+  .index-row p {
+    grid-column: 2;
+  }
+}
+
+/* ---- The diagonal: one rising line carried through the whole page ---- */
+:root {
+  --color-shade: oklch(80% 0.085 78);
+  --color-lip: oklch(74% 0.085 52);
+  --slant: 14px;
+  --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+
+/* scene parts new to the diagonal composition */
+.art-bar-wide {
+  fill: var(--color-slate-deep);
+}
+
+.art-bar-light {
+  fill: var(--color-ink);
+}
+
+.art-bar-red {
+  fill: var(--color-accent);
+}
+
+.fig-light {
+  fill: var(--color-ink);
+  stroke: var(--color-sky);
+  stroke-width: 16;
+  stroke-linejoin: miter;
+  paint-order: stroke;
+}
+
+.fig-shade {
+  fill: var(--color-shade);
+}
+
+.fig-mid {
+  fill: var(--color-slate);
+}
+
+.fig-red {
+  fill: var(--color-accent);
+}
+
+.fig-ear {
+  fill: var(--color-ink);
+}
+
+.fig-eye {
+  fill: var(--color-ink);
+}
+
+.fig-lips {
+  fill: var(--color-lip);
+}
+
+.fig-dark {
+  fill: var(--color-sky);
+}
+
+/* the hero ends on the diagonal, edged in cream */
+.poster-hero {
+  border-bottom: 0;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7vw), 0 100%);
+}
+
+.poster-hero::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(7vw + 12px);
+  content: '';
+  background: var(--color-ink);
+  clip-path: polygon(0 calc(100% - 12px), 100% 0, 100% 12px, 0 100%);
+  pointer-events: none;
+}
+
+html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+  transform: rotate(-5deg);
+}
+
+.poster-hero-copy {
+  padding-bottom: calc(var(--space-2xl) + 4vw);
+}
+
+/* controls and slips are cut as slabs leaning the same way */
+.button {
+  border: 0;
+  background: var(--color-paper-3);
+  clip-path: var(--shape-slab);
+  padding-inline: calc(var(--space-lg) + var(--slant));
+}
+
+.button-primary {
+  background: var(--color-accent);
+}
+
+.button-secondary:hover {
+  background: var(--color-accent);
+}
+
+.contact-band .button-primary {
+  background: var(--color-paper);
+}
+
+.intro-side .poster,
+.intro-side .seeking-note {
+  --slant: 26px;
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+}
+
+.intro-side .poster {
+  border: 0;
+  background: none;
+}
+
+.intro-side .poster-band {
+  padding-block: calc(var(--space-lg) + 26px);
+  border-top: 0;
+}
+
+.intro-side .seeking-note {
+  padding-block: calc(var(--space-lg) + 26px);
+  border-top: 0;
+}
+
+/* contents rows: slanted ends, the number on a red slab */
+.home-index {
+  border-bottom: 0;
+}
+
+.index-row {
+  --slant: 22px;
+  margin-bottom: var(--space-xs);
+  padding-inline: calc(var(--space-md) + var(--slant));
+  border-top: 0;
+  background: var(--color-paper-2);
+  clip-path: var(--shape-slab);
+}
+
+.index-number {
+  --slant: 10px;
+  justify-self: start;
+  padding: var(--space-xs) calc(var(--space-sm) + var(--slant));
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  clip-path: var(--shape-slab);
+}
+
+.index-row:hover .index-number,
+.index-row:focus-visible .index-number {
+  color: var(--color-accent);
+  background: var(--color-accent-ink);
+}
+
+.index-row:hover .index-number,
+.index-row:focus-visible .index-number {
+  color: var(--color-accent);
+}
+
+/* the closing band is a slab on the same lean */
+.contact-band {
+  border: 0;
+  padding-block: calc(var(--space-2xl) + 3vw);
+  clip-path: polygon(0 3vw, 100% 0, 100% calc(100% - 3vw), 0 100%);
+}
+
+@media (max-width: 1000px) {
+  .poster-hero {
+    clip-path: none;
+    background: var(--color-paper);
+  }
+
+  .poster-hero::after {
+    display: none;
+  }
+
+  .hero-art {
+    background: var(--color-sky);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9vw), 0 100%);
+  }
+
+  .poster-hero-copy {
+    padding-bottom: var(--space-xl);
+  }
+}
+
+@media (max-width: 760px) {
+  .index-row {
+    --slant: 12px;
+  }
+}
+
+/* On narrow screens the tilted head pivots from its top-left corner, so no line leaves the gutter */
+@media (max-width: 1000px) {
+  html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+    margin-top: var(--space-xl);
+    transform: rotate(-4deg);
+    transform-origin: left top;
+  }
+}
+
+/* The head sits in the middle of the space left of the figure, and tilts about its own centre */
+@media (min-width: 1001px) {
+  .poster-hero-copy {
+    padding-left: clamp(0px, 5vw, 88px);
+  }
+
+  html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+    transform-origin: center;
+  }
+}
+
+/* ---- The rocket's parabola ---- */
+.art-course {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2.5;
+  stroke-dasharray: 3 15;
+  stroke-linecap: round;
+}
+
+.art-trail {
+  animation: exhaust 1700ms var(--ease-out) 150ms both;
+}
+
+.art-trail-thin {
+  animation-delay: 350ms;
+}
+
+@keyframes exhaust {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (offset-path: path('M0 0 L1 1')) {
+  .art-rocket {
+    transform: none;
+    offset-path: path('M700 800 Q740 430 980 236');
+    offset-rotate: auto;
+    offset-distance: 100%;
+    animation: climb 1700ms var(--ease-out) 150ms both;
+  }
+}
+
+@keyframes climb {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-rocket,
+  .art-trail {
+    animation: none;
+  }
+}
+
+/* ---- Inner pages: a poster header, slanted slabs below ---- */
+.page-shell {
+  padding-top: 0;
+}
+
+.page-heading {
+  position: relative;
+  isolation: isolate;
+  max-width: none;
+  min-height: clamp(260px, 30vw, 360px);
+  display: grid;
+  align-content: center;
+  margin: 0 calc(50% - 50vw) var(--space-2xl);
+  padding: var(--space-2xl) max(20px, calc(50vw - var(--content) / 2)) calc(var(--space-2xl) + 5vw);
+  overflow: hidden;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5vw), 0 100%);
+}
+
+.page-heading::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(5vw + 10px);
+  content: '';
+  background: var(--color-ink);
+  clip-path: polygon(0 calc(100% - 10px), 100% 0, 100% 10px, 0 100%);
+  pointer-events: none;
+}
+
+.page-art {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: min(62%, 820px);
+  height: 100%;
+}
+
+.page-art .art-trail {
+  animation: none;
+}
+
+.page-heading > :not(.page-art) {
+  max-width: min(56%, 620px);
+}
+
+.page-heading .eyebrow {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-ink-2);
+}
+
+html:is(:lang(en), :lang(zh)) .page-heading h1 {
+  margin: 0 0 var(--space-lg);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+
+.page-heading h1::before {
+  content: none;
+}
+
+.page-heading > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: var(--text-lg);
+}
+
+/* cards lean the same way as the home contents rows */
+.content-card,
+.contact-card,
+.interest-card,
+.about-chapter {
+  --slant: 14px;
+  padding-block: calc(var(--space-lg) + var(--slant));
+  border-top: 0;
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+}
+
+/* dates and kinds ride a small red slab, like the contents numbers */
+.content-card > time,
+.content-card span.meta {
+  --slant: 8px;
+  width: fit-content;
+  display: block;
+  margin-bottom: var(--space-sm);
+  padding: var(--space-2xs) calc(var(--space-sm) + var(--slant));
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  clip-path: var(--shape-slab);
+}
+
+.tag {
+  --slant: 6px;
+  padding: var(--space-2xs) calc(var(--space-sm) + var(--slant));
+  border: 0;
+  color: var(--color-ink);
+  background: var(--color-paper-3);
+  clip-path: var(--shape-slab);
+}
+
+.page-section > h2::before,
+.contact-card > h2::before {
+  width: 0.5em;
+  height: 0.5em;
+  display: inline-block;
+  margin-right: 0.28em;
+  vertical-align: 0.12em;
+  content: '';
+  background: var(--color-gold);
+  clip-path: var(--shape-star);
+}
+
+/* the About portrait is the cut-out on its disc */
+.cutout-card {
+  border: 0;
+  background: none;
+}
+
+.cutout-card::after {
+  display: none;
+}
+
+.portrait-cutout {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), 0 100%);
+}
+
+@media (max-width: 760px) {
+  .page-heading {
+    min-height: 0;
+    display: block;
+    padding-top: 0;
+  }
+
+  .page-art {
+    position: static;
+    width: calc(100% + 40px);
+    height: 170px;
+    display: block;
+    margin: 0 -20px var(--space-lg);
+  }
+
+  .page-heading > :not(.page-art) {
+    max-width: none;
   }
 }

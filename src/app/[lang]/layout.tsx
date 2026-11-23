@@ -53,8 +53,8 @@ export async function generateMetadata({
       images: [
         {
           url: `${SITE_URL}/og.png`,
-          width: 1733,
-          height: 909,
+          width: 1200,
+          height: 630,
           alt: 'Yuning Gu — Pharmaceutical Sciences',
         },
       ],
@@ -73,8 +73,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f5f0' },
-    { media: '(prefers-color-scheme: dark)', color: '#121413' },
+    { media: '(prefers-color-scheme: light)', color: '#0b1a22' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1a22' },
   ],
 };
 
