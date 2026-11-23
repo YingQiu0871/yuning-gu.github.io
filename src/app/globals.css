@@ -1,37 +1,23 @@
-/* Hallmark · shape: kept · genre: playful · theme: Werkstatt (by request) · redesign: restyle
- * hero: kept · nav: kept · footer: kept · imagery: photographs · signature: the three research lines coded blue, red and yellow · werkstatt: putty, blackboard in dark mode
- * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P4 H3 E4 S4 R4 V4 · weakest: H, the kept hero carries a long intro and a notice above its actions; the notice moved below the actions so the first screen ends on them */
+/* Hallmark · shape: kept · genre: editorial · theme: Manifesto (by request) · redesign: restyle
+ * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: the hero head at poster size with one red word
+ * axes: dark/display-condensed/chromatic-red · posture: one-accent · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, a personal academic page under a campaign theme; the red is spent on the one word that names the work and on the closing band */
+/* Hallmark · waive 38iii · one red word, once, in the hero head · the theme names it as its signature */
 @import url('./tokens.css');
 @import url('./base.css');
 
 :root {
-  --font-display: var(--font-jost), 'Jost', 'Futura', sans-serif;
-  --font-body: var(--font-karla), 'Karla', ui-sans-serif, system-ui, sans-serif;
-  --font-display-zh: var(--font-jost), var(--font-hei-sc), 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: var(--font-anton), 'Anton', 'Impact', sans-serif;
+  --font-body: var(--font-public-sans), 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display-zh: var(--font-anton), var(--font-hei-sc), 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-body-zh:
-    var(--font-karla), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
-    system-ui, sans-serif;
-  --color-accent-3-ink: oklch(18% 0.008 60);
+    var(--font-public-sans), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui,
+    sans-serif;
+  --text-hero: clamp(3rem, 7vw, 6rem);
+  --text-hero-zh: clamp(2.75rem, 7vw, 6rem);
+  --text-head: clamp(2.5rem, 5vw, 4.5rem);
   --header-height: 72px;
   --content: 1120px;
-}
-
-/* Werkstatt's blackboard colourway carries the site's dark mode */
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --color-paper: oklch(17% 0.005 60);
-  --color-paper-2: oklch(21% 0.006 60);
-  --color-paper-3: oklch(24% 0.007 60);
-  --color-ink: oklch(90% 0.015 80);
-  --color-ink-2: oklch(82% 0.015 80);
-  --color-muted: oklch(72% 0.015 78);
-  --color-rule: oklch(38% 0.01 60);
-  --color-accent: oklch(54% 0.2 264);
-  --color-accent-2: oklch(62% 0.205 33);
-  --color-accent-2-deep: oklch(55% 0.19 31);
-  --color-accent-3: oklch(88% 0.165 92);
-  --color-focus: oklch(72% 0.14 264);
 }
 
 * {
@@ -1789,35 +1775,100 @@ html:lang(zh) .about-chapter p {
   font-size: clamp(1.6rem, 2.8vw, 2.1rem);
 }
 
-/* ---- Werkstatt: type ---- */
+/* ---- Manifesto: type ---- */
+body {
+  color: var(--color-ink-2);
+}
+
 h1,
 h2,
 h3,
 html:lang(en) :is(h1, h2, h3),
 html:lang(zh) :is(h1, h2, h3) {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-display);
   max-width: none;
+  color: var(--color-ink);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
 }
 
-html:lang(en) :is(h1, h2) {
-  line-height: 1.02;
+html:lang(en) :is(.stats-strip strong, .focus-card > span, .publication-index, .brand-mark, .not-found-code) {
+  font-weight: 400;
 }
 
 html:lang(zh) :is(h1, h2, h3, .stats-strip strong, .focus-card > span, .publication-index, .brand-mark, .not-found-code) {
   font-family: var(--font-display-zh);
   font-weight: 900;
+  line-height: 1.12;
   letter-spacing: 0;
 }
 
-.hero h1 {
-  font-size: clamp(2.25rem, 4.4vw, 3.5rem);
-  font-weight: 700;
+/* The hero head is the poster: full width, above the copy, one word in red */
+.hero {
+  row-gap: var(--space-xl);
+  align-items: start;
 }
 
-html:lang(zh) .hero h1 {
-  font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+.hero > h1 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--text-hero);
+  animation: wipe var(--dur-long) var(--ease-out) both;
+}
+
+html:lang(zh) .hero > h1 {
+  font-size: var(--text-hero-zh);
+  line-height: 1.1;
+}
+
+.hero .hot {
+  color: var(--color-accent-text);
+}
+
+@keyframes wipe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero > h1 {
+    animation: none;
+  }
+}
+
+.hero-intro {
+  color: var(--color-ink-2);
+  font-size: var(--text-lead);
+}
+
+.section-heading h2,
+.section-title-row h2,
+.education-panel > h2,
+.contact-band h2,
+.page-heading h1 {
+  font-size: var(--text-head);
+}
+
+html:lang(zh) :is(.section-heading h2, .section-title-row h2, .education-panel > h2, .contact-band h2, .page-heading h1) {
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+}
+
+.timeline h3,
+.education-panel h3,
+.focus-card h3,
+.content-card h2,
+.content-card h3,
+.contact-card h2,
+.profile-card-copy h2,
+.interest-card h3 {
+  font-size: var(--text-xl);
+  line-height: 1.1;
 }
 
 /* Paper titles are citations, not display heads: body face, as published */
@@ -1827,8 +1878,8 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
   font-size: var(--text-lg);
   font-weight: 600;
   line-height: 1.3;
-  text-transform: none;
   letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Labels: the body face, a step smaller, sentence case */
@@ -1845,11 +1896,12 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 .contact-detail span,
 .interest-meta,
 .about-focus > span,
-.about-chapter-item span {
+.about-chapter-item span,
+.stats-strip span {
   color: var(--color-muted);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .eyebrow::before {
@@ -1864,34 +1916,35 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 .author-self {
-  font-weight: 700;
+  color: var(--color-ink);
+  font-weight: 600;
 }
 
-/* ---- Werkstatt: controls ---- */
+/* ---- Manifesto: controls ---- */
 .button {
   min-height: 48px;
-  padding: var(--space-md) var(--space-lg);
-  border: var(--rule-bar) solid var(--color-ink);
+  padding: var(--space-sm) var(--space-lg);
+  border: var(--rule-hair) solid var(--color-ink-2);
   color: var(--color-ink);
-  background: transparent;
-  font: 600 var(--text-sm) / 1 var(--font-body);
-  text-transform: uppercase;
+  background: none;
+  font: 600 var(--text-md) / 1 var(--font-body);
 }
 
-.button-primary,
-:root[data-theme='dark'] .button-primary {
-  color: var(--color-paper);
-  background: var(--color-ink);
+.button-primary {
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
-.button-primary:hover,
-:root[data-theme='dark'] .button-primary:hover {
-  border-color: var(--color-ink-2);
-  background: var(--color-ink-2);
+.button-primary:hover {
+  border-color: var(--color-accent-deep);
+  background: var(--color-accent-deep);
 }
 
 .button-secondary:hover {
-  background: var(--color-paper-3);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .button:active {
@@ -1904,15 +1957,16 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
   color: var(--color-ink);
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
 .text-link:hover,
 .contact-detail a:hover,
-.footer-profiles a:hover {
-  text-decoration-thickness: 3px;
-  text-underline-offset: 0.2em;
+.footer-profiles a:hover,
+.desktop-nav a:hover,
+.mobile-nav a:hover {
+  color: var(--color-accent-text);
 }
 
 .text-link:active,
@@ -1928,133 +1982,144 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 ::selection {
-  color: var(--color-accent-3-ink);
-  background: var(--color-accent-3);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .publication-row > a {
-  border: var(--rule-bar) solid var(--color-ink);
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--rule-hair) solid var(--color-ink-2);
   color: var(--color-ink);
   font: 600 var(--text-xs) / 1 var(--font-body);
-  padding: var(--space-xs) var(--space-sm);
 }
 
 .publication-row > a:hover {
-  background: var(--color-paper-3);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .tag {
-  border: var(--rule-hair) solid var(--color-ink);
-  color: var(--color-ink);
+  border: var(--rule-hair) solid var(--color-rule);
+  color: var(--color-ink-2);
 }
 
-/* ---- Werkstatt: rules and cells ---- */
+/* The sheet stays dark: Manifesto has no light ground, so the switch is retired */
+.theme-toggle {
+  display: none;
+}
+
+/* ---- Manifesto: rules and fields ---- */
 .site-header {
   border-bottom: var(--rule-bar) solid var(--color-ink);
 }
 
+.brand-mark {
+  color: var(--color-paper);
+  background: var(--color-ink);
+}
+
+/* No boxed cards: a well is a darker field under a hairline */
 .profile-card,
 .content-card,
 .contact-card,
 .education-panel,
 .interest-card,
-.about-chapter {
-  border: var(--rule-bar) solid var(--color-ink);
-  background: transparent;
-}
-
-.portrait-wrap {
-  border-bottom: var(--rule-bar) solid var(--color-ink);
-}
-
-/* Photographs print black and white so the primaries stay the only colour */
-.portrait-wrap img {
-  filter: grayscale(1) contrast(1.05);
+.about-chapter,
+.seeking-note {
+  border: 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
 }
 
 .seeking-note {
   margin: var(--space-lg) 0 0;
   padding: var(--space-md);
-  border: var(--rule-bar) solid var(--color-ink);
-  border-left-width: var(--rule-bar);
-  color: var(--color-ink);
+  color: var(--color-ink-2);
+}
+
+/* Photographs print in the ink, inside a hairline ring */
+.portrait-wrap {
+  border: var(--rule-hair) solid var(--color-rule);
+}
+
+.portrait-wrap img {
+  filter: grayscale(1) contrast(1.1) brightness(0.95);
 }
 
 .stats-strip {
   padding: 0;
-  border: var(--rule-box) solid var(--color-ink);
+  border-top: var(--rule-hair) solid var(--color-rule);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
 }
 
 .stats-strip div,
 .stats-strip div:first-child {
   flex-direction: column;
   gap: var(--space-2xs);
-  padding: var(--space-lg);
-  border-right: var(--rule-box) solid var(--color-ink);
-}
-
-.stats-strip div:last-child {
+  padding: var(--space-lg) var(--space-lg) var(--space-lg) 0;
   border-right: 0;
 }
 
 .stats-strip strong {
+  color: var(--color-ink);
   font-family: var(--font-display);
-  font-size: var(--text-display-s);
-  font-weight: 700;
+  font-size: var(--text-head);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.stats-strip span {
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  font-weight: 600;
+/* The record: research lines as full-width rows under hairlines */
+.focus-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
 }
 
-/* The three research lines, one primary each, wherever they appear */
-.focus-card {
+.focus-card,
+.focus-card:last-child {
   min-height: 0;
-  padding: 0;
-  border: var(--rule-bar) solid var(--color-ink);
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1.3fr);
+  column-gap: var(--gap-columns);
+  align-items: start;
+  padding: var(--space-lg) 0;
+  border: 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
 }
 
-.focus-card:hover {
-  border-color: var(--color-ink);
-}
-
-.focus-card > span {
-  margin: 0 0 var(--space-lg);
-  padding: var(--space-md) var(--space-lg);
-  border-bottom: var(--rule-bar) solid var(--color-ink);
-  color: var(--color-accent-ink);
-  background: var(--color-accent);
+.focus-card > span,
+.focus-card:last-child > span {
+  grid-row: 1 / span 2;
+  margin: 0;
+  color: var(--color-muted);
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 700;
+  font-size: var(--text-head);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.focus-card:nth-child(2) > span {
-  color: var(--color-accent-ink);
-  background: var(--color-accent-2-deep);
+.focus-card > .focus-tag {
+  grid-column: 2;
+  margin: 0 0 var(--space-xs);
 }
 
-.focus-card:nth-child(3) > span {
-  color: var(--color-accent-3-ink);
-  background: var(--color-accent-3);
-}
-
-.focus-card > :not(span) {
-  margin-inline: var(--space-lg);
+.focus-card > h3 {
+  grid-column: 2;
+  margin: 0;
+  font-size: var(--text-2xl);
 }
 
 .focus-card > p:last-child {
-  margin-bottom: var(--space-lg);
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  margin: 0;
+  font-size: var(--text-md);
 }
 
 .section-title-row,
 .section-heading {
-  padding-top: var(--space-lg);
-  border-top: var(--rule-box) solid var(--color-ink);
+  padding-top: 0;
+  border-top: 0;
 }
 
 .timeline article,
@@ -2063,33 +2128,30 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 .publication-index {
-  color: var(--color-ink);
+  color: var(--color-muted);
   font-family: var(--font-display);
-  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-/* The closing band is an ink band; its button inverts to paper */
+/* The page's one red field; on it the action turns to the ground */
 .contact-band {
   border: 0;
-  color: var(--color-paper);
-  background: var(--color-ink);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
 }
 
 .contact-band h2,
 .contact-band p {
-  color: var(--color-paper);
+  color: var(--color-accent-ink);
 }
 
-.contact-band .button-primary,
-:root[data-theme='dark'] .contact-band .button-primary {
+.contact-band .button-primary {
   border-color: var(--color-paper);
   color: var(--color-ink);
   background: var(--color-paper);
 }
 
-.contact-band .button-primary:hover,
-:root[data-theme='dark'] .contact-band .button-primary:hover {
+.contact-band .button-primary:hover {
   border-color: var(--color-paper-3);
   background: var(--color-paper-3);
 }
@@ -2097,7 +2159,6 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 /* One column gap for every multi-column section */
 .hero,
 .section-heading,
-.focus-grid,
 .split-section,
 .content-grid,
 .contact-grid,
@@ -2106,11 +2167,21 @@ html:is(:lang(en), :lang(zh)) .publication-card h2 {
 }
 
 @media (max-width: 720px) {
+  .focus-card,
+  .focus-card:last-child {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+
+  .focus-card > p:last-child {
+    grid-column: 2;
+    grid-row: auto;
+    margin-top: var(--space-sm);
+  }
+
   .stats-strip div,
   .stats-strip div:first-child {
-    padding: var(--space-md);
-    border-right: 0;
-    border-bottom: var(--rule-box) solid var(--color-ink);
+    padding: var(--space-md) 0;
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
 
   .stats-strip div:last-child {

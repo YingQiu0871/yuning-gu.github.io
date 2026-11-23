@@ -1,19 +1,20 @@
-import { Jost, Karla, Noto_Sans_SC } from 'next/font/google';
+import { Anton, Noto_Sans_SC, Public_Sans } from 'next/font/google';
 
-// Werkstatt: Jost capitals for display, Karla for everything read.
-export const display = Jost({
+// Manifesto: Anton capitals at poster size over a quiet Public Sans body.
+export const display = Anton({
+  weight: '400',
   subsets: ['latin'],
-  variable: '--font-jost',
+  variable: '--font-anton',
   display: 'swap',
 });
 
-export const body = Karla({
+export const body = Public_Sans({
   subsets: ['latin'],
-  variable: '--font-karla',
+  variable: '--font-public-sans',
   display: 'swap',
 });
 
-// Chinese display weight to stand beside Jost 700. Google serves it in unicode-range
+// Chinese display weight to stand beside Anton. Google serves it in unicode-range
 // slices, so a page only downloads the slices its headings actually use.
 export const displaySC = Noto_Sans_SC({
   weight: ['900'],

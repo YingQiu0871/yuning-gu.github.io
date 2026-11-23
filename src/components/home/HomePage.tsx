@@ -22,8 +22,12 @@ export default function HomePage({ lang }: { lang: Locale }) {
   return (
     <>
       <section className="hero section-shell" aria-labelledby="hero-title">
+        <h1 id="hero-title">
+          {content.title}
+          <span className="hot">{content.titleAccent}</span>
+          {content.titleEnd}
+        </h1>
         <div className="hero-copy">
-          <h1 id="hero-title">{content.title}</h1>
           <p className="hero-intro">{content.intro}</p>
           <div className="hero-actions">
             <Link className="button button-primary" href={`/${lang}/research`}>
