@@ -1,5 +1,5 @@
 /* Hallmark · shape: kept · genre: editorial · theme: custom, a constructivist space-poster direction on the Manifesto scale · redesign: restyle
- * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: the hero is one poster scene, a capsule rocket climbing to a red planet
+ * hero: kept, the head now runs the full width above the copy · nav: kept · footer: kept · imagery: photographs · signature: one rising diagonal through the page, and the portrait as a hard-edged cut-out on a red disc
  * axes: dark/display-condensed/chromatic-red · posture: red and gold · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, a personal academic page under a campaign theme; the red is spent on the one word that names the work and on the closing band */
 /* Hallmark · waive 38iii · one word on a red plate, once, in the hero head · it is the direction's signature */
@@ -2643,7 +2643,7 @@ html:lang(zh) .poster-hero h1:lang(zh) {
 @keyframes launch {
   from {
     opacity: 0;
-    transform: translate(-340px, 420px);
+    transform: translate(-300px, 140px);
   }
 
   to {
@@ -2822,5 +2822,177 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
   .index-row p {
     grid-column: 2;
+  }
+}
+
+/* ---- The diagonal: one rising line carried through the whole page ---- */
+:root {
+  --slant: 14px;
+  --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+
+/* scene parts new to the diagonal composition */
+.art-bar-wide {
+  fill: var(--color-slate-deep);
+}
+
+.art-bar-light {
+  fill: var(--color-ink);
+}
+
+.art-bar-red {
+  fill: var(--color-accent);
+}
+
+.fig-light {
+  fill: var(--color-ink);
+  stroke: var(--color-sky);
+  stroke-width: 14;
+  stroke-linejoin: miter;
+  paint-order: stroke;
+}
+
+.fig-mid {
+  fill: var(--color-slate);
+}
+
+.fig-red {
+  fill: var(--color-accent);
+}
+
+.fig-dark {
+  fill: var(--color-sky);
+}
+
+/* the hero ends on the diagonal, edged in cream */
+.poster-hero {
+  border-bottom: 0;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7vw), 0 100%);
+}
+
+.poster-hero::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(7vw + 12px);
+  content: '';
+  background: var(--color-ink);
+  clip-path: polygon(0 calc(100% - 12px), 100% 0, 100% 12px, 0 100%);
+  pointer-events: none;
+}
+
+html:is(:lang(en), :lang(zh)) .poster-hero h1 {
+  transform: rotate(-5deg);
+}
+
+.poster-hero-copy {
+  padding-bottom: calc(var(--space-2xl) + 4vw);
+}
+
+/* controls and slips are cut as slabs leaning the same way */
+.button {
+  border: 0;
+  background: var(--color-paper-3);
+  clip-path: var(--shape-slab);
+  padding-inline: calc(var(--space-lg) + var(--slant));
+}
+
+.button-primary {
+  background: var(--color-accent);
+}
+
+.button-secondary:hover {
+  background: var(--color-accent);
+}
+
+.contact-band .button-primary {
+  background: var(--color-paper);
+}
+
+.intro-side .poster,
+.intro-side .seeking-note {
+  --slant: 26px;
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+}
+
+.intro-side .poster {
+  border: 0;
+  background: none;
+}
+
+.intro-side .poster-band {
+  padding-block: calc(var(--space-lg) + 26px);
+  border-top: 0;
+}
+
+.intro-side .seeking-note {
+  padding-block: calc(var(--space-lg) + 26px);
+  border-top: 0;
+}
+
+/* contents rows: slanted ends, the number on a red slab */
+.home-index {
+  border-bottom: 0;
+}
+
+.index-row {
+  --slant: 22px;
+  margin-bottom: var(--space-xs);
+  padding-inline: calc(var(--space-md) + var(--slant));
+  border-top: 0;
+  background: var(--color-paper-2);
+  clip-path: var(--shape-slab);
+}
+
+.index-number {
+  --slant: 10px;
+  justify-self: start;
+  padding: var(--space-xs) calc(var(--space-sm) + var(--slant));
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  clip-path: var(--shape-slab);
+}
+
+.index-row:hover .index-number,
+.index-row:focus-visible .index-number {
+  color: var(--color-accent);
+  background: var(--color-accent-ink);
+}
+
+.index-row:hover .index-number,
+.index-row:focus-visible .index-number {
+  color: var(--color-accent);
+}
+
+/* the closing band is a slab on the same lean */
+.contact-band {
+  border: 0;
+  padding-block: calc(var(--space-2xl) + 3vw);
+  clip-path: polygon(0 3vw, 100% 0, 100% calc(100% - 3vw), 0 100%);
+}
+
+@media (max-width: 1000px) {
+  .poster-hero {
+    clip-path: none;
+    background: var(--color-paper);
+  }
+
+  .poster-hero::after {
+    display: none;
+  }
+
+  .hero-art {
+    background: var(--color-sky);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9vw), 0 100%);
+  }
+
+  .poster-hero-copy {
+    padding-bottom: var(--space-xl);
+  }
+}
+
+@media (max-width: 760px) {
+  .index-row {
+    --slant: 12px;
   }
 }
