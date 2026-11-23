@@ -2754,3 +2754,73 @@ html:lang(zh) .poster-hero h1:lang(zh) {
     padding-block: var(--space-lg) var(--space-xl);
   }
 }
+
+/* ---- Home contents list: five rows, each a way in ---- */
+.home-index {
+  margin-block: var(--space-xl) var(--space-3xl);
+  border-bottom: var(--rule-bar) solid var(--color-ink);
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: var(--gap-columns);
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  border-top: var(--rule-bar) solid var(--color-ink);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.index-number {
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+html:lang(zh) .index-number {
+  font-family: var(--font-display-zh);
+}
+
+.index-row h2,
+html:is(:lang(en), :lang(zh)) .index-row h2 {
+  margin: 0;
+  font-size: var(--text-head);
+  line-height: 1;
+}
+
+.index-row p {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: var(--text-md);
+}
+
+.index-row:hover,
+.index-row:focus-visible {
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+
+.index-row:hover :is(h2, p, .index-number),
+.index-row:focus-visible :is(h2, p, .index-number) {
+  color: var(--color-accent-ink);
+}
+
+.index-row:active {
+  background: var(--color-accent-deep);
+}
+
+@media (max-width: 760px) {
+  .index-row {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    row-gap: var(--space-xs);
+    padding-inline: 0;
+  }
+
+  .index-row p {
+    grid-column: 2;
+  }
+}
