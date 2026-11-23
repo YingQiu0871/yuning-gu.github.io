@@ -2829,6 +2829,7 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 :root {
   --color-shade: oklch(80% 0.085 78);
   --color-lip: oklch(74% 0.085 52);
+  --color-eye: oklch(98.5% 0.01 95);
   --slant: 14px;
   --shape-slab: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }
@@ -2868,6 +2869,10 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 
 .fig-ear {
   fill: var(--color-ink);
+}
+
+.fig-eye {
+  fill: var(--color-eye);
 }
 
 .fig-lips {

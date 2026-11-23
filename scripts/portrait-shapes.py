@@ -66,7 +66,7 @@ def contours(mask, eps, min_area, scale):
         if len(p) >= 3: out.append(p.reshape(-1, 2).astype(np.float64) / scale)
     return out
 
-face = {'brows': [], 'nose': [], 'lipline': [], 'lips': [], 'eyes': []}
+face = {'brows': [], 'nose': [], 'lipline': [], 'lips': [], 'eyewhite': [], 'iris': [], 'lid': []}
 if len(sys.argv) > 4:
     KI = 3
     idr = cv2.cvtColor(np.array(Image.open(sys.argv[4]).convert('RGB')), cv2.COLOR_RGB2BGR)
@@ -88,11 +88,20 @@ if len(sys.argv) > 4:
     thin = lambda pts: [(x, 280.5 + (y - 280.5) * 0.5) for x, y in pts]
     face['lips'] = [np.array(thin(upper), np.float64), np.array(thin(lower), np.float64)]
     face['lipline'] = [np.array(seam, np.float64)]
-    almond = [(-22, 1.7), (-12.5, -6.7), (3.6, -8.4), (16, -4.8), (22, 1.2), (12.5, 6.2), (-7, 6.5)]
-    face['eyes'] = [np.array([(ex + f * dx, ey + dy) for dx, dy in almond]) for (ex, ey), f in zip(ID_EYES, (1, -1))]
+    # each eye is built from plain shapes: the white, the iris, and the upper lid as a dark crescent
+    top = [(-22, 1.7), (-12.5, -6.7), (3.6, -8.4), (16, -4.8), (22, 1.2)]
+    bottom = [(12.5, 6.2), (-7, 6.5)]
+    lid = top + [(x * 0.97, y + (3.4 if abs(x) < 20 else 1.6)) for x, y in reversed(top)]
+    ang = np.linspace(0, 2 * np.pi, 14, endpoint=False)
+    iris = [(1.5 + 6.6 * np.cos(t), -0.9 + 6.6 * np.sin(t)) for t in ang]
+    def place(shape, ex, ey, f): return np.array([(ex + f * dx, ey + dy) for dx, dy in shape], np.float64)
+    face['eyewhite'] = [place(top + bottom, ex, ey, f) for (ex, ey), f in zip(ID_EYES, (1, -1))]
+    face['iris'] = [place(iris, ex, ey, f) for (ex, ey), f in zip(ID_EYES, (1, -1))]
+    face['lid'] = [place(lid, ex, ey, f) for (ex, ey), f in zip(ID_EYES, (1, -1))]
     face = {k: [to_sea(p) for p in v] for k, v in face.items()}
     # the eyes sit a little lower, nearer the middle of each lens
-    face['eyes'] = [p + np.array([0.0, 4.5]) for p in face['eyes']]
+    for part in ('eyewhite', 'iris', 'lid'):
+        face[part] = [p + np.array([0.0, 4.5]) for p in face[part]]
 
 # the spectacles: thick dark frames, measured on the figure photo
 KG = 4
@@ -125,7 +134,7 @@ def polys(m, e, min_area):
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
 layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)),
-          ('ear', ear), ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline'] + ear_fold), ('eyes', face['eyes']), ('glasses', glasses)]
+          ('ear', ear), ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline'] + ear_fold), ('eyewhite', face['eyewhite']), ('iris', face['iris']), ('lid', face['lid']), ('glasses', glasses)]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
 def d(ps):
@@ -134,7 +143,7 @@ shapes = {name: d(ps) for name, ps in layers}
 json.dump({'width': int(wbox), 'height': int(hbox), 'shapes': shapes}, open(outdir + '/portrait.json', 'w'))
 
 # preview
-cols = {'light': (168, 231, 246), 'ear': (168, 231, 246), 'lips': (70, 100, 214), 'eyes': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
+cols = {'light': (168, 231, 246), 'ear': (168, 231, 246), 'lips': (70, 100, 214), 'eyewhite': (246, 250, 252), 'iris': (34, 26, 11), 'lid': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
 prev = np.full((H * 3, W * 3, 3), (60, 40, 20), np.uint8)
 for name, ps in layers:
     layer = np.zeros((H * 3, W * 3), np.uint8)

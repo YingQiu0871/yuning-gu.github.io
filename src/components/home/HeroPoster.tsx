@@ -82,7 +82,9 @@ export default function HeroPoster({ label }: { label: string }) {
         <path className="fig-ear" d={portraitShapes.ear} />
         <path className="fig-lips" d={portraitShapes.lips} />
         <path className="fig-dark" d={portraitShapes.lines} />
-        <path className="fig-dark" d={portraitShapes.eyes} />
+        <path className="fig-eye" d={portraitShapes.eyewhite} />
+        <path className="fig-dark" d={portraitShapes.iris} />
+        <path className="fig-dark" d={portraitShapes.lid} />
         <path className="fig-dark" fillRule="evenodd" d={portraitShapes.glasses} />
       </g>
     </svg>
