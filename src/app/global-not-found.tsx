@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
 import ThemeScript from '@/components/layout/ThemeScript';
+import LostArt from '@/components/poster/LostArt';
 import { fontVariables } from '@/lib/fonts';
 
 export const metadata: Metadata = {
@@ -15,9 +16,11 @@ export default function GlobalNotFound() {
       <head>
         <ThemeScript />
       </head>
-      <body className="not-found-body">
-        <main className="not-found-page">
-          <header className="not-found-header">
+      <body className="lost-body">
+        <main className="lost-page">
+          <LostArt />
+
+          <header className="lost-header">
             <Link className="brand" href="/" aria-label="Yuning Gu home">
               <span className="brand-mark" aria-hidden="true">
                 YG
@@ -27,58 +30,42 @@ export default function GlobalNotFound() {
                 <small>谷昱宁</small>
               </span>
             </Link>
-            <span>Pharmaceutical Sciences</span>
           </header>
 
-          <section className="not-found-content" aria-labelledby="not-found-title">
-            <div className="not-found-copy">
-              <p className="eyebrow">404 · Page not found</p>
-              <p className="not-found-code" aria-hidden="true">
-                404
-              </p>
-              <h1 id="not-found-title">
-                This page could not be found.
-                <span>页面未找到。</span>
-              </h1>
-              <p>
-                The address may have changed, or the page may no longer exist.
-                <span>该页面可能已移动，或输入的地址有误。</span>
-              </p>
-              <div className="not-found-actions">
-                <Link className="button button-primary" href="/">
-                  Back to home
-                </Link>
-                <Link className="button button-secondary" href="/zh/">
-                  返回中文首页
-                </Link>
-              </div>
-              <nav className="not-found-links" aria-label="Suggested pages">
-                <Link href="/en/research/">Research</Link>
-                <Link href="/en/publications/">Publications</Link>
-                <Link href="/en/contact/">Contact</Link>
-              </nav>
+          <section className="lost-copy" aria-labelledby="lost-title">
+            <p className="lost-code" aria-hidden="true">
+              404
+            </p>
+            <h1 id="lost-title">
+              This page is <span className="hot">off course</span>
+              <span className="lost-zh" lang="zh">
+                页面偏离了航线
+              </span>
+            </h1>
+            <p className="lost-note">
+              The address may have changed, or the page may no longer exist.
+              <span lang="zh">这个地址可能已经改了，或者页面已经不在了。</span>
+            </p>
+            <div className="lost-actions">
+              <Link className="button button-primary" href="/">
+                Back to home
+              </Link>
+              <Link className="button button-secondary" href="/zh/">
+                返回中文首页
+              </Link>
             </div>
-
-            <div className="not-found-visual" aria-hidden="true">
-              <div className="not-found-orbit orbit-one">
-                <span />
-              </div>
-              <div className="not-found-orbit orbit-two">
-                <span />
-              </div>
-              <div className="not-found-tablet tablet-one" />
-              <div className="not-found-tablet tablet-two" />
-              <div className="not-found-particle particle-one" />
-              <div className="not-found-particle particle-two" />
-              <div className="not-found-particle particle-three" />
-            </div>
+            <nav className="lost-links" aria-label="Suggested pages">
+              <Link href="/en/research/">Research</Link>
+              <Link href="/en/publications/">Publications</Link>
+              <Link href="/en/contact/">Contact</Link>
+            </nav>
           </section>
-
-          <footer className="not-found-footer">
-            <span>yuning-gu.github.io</span>
-            <span>Université Paris-Saclay · 2026</span>
-          </footer>
         </main>
+
+        <footer className="lost-footer">
+          <span>yingqiu.me</span>
+          <span>Université Paris-Saclay, 2026</span>
+        </footer>
       </body>
     </html>
   );
