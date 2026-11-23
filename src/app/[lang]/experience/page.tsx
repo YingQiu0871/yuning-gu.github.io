@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import PageArt from '@/components/poster/PageArt';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import { experiences, pageLabels } from '@/lib/site-content';
@@ -26,6 +27,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ lan
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{lang === 'zh' ? '实践与研究' : 'Practice and research'}</p>
         <h1>{label.experience}</h1>
         <p>

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import PageArt from '@/components/poster/PageArt';
+import PortraitCutout from '@/components/poster/PortraitCutout';
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import { profile, skills } from '@/lib/site-content';
@@ -180,25 +181,18 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{profile.name}</p>
         <h1>{content.title}</h1>
         <p>{content.intro}</p>
       </header>
 
       <div className="contact-grid about-grid">
-        <div className="profile-card">
-          <div className="portrait-wrap">
-            <Image
-              src="/images/avatar.webp"
-              width="416"
-              height="416"
-              alt={`${profile.name} portrait`}
-              sizes="(max-width: 720px) 72vw, 416px"
-            />
-          </div>
+        <div className="profile-card cutout-card">
+          <PortraitCutout label={`${profile.name} portrait`} />
           <div className="profile-card-copy">
-            <p className="card-label">Yuning Gu · 谷昱宁</p>
-            <p>{lang === 'zh' ? '药物科学 · 制剂技术 · 临床研究' : 'Pharmaceutical sciences · Formulation · Clinical research'}</p>
+            <p className="card-label">Yuning Gu 谷昱宁</p>
+            <p>{lang === 'zh' ? '药物科学、制剂技术、临床研究' : 'Pharmaceutical sciences, formulation, clinical research'}</p>
           </div>
         </div>
 

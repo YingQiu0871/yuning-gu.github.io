@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import PageArt from '@/components/poster/PageArt';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import { homeContent, pageLabels, projects } from '@/lib/site-content';
@@ -27,6 +28,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ lang:
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{lang === 'zh' ? '药物制剂技术' : 'Pharmaceutical technology'}</p>
         <h1>{label.research}</h1>
         <p>{content.focusIntro}</p>

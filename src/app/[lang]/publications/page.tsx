@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import PageArt from '@/components/poster/PageArt';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import Authors from '@/components/Authors';
@@ -27,6 +28,7 @@ export default async function PublicationsPage({ params }: { params: Promise<{ l
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{lang === 'zh' ? '学术成果' : 'Research output'}</p>
         <h1>{label.publications}</h1>
         <p>

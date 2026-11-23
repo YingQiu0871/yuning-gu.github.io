@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import PageArt from '@/components/poster/PageArt';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import { pageLabels, profile } from '@/lib/site-content';
@@ -25,6 +26,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{lang === 'zh' ? '交流与合作' : 'Exchange and collaboration'}</p>
         <h1>{label.contact}</h1>
         <p>{label.contactIntro}</p>

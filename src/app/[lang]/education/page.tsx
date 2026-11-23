@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import PageArt from '@/components/poster/PageArt';
 import { isValidLocale } from '@/lib/i18n/config';
 import { createPageMetadata } from '@/lib/metadata';
 import { education, pageLabels } from '@/lib/site-content';
@@ -25,6 +26,7 @@ export default async function EducationPage({ params }: { params: Promise<{ lang
   return (
     <div className="page-shell">
       <header className="page-heading">
+        <PageArt />
         <p className="eyebrow">{lang === 'zh' ? '学习路径' : 'Academic path'}</p>
         <h1>{label.education}</h1>
         <p>

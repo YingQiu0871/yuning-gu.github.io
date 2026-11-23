@@ -1,4 +1,5 @@
-import { portraitShapes } from '@/components/home/portraitShapes';
+import PortraitFigure from '@/components/poster/PortraitFigure';
+import Rocket from '@/components/poster/Rocket';
 
 // The home hero's picture: one flat poster scene behind the headline, built on a
 // single rising diagonal. A red disc stands behind a cut-out portrait (the photo
@@ -65,34 +66,11 @@ export default function HeroPoster({ label }: { label: string }) {
       <path className="art-trail art-trail-thin" d="M790 800 Q796 500 944 290 L949 293 Q820 500 816 800 Z" />
       {/* static placement here; where offset-path is supported the stylesheet flies it along the curve */}
       <g className="art-rocket" transform="translate(980 236) rotate(-39)">
-        <g transform="scale(1.8)">
-          <path className="art-fin" d="M-26 -11 L-46 -28 L-10 -11 Z" />
-          <path className="art-fin" d="M-26 11 L-46 28 L-10 11 Z" />
-          <path className="art-nozzle" d="M-26 -8 L-34 -11 L-34 11 L-26 8 Z" />
-          <rect className="art-hull" x="-26" y="-11" width="42" height="22" />
-          <rect className="art-stripe" x="-4" y="-11" width="6" height="22" />
-          <rect className="art-stripe" x="6" y="-11" width="2" height="22" />
-          <circle className="art-stripe" cx="-15" cy="0" r="4.5" />
-          <path className="art-wedge" d="M16 -11 L46 0 L16 11 Z" />
-        </g>
+        <Rocket transform="scale(1.8)" />
       </g>
 
       {/* the portrait as a cut-out: silhouette with a dark keyline, the tones, then the face */}
-      <g className="art-figure" transform="translate(1016 318) scale(0.62)">
-        <path className="fig-light" d={portraitShapes.light} />
-        <path className="fig-mid" fillRule="evenodd" d={portraitShapes.mid} />
-        <path className="fig-red" fillRule="evenodd" d={portraitShapes.red} />
-        <path className="fig-shade" d={portraitShapes.neck} />
-        <path className="fig-ear" d={portraitShapes.chin} />
-        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.dark} />
-        <path className="fig-ear" d={portraitShapes.ear} />
-        <path className="fig-lips" d={portraitShapes.lips} />
-        <path className="fig-dark" d={portraitShapes.lines} />
-        <path className="fig-eye" d={portraitShapes.eyewhite} />
-        <path className="fig-dark" d={portraitShapes.iris} />
-        <path className="fig-dark" d={portraitShapes.lid} />
-        <path className="fig-dark" fillRule="evenodd" d={portraitShapes.glasses} />
-      </g>
+      <PortraitFigure transform="translate(1016 318) scale(0.62)" />
     </svg>
   );
 }

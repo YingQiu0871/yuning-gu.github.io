@@ -3088,3 +3088,153 @@ html:is(:lang(en), :lang(zh)) .poster-hero h1 {
     animation: none;
   }
 }
+
+/* ---- Inner pages: a poster header, slanted slabs below ---- */
+.page-shell {
+  padding-top: 0;
+}
+
+.page-heading {
+  position: relative;
+  isolation: isolate;
+  max-width: none;
+  min-height: clamp(260px, 30vw, 360px);
+  display: grid;
+  align-content: center;
+  margin: 0 calc(50% - 50vw) var(--space-2xl);
+  padding: var(--space-2xl) max(20px, calc(50vw - var(--content) / 2)) calc(var(--space-2xl) + 5vw);
+  overflow: hidden;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5vw), 0 100%);
+}
+
+.page-heading::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(5vw + 10px);
+  content: '';
+  background: var(--color-ink);
+  clip-path: polygon(0 calc(100% - 10px), 100% 0, 100% 10px, 0 100%);
+  pointer-events: none;
+}
+
+.page-art {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: min(62%, 820px);
+  height: 100%;
+}
+
+.page-art .art-trail {
+  animation: none;
+}
+
+.page-heading > :not(.page-art) {
+  max-width: min(56%, 620px);
+}
+
+.page-heading .eyebrow {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-ink-2);
+}
+
+html:is(:lang(en), :lang(zh)) .page-heading h1 {
+  margin: 0 0 var(--space-lg);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+
+.page-heading h1::before {
+  content: none;
+}
+
+.page-heading > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: var(--text-lg);
+}
+
+/* cards lean the same way as the home contents rows */
+.content-card,
+.contact-card,
+.interest-card,
+.about-chapter {
+  --slant: 14px;
+  padding-block: calc(var(--space-lg) + var(--slant));
+  border-top: 0;
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+}
+
+/* dates and kinds ride a small red slab, like the contents numbers */
+.content-card > time,
+.content-card span.meta {
+  --slant: 8px;
+  width: fit-content;
+  display: block;
+  margin-bottom: var(--space-sm);
+  padding: var(--space-2xs) calc(var(--space-sm) + var(--slant));
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  clip-path: var(--shape-slab);
+}
+
+.tag {
+  --slant: 6px;
+  padding: var(--space-2xs) calc(var(--space-sm) + var(--slant));
+  border: 0;
+  color: var(--color-ink);
+  background: var(--color-paper-3);
+  clip-path: var(--shape-slab);
+}
+
+.page-section > h2::before,
+.contact-card > h2::before {
+  width: 0.5em;
+  height: 0.5em;
+  display: inline-block;
+  margin-right: 0.28em;
+  vertical-align: 0.12em;
+  content: '';
+  background: var(--color-gold);
+  clip-path: var(--shape-star);
+}
+
+/* the About portrait is the cut-out on its disc */
+.cutout-card {
+  border: 0;
+  background: none;
+}
+
+.cutout-card::after {
+  display: none;
+}
+
+.portrait-cutout {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--color-sky);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), 0 100%);
+}
+
+@media (max-width: 760px) {
+  .page-heading {
+    min-height: 0;
+    display: block;
+    padding-top: 0;
+  }
+
+  .page-art {
+    position: static;
+    width: calc(100% + 40px);
+    height: 170px;
+    display: block;
+    margin: 0 -20px var(--space-lg);
+  }
+
+  .page-heading > :not(.page-art) {
+    max-width: none;
+  }
+}
