@@ -2474,3 +2474,63 @@ html:lang(zh) .poster-band :is(p, h2, span) {
     margin-inline: auto;
   }
 }
+
+/* ---- Hero: two aligned columns, the copy on the left, the poster on the right ---- */
+:root {
+  --text-hero: clamp(2.75rem, 5.4vw, 4.75rem);
+  --text-hero-zh: clamp(2.5rem, 5vw, 4.25rem);
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.72fr);
+  row-gap: var(--space-lg);
+  padding-top: clamp(var(--space-xl), 6vw, 80px);
+}
+
+.hero > h1 {
+  grid-column: 1;
+  align-self: end;
+}
+
+.hero > .hero-copy {
+  grid-column: 1;
+}
+
+.hero > .poster {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.hero-intro {
+  margin-bottom: var(--space-lg);
+  font-size: var(--text-lg);
+}
+
+/* The notice closes the left column as a ruled slip, level with the poster's foot */
+.seeking-note {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border-top: var(--rule-bar) solid var(--color-accent);
+}
+
+.poster-band {
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.poster-band h2,
+html:is(:lang(en), :lang(zh)) .poster-band h2 {
+  font-size: var(--text-xl);
+}
+
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero > h1,
+  .hero > .hero-copy,
+  .hero > .poster {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
