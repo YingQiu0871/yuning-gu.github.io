@@ -121,6 +121,11 @@ cv2.line(gl, G(610.5, 407), G(624, 408), 255, FR, cv2.LINE_AA)
 glasses = contours((gl > 127).astype(np.uint8) * 255, 2.2, 200, KG)
 ear_fold = [np.array([(466, 394), (468.4, 393.4), (471, 404), (473, 413), (477.5, 421.5), (481, 428), (479.4, 429.6), (475, 423.5), (471, 414.5), (468.6, 405)], np.float64),
             np.array([(482.5, 392), (485, 392), (486, 410), (488.5, 426), (486.5, 427), (484, 411)], np.float64)]
+# the jaw, measured on the figure photo: the face ends on a clean curve and the neck below it
+# takes the shade tone, instead of the face running straight into the hood's ragged edge
+jaw = [(486, 455), (492, 470), (503, 483), (520, 493), (540, 498), (555, 498), (568, 494), (580, 488), (592, 476), (600, 460)]
+chin = [np.array([(486, 438)] + jaw + [(600, 438)], np.float64)]
+neck = [np.array([(498, 478)] + jaw[2:9] + [(590, 480), (584, 512), (566, 524), (545, 528), (524, 524), (506, 512)], np.float64)]
 # the left ear shows as a narrow strip between the hair and the hood; the dark tone swallowed it
 ear = [np.array([(462, 390), (468, 388), (471.5, 400), (473.5, 412), (479, 421), (483.5, 432), (480.5, 436.5), (474, 430), (468, 420), (464, 406)], np.float64)]
 
@@ -133,7 +138,7 @@ def polys(m, e, min_area):
         a = cv2.approxPolyDP(c, e, True)
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
-layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)),
+layers = [('light', polys(fg, eps * 1.4, 2000)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('neck', neck), ('chin', chin), ('dark', polys(dark, eps * 0.7, 60)),
           ('ear', ear), ('lips', face['lips']), ('lines', face['brows'] + face['nose'] + face['lipline'] + ear_fold), ('eyewhite', face['eyewhite']), ('iris', face['iris']), ('lid', face['lid']), ('glasses', glasses)]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
@@ -143,7 +148,7 @@ shapes = {name: d(ps) for name, ps in layers}
 json.dump({'width': int(wbox), 'height': int(hbox), 'shapes': shapes}, open(outdir + '/portrait.json', 'w'))
 
 # preview
-cols = {'light': (168, 231, 246), 'ear': (168, 231, 246), 'lips': (70, 100, 214), 'eyewhite': (246, 250, 252), 'iris': (34, 26, 11), 'lid': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
+cols = {'light': (168, 231, 246), 'neck': (128, 186, 226), 'chin': (168, 231, 246), 'ear': (168, 231, 246), 'lips': (70, 100, 214), 'eyewhite': (246, 250, 252), 'iris': (34, 26, 11), 'lid': (34, 26, 11), 'glasses': (34, 26, 11), 'mid': (150, 120, 70), 'red': (30, 60, 215), 'dark': (34, 26, 11), 'lines': (34, 26, 11)}
 prev = np.full((H * 3, W * 3, 3), (60, 40, 20), np.uint8)
 for name, ps in layers:
     layer = np.zeros((H * 3, W * 3), np.uint8)

@@ -53,8 +53,8 @@ export async function generateMetadata({
       images: [
         {
           url: `${SITE_URL}/og.png`,
-          width: 1733,
-          height: 909,
+          width: 1200,
+          height: 630,
           alt: 'Yuning Gu — Pharmaceutical Sciences',
         },
       ],
