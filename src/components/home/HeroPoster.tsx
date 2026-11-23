@@ -41,16 +41,16 @@ export default function HeroPoster({ label }: { label: string }) {
             ))}
           </g>
         ))}
-        <path className="art-sparkle" d={SPARKLE} transform="translate(760 150)" />
-        <path className="art-sparkle" d={SPARKLE} transform="translate(884 96) scale(0.6)" />
-        <path className="art-sparkle" d={SPARKLE} transform="translate(836 420) scale(0.7)" />
+        <path className="art-sparkle" d={SPARKLE} transform="translate(820 150)" />
+        <path className="art-sparkle" d={SPARKLE} transform="translate(1010 84) scale(0.6)" />
+        <path className="art-sparkle" d={SPARKLE} transform="translate(1368 160) scale(0.7)" />
       </g>
 
       {/* the disc behind the figure */}
       <g className="art-planet">
-        <circle className="art-dash" cx="1170" cy="330" r="312" />
-        <circle className="art-rim" cx="1170" cy="330" r="262" />
-        <circle className="art-body" cx="1170" cy="330" r="250" />
+        <circle className="art-dash" cx="1196" cy="392" r="262" />
+        <circle className="art-rim" cx="1196" cy="392" r="216" />
+        <circle className="art-body" cx="1196" cy="392" r="206" />
       </g>
 
       {/* three bars on one rising diagonal */}
@@ -74,7 +74,7 @@ export default function HeroPoster({ label }: { label: string }) {
       </g>
 
       {/* the portrait as a cut-out: silhouette with a dark keyline, then the tones */}
-      <g className="art-figure" transform="translate(940 196) scale(0.78)">
+      <g className="art-figure" transform="translate(1016 318) scale(0.62)">
         <path className="fig-light" d={portraitShapes.light} />
         <path className="fig-shade" fillRule="evenodd" d={portraitShapes.shade} />
         <path className="fig-mid" fillRule="evenodd" d={portraitShapes.mid} />

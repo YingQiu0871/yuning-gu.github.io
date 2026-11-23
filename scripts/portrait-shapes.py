@@ -46,11 +46,36 @@ lines = cv2.bitwise_or(lines, (upb < 62).astype(np.uint8) * 255)
 lines = cv2.bitwise_and(lines, oval)
 lines = cv2.morphologyEx(lines, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
 lines = cv2.medianBlur(lines, 7)
+# tidy the lower face: the ears and the chin carry no marks, and the mouth is one clean lip line
+def box(x0b, y0b, x1b, y1b):
+    return (slice((y0b - FY0) * K, (y1b - FY0) * K), slice((x0b - FX0) * K, (x1b - FX0) * K))
+inner = np.zeros_like(up); cv2.ellipse(inner, ((541 - FX0) * K, (418 - FY0) * K), (70 * K, 96 * K), 0, 0, 360, 255, -1)
+band = np.zeros_like(up); band[box(FX0, 372, FX1, 412)] = 255          # the spectacle band keeps its full width
+lines = cv2.bitwise_and(lines, cv2.bitwise_or(inner, band))
+mouth = box(506, 440, 590, 470)
+lip = cv2.adaptiveThreshold(cv2.GaussianBlur(up, (13, 13), 0), 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 61, 9)[mouth]
+lip = cv2.morphologyEx(lip, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+nl, ll, sl, _ = cv2.connectedComponentsWithStats(lip)
+keep = np.zeros_like(lip)
+if nl > 1:
+    # the lip line is the widest mark in the box
+    widest = 1 + int(np.argmax(sl[1:, cv2.CC_STAT_WIDTH]))
+    keep[ll == widest] = 255
+    keep = cv2.morphologyEx(keep, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
+    # keep only the lip line itself: in each column, the first run of the mark, at most 22px deep
+    for cx in range(keep.shape[1]):
+        col = np.flatnonzero(keep[:, cx])
+        if col.size: keep[col[0] + 22:, cx] = 0
+    keep = cv2.medianBlur(keep, 7)
+lines[box(FX0, 438, FX1, FY1)] = 0
+lines[mouth] = keep
 wide = cv2.GaussianBlur(up, (31, 31), 0)
 local = cv2.blur(wide, (301, 301))
 shade = ((wide.astype(np.int16) < local.astype(np.int16) - 3) & (wide > 95)).astype(np.uint8) * 255
 shade = cv2.bitwise_and(shade, oval)
 shade = cv2.medianBlur(shade, 21)
+shade[box(FX0, 436, FX1, FY1)] = 0   # no shade below the nose: it read as stubble
+shade = cv2.bitwise_and(shade, inner)
 roi = np.zeros((H, W), np.uint8); cv2.ellipse(roi, (543, 420), (80, 98), 0, 0, 360, 255, -1)
 mid = cv2.bitwise_and(mid, cv2.bitwise_not(roi))
 def face_polys(m, e, min_area):
@@ -71,7 +96,7 @@ def polys(m, e, min_area):
         a = cv2.approxPolyDP(c, e, True)
         if len(a) >= 3: out.append(a.reshape(-1, 2))
     return out
-layers = [('light', polys(fg, eps * 1.4, 2000)), ('shade', face_polys(shade, 5.0, 900)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)), ('lines', face_polys(lines, 1.8, 70))]
+layers = [('light', polys(fg, eps * 1.4, 2000)), ('shade', face_polys(shade, 5.0, 900)), ('mid', polys(mid, eps, 220)), ('red', polys(red, eps, 260)), ('dark', polys(dark, eps * 0.7, 60)), ('lines', face_polys(lines, 1.6, 150))]
 
 x0, y0, wbox, hbox = cv2.boundingRect(fg)
 def d(ps):

@@ -2848,7 +2848,7 @@ html:is(:lang(en), :lang(zh)) .index-row h2 {
 .fig-light {
   fill: var(--color-ink);
   stroke: var(--color-sky);
-  stroke-width: 14;
+  stroke-width: 16;
   stroke-linejoin: miter;
   paint-order: stroke;
 }
