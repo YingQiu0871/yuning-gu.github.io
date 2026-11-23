@@ -18,8 +18,8 @@ export default function SiteFrame({
           <strong>{profile.name}</strong>
           <span>
             {lang === 'zh'
-              ? '药物科学 · 制剂技术 · 临床研究'
-              : 'Pharmaceutical sciences · Drug delivery · Clinical research'}
+              ? '药物科学、制剂技术、临床研究'
+              : 'Pharmaceutical sciences, drug delivery, clinical research'}
           </span>
         </div>
         <nav
@@ -27,13 +27,13 @@ export default function SiteFrame({
           aria-label={lang === 'zh' ? '学术与开发主页' : 'Academic and development profiles'}
         >
           <a href={profile.googleScholar} target="_blank" rel="noreferrer">
-            Google Scholar ↗
+            Google Scholar
           </a>
           <a href={profile.orcid} target="_blank" rel="noreferrer">
-            ORCID ↗
+            ORCID
           </a>
           <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub ↗
+            GitHub
           </a>
         </nav>
         <div className="footer-meta">

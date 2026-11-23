@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local workspace ledger
 /.jspace/
+
+# Hallmark working files (before/after records, theme previews)
+.hallmark/

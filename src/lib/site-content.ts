@@ -39,7 +39,6 @@ export const navigation = {
 
 export const homeContent = {
   en: {
-    eyebrow: 'Pharmaceutical Sciences · Université Paris-Saclay',
     title: 'Pharmaceutical technology, from hot-melt extrusion to printed tablets.',
     intro:
       'I am an M2 student in Development of Drugs and Health Products (D2HP) at Université Paris-Saclay. My main interest is pharmaceutical technology: hot-melt extrusion and 3D printing of oral dosage forms. Earlier work in natural-product pharmacology and clinical epidemiology gave me the analytical and data skills I bring to it.',
@@ -92,7 +91,6 @@ export const homeContent = {
     emailCta: 'Email me',
   },
   zh: {
-    eyebrow: '药物科学 · 巴黎萨克雷大学',
     title: '药物制剂技术：从热熔挤出到 3D 打印片剂。',
     intro:
       '我现就读于巴黎萨克雷大学药学院 M2 Development of Drugs and Health Products（D2HP）项目，主要方向是药物制剂技术，包括热熔挤出和口服固体制剂的 3D 打印。此前在天然产物药理和临床流行病学方面的研究，为我打下了分析与数据方面的基础。',
@@ -104,7 +102,7 @@ export const homeContent = {
     statusLabel: '当前学术方向',
     statusTitle: 'M2 Development of Drugs and Health Products（D2HP）',
     statusBody: '巴黎萨克雷大学药学院',
-    location: '法国 · 巴黎萨克雷',
+    location: '法国巴黎萨克雷',
     statLabels: {
       publications: '同行评议论文',
       firstAuthor: '第一或共同第一作者',
@@ -343,7 +341,7 @@ export const publications: Publication[] = [
     title:
       'Active ingredients and mechanisms of peony seed blended oil in diabetes treatment using Kunming mice: Insights from GC–MS, network pharmacology, and experimental verification',
     authors: 'Yuning Gu; Fengliang Zhong; Tiantian Sun; Zirui Chang',
-    venue: 'Journal of Functional Foods · 125, 106652',
+    venue: 'Journal of Functional Foods, 125, 106652',
     date: '2025',
     doi: '10.1016/j.jff.2024.106652',
     type: 'Journal article',
@@ -355,7 +353,7 @@ export const publications: Publication[] = [
     title:
       'Study on the in vitro inhibitory activity of peony seed blended oil on α-amylase and α-glucosidase',
     authors: 'Tiantian Sun; Zirui Chang; Fengliang Zhong; Zishu Li; Yu Fu; Yuning Gu',
-    venue: 'Journal of Clinical Medicine Research · 5(2), 151–158',
+    venue: 'Journal of Clinical Medicine Research, 5(2), 151–158',
     date: '2024',
     doi: '10.32629/jcmr.v5i2.2288',
     type: 'Journal article',
@@ -365,7 +363,7 @@ export const publications: Publication[] = [
   {
     title: 'Retrosynthetic design of Wulfenioidins L with potential anti-Zika virus activity',
     authors: 'Yuning Gu; Tanghe Wang',
-    venue: 'BIO Web of Conferences · 111, 02004',
+    venue: 'BIO Web of Conferences, 111, 02004',
     date: '2024',
     doi: '10.1051/bioconf/202411102004',
     type: 'Conference paper',

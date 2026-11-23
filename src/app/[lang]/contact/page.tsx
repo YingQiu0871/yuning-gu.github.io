@@ -60,31 +60,31 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
           <div className="contact-detail">
             <span>Google Scholar</span>
             <a href={profile.googleScholar} target="_blank" rel="noreferrer">
-              Yuning Gu ↗
+              Yuning Gu
             </a>
           </div>
           <div className="contact-detail">
             <span>ORCID</span>
             <a href={profile.orcid} target="_blank" rel="noreferrer">
-              0009-0003-2561-8122 ↗
+              0009-0003-2561-8122
             </a>
           </div>
           <div className="contact-detail">
             <span>LinkedIn</span>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
-              yuninggu2002 ↗
+              yuninggu2002
             </a>
           </div>
           <div className="contact-detail">
             <span>GitHub</span>
             <a href={profile.github} target="_blank" rel="noreferrer">
-              YingQiu0871 ↗
+              YingQiu0871
             </a>
           </div>
           <div className="contact-detail">
             <span>ResearchGate</span>
             <a href={profile.researchGate} target="_blank" rel="noreferrer">
-              Yuning Gu ↗
+              Yuning Gu
             </a>
           </div>
         </section>
