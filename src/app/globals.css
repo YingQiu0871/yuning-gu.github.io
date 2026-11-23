@@ -2583,18 +2583,26 @@ html:lang(zh) .poster-hero h1:lang(zh) {
 .art-sparkle,
 .art-rim,
 .art-trail,
-.art-capsule-tail {
+.art-hull {
   fill: var(--color-ink);
 }
 
 .art-body,
 .art-fin,
-.art-capsule-nose {
+.art-wedge {
   fill: var(--color-accent);
 }
 
 .art-band {
   fill: var(--color-accent-deep);
+}
+
+.art-stripe {
+  fill: var(--color-sky);
+}
+
+.art-nozzle {
+  fill: var(--color-slate);
 }
 
 .art-dash {
